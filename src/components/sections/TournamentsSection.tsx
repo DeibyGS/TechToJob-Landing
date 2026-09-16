@@ -1,10 +1,11 @@
 import { getTranslations } from "next-intl/server";
-import { Target, Upload, Gavel } from "lucide-react";
+import { Target, Upload, Gavel, Sparkles } from "lucide-react";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { Card } from "@/components/ui/Card";
 import { Reveal } from "@/components/ui/Reveal";
 
 const STEP_ICONS = [Target, Upload, Gavel];
+const FALLBACK_STEP_ICON = Sparkles;
 
 export async function TournamentsSection() {
   const t = await getTranslations("Tournaments");
@@ -20,10 +21,10 @@ export async function TournamentsSection() {
       </Reveal>
       <div className="mt-12 grid gap-6 md:grid-cols-3">
         {steps.map((step, index) => {
-          const Icon = STEP_ICONS[index];
+          const Icon = STEP_ICONS[index] ?? FALLBACK_STEP_ICON;
           return (
             <Reveal key={step.title} delay={index * 0.1}>
-              <Card className="h-full border-brand-white/15">
+              <Card border="light" className="h-full">
                 <Icon
                   className="h-6 w-6 text-brand-teal"
                   strokeWidth={2}
