@@ -18,26 +18,36 @@ Task sizes: S (<1h) | M (1-3h) | L (3-6h, consider splitting)
 
 ## PR2 — `feat/cc-ui-primitives-brand`
 
-- [ ] T2 — Build `Button`, `SectionContainer`, `Card` in `src/components/ui/`
+- [x] T2 — Build `Button`, `SectionContainer`, `Card` in `src/components/ui/`
   [M] — implements AC-01, AC-05, AC-08, AC-09 (structural prerequisites) —
   Depends on: T1
   - Done when: each primitive is used by at least 2 sections once PR3/PR4
-    land (no premature 3rd variant).
-- [ ] T3 — Build `LanguageSwitcher` using `next-intl`'s `Link`/`usePathname`
+    land (no premature 3rd variant). Built with `motion` tactile feedback
+    on `Button` (`whileTap`, respects `useReducedMotion`); shape-consistency
+    lock applied (pill buttons, `rounded-2xl` cards) per `docs/DESIGN.md`.
+- [x] T3 — Build `LanguageSwitcher` using `next-intl`'s `Link`/`usePathname`
   [S] [P] — implements AC-15 — Depends on: T1
   - Done when: switching locale works with JavaScript disabled (real
     `<a>` href, verified via DevTools network-conditions or curl).
-- [ ] T4 — Prepare and drop in brand assets: favicon (SVG + rasterized
-  `.ico`/apple-touch-icon from `Símbolo*`), `og-image.png`, `public/logo/
-  {symbol,logo}-{positive,negative}.svg` per `docs/DESIGN.md` logo matrix
-  [S] [P] — implements AC-20 — Depends on: none
+- [x] T4 — Prepare and drop in brand assets: favicon, `og-image.png`,
+  `public/logo/{symbol,logo}-{positive,negative}.svg` per `docs/DESIGN.md`
+  logo matrix [S] [P] — implements AC-20 — Depends on: none
   - Done when: favicon renders in browser tab, OG image resolves at
-    `/og-image.png`.
-- [ ] T5 — Add `alternates.languages` (hreflang) + canonical to
+    `/og-image.png`. **Note**: used Next's file-convention favicon
+    (`src/app/icon.svg` + `apple-icon.png`) instead of a hand-built
+    `.ico` — no ICO conversion tool available locally (`sips` only), and
+    Next auto-generates the correct `<link>` tags from `icon.svg` /
+    `apple-icon.png`, which all evergreen browsers support. Verified the
+    `Negativo` SVG variants are teal-on-transparent (not white) from their
+    source, corrected the OG-image composition plan accordingly
+    (`v2Negativo` on `brand-dark`, not `v2Positivo`/`v2Degradado`).
+- [x] T5 — Add `alternates.languages` (hreflang) + canonical to
   `generateMetadata` in `[locale]/layout.tsx` [S] — implements AC-14 —
   Depends on: T1
   - Done when: viewing page source on `/es` and `/en` shows both
-    `hreflang` tags plus `x-default`.
+    `hreflang` tags plus `x-default`. **Done in PR1** — was written as part
+    of the initial `[locale]/layout.tsx` (`generateMetadata` already
+    includes `alternates.languages` with `es`/`en`/`x-default`).
 
 ## PR3 — `feat/cc-sections-1-to-5`
 

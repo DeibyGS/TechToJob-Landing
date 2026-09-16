@@ -7,11 +7,43 @@ Created because this project has a UI. The reusable-components inventory
 below is the part that matters most in practice — check it before creating
 any new component, so work doesn't silently duplicate an existing one.
 
-## Design principles
+## Design read
 
-TechToJob is a community, not a job board — the design should feel like a
-tech community hub (confident, direct, builder-oriented), never like a
-generic corporate job-listing site. Avoid stock-photo-of-people-in-an-office
+Tech-community landing (not a corporate job-listing site, not a SaaS
+dashboard) for a developer/company audience: confident, direct,
+builder-oriented. Tailwind + Sora + `motion` (moderate use). Dials:
+`DESIGN_VARIANCE 8 / MOTION_INTENSITY 6 / VISUAL_DENSITY 4`. The 3 mandatory
+brand colors (dark neutral + white + single teal accent) already avoid the
+generic AI-purple/gradient default — no additional accent gets added.
+
+## Consistency locks (mandatory, apply to every section built from here on)
+
+- **Theme**: single light theme, locked. Deliberate choice, not an
+  oversight — the rubric mandates `#ffffff` as one of the 3 dominant brand
+  colors, so a dark-mode variant would fight the brand identity itself. No
+  dark-mode toggle for v1.
+- **Shape**: buttons are full-pill (`rounded-full`); cards and containers
+  use `rounded-2xl` (~16px); inputs (newsletter form, PR4) use `rounded-lg`.
+  No other radius values anywhere.
+- **Shadows**: tinted toward `brand-dark`, never pure black. Prefer borders
+  (`border border-brand-dark/10`) over heavy elevation — cards get a
+  shadow only where it communicates real hierarchy (e.g. the Newsletter
+  form), not by default.
+- **Accent**: `brand-teal` is the only accent, used identically across all
+  10 sections (section backgrounds alternate `brand-white`/a subtle
+  `brand-dark` band, never a different hue).
+- **Section variety**: across the 10 sections, at least 4 distinct layout
+  families are used (not every section is a centered text block or an
+  image+text split) — enforced during PR3/PR4 section-building, audited in
+  PR5 (`tasks.md` T23).
+- **Eyebrows**: max 1 per 3 sections (≈3 total across the whole page) — no
+  section-number labels, no `00 / INDEX` style micro-meta.
+- **Motion**: every animation must be motivated (hierarchy, storytelling,
+  feedback, or state transition) — no decoration-only motion. Respects
+  `prefers-reduced-motion` via `useReducedMotion()` from `motion/react`
+  wherever `MOTION_INTENSITY` shows.
+
+Avoid stock-photo-of-people-in-an-office
 aesthetics; favor typography, brand color, and iconography (Lucide) over
 photography. No emoji anywhere, no AI-template-default look (see the `taste`
 skill, invoked during section implementation).
@@ -87,7 +119,7 @@ connection; respect `prefers-reduced-motion`.
 | Favicon / small icon | `Símbolo*` family (SVG + rasterized PNG for `.ico`/apple-touch-icon) | any |
 | Header logo | `v2Positivo.svg` | Light (`brand-white`) sections |
 | Footer / dark sections | `v2Negativo.svg` | `brand-dark` background |
-| OG image (1200×630) | Composited from `v2Positivo`/`v2Degradado` | Static, one per site (not per-locale) |
+| OG image (1200×630) | Composited: `v2Negativo` logo (teal mark, `#84c0bf`) on a `brand-dark` (`#2f3436`) canvas | Static, one per site (not per-locale) — corrected during PR2 asset prep: `Negativo` variants are teal-on-transparent, not white, confirmed from the SVG source, so they pair with `brand-dark` exactly as the naming implies |
 
 `Degradado` and `Black` logo variants stay out of `public/` — risk of
 clashing with the flat brand palette the rubric grades; source files remain
