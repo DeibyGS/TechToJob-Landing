@@ -51,26 +51,40 @@ Task sizes: S (<1h) | M (1-3h) | L (3-6h, consider splitting)
 
 ## PR3 — `feat/cc-sections-1-to-5`
 
-- [ ] T6 — `HeroSection` + `Hero` namespace in both locales [S] — implements
+- [x] T6 — `HeroSection` + `Hero` namespace in both locales [S] — implements
   AC-01, AC-16 — Depends on: T2
-  - Done when: single CTA button links to `SOCIAL_LINKS.discord`.
-- [ ] T7 — `HowItWorksSection` + `HowItWorks` namespace (steps array) [S]
+  - Done when: single CTA button links to `SOCIAL_LINKS.discord`. Asymmetric
+    split layout (text left, brand symbol mark right), no eyebrow.
+- [x] T7 — `HowItWorksSection` + `HowItWorks` namespace (steps array) [S]
   [P] — implements AC-02, AC-16 — Depends on: T2
   - Done when: step count matches `HowItWorks.steps.length` for both
-    locales, no hardcoded count in JSX.
-- [ ] T8 — `TalentSection` + `Talent` namespace [S] [P] — implements AC-03,
+    locales, no hardcoded count in JSX. 3-column step row with typographic
+    `01/02/03` numerals (not "Step 1" labels).
+- [x] T8 — `TalentSection` + `Talent` namespace [S] [P] — implements AC-03,
   AC-16 — Depends on: T2
-  - Done when: renders stack/level/availability placeholder fields.
-- [ ] T9 — `CompanySection` + `Company` namespace [S] [P] — implements
+  - Done when: renders stack/level/availability placeholder fields. Split
+    layout (text+bullets left, example profile card right via new shared
+    `DefinitionRow` primitive).
+- [x] T9 — `CompanySection` + `Company` namespace [S] [P] — implements
   AC-04, AC-16 — Depends on: T2, T8 (visual mirroring)
   - Done when: shares `TalentSection`'s layout pattern (not its code).
-- [ ] T10 — `TournamentsSection` + `Tournaments` namespace, reusing `Card`
+    Mirrored order (card left, text right) via `md:order-1`/`md:order-2` —
+    same pattern, visually distinct rhythm.
+- [x] T10 — `TournamentsSection` + `Tournaments` namespace, reusing `Card`
   [S] [P] — implements AC-05, AC-16 — Depends on: T2
-  - Done when: uses `Card` component, not a bespoke card markup.
-- [ ] T11 — Assemble sections 1-5 in `[locale]/page.tsx` in rubric order [S]
+  - Done when: uses `Card` component, not a bespoke card markup. Dark-band
+    background, 3-card grid with Lucide icons (Target/Upload/Gavel) — a
+    distinct layout family from the Talent/Company split pair, breaking
+    the zigzag per `docs/DESIGN.md`'s consistency locks.
+- [x] T11 — Assemble sections 1-5 in `[locale]/page.tsx` in rubric order [S]
   — implements AC-01–AC-05 (integration) — Depends on: T6, T7, T8, T9, T10
   - Done when: `npm run build` succeeds with all 5 sections rendering on
-    both locales.
+    both locales. Also added a minimal `Header` (logo + `LanguageSwitcher`,
+    not one of the 10 required sections but necessary chrome — the
+    switcher built in PR2 had nowhere to render until now). Verified
+    visually with a headless-Chromium screenshot (scroll-triggered to fire
+    `Reveal`'s `whileInView`), no console errors, responsive collapse
+    confirmed at 390px.
 
 ## PR4 — `feat/cc-sections-6-to-10-formspree`
 
