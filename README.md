@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TechToJob-Landing
 
-## Getting Started
+Static, bilingual (es/en) marketing landing for **TechToJob**, a Discord-first
+tech community — built for a design/dev competition. See `docs/ARCHITECTURE.md`
+for the full technical picture and `AGENTS.md` for AI-agent conventions.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) — it redirects to the
+default locale (`/es`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.local.example` to `.env.local` and set
+`NEXT_PUBLIC_FORMSPREE_FORM_ID` to enable the newsletter form.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Verifying a change
 
-## Learn More
+No automated test suite for v1 (see `docs/TESTING.md` for why). Before every
+PR, run:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm ci
+npm run build     # confirms SSG of /es and /en
+npm run lint
+npx tsc --noEmit
+npm run start      # smoke test the production build, not `next dev`
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Then manually check, on the running production build:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- View source on `/es` and `/en`: `<html lang="es"|"en">` and
+  `<link rel="alternate" hreflang="es"|"en"|"x-default">` present in the
+  actual HTML.
+- Language switcher works with JavaScript disabled (it's a real link).
+- All 10 sections render in order; Hero and Closing CTAs open the Discord
+  invite; footer social links point to the confirmed LinkedIn/X/Instagram
+  URLs.
+- Newsletter form: submit a test address, confirm it lands in the Formspree
+  dashboard and the on-page success message renders.
+- Lighthouse (Performance/Accessibility/SEO/Best Practices) — check the
+  brand-teal contrast usage specifically passes the accessibility audit.
+- Responsive at 375px / 768px / 1440px — no horizontal overflow, no broken
+  wrapping on the longest placeholder strings in either locale.
 
-## Deploy on Vercel
+## Docs
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `docs/ARCHITECTURE.md` — chosen architecture, alternatives, evolution path
+- `docs/DESIGN.md` — brand tokens, contrast rules, reusable components
+- `docs/API.md` / `docs/TESTING.md` — not applicable for v1 (see each file)
+- `docs/constitution.md` — non-negotiable project principles
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Deployed via Vercel, connected to this repo. Set
+`NEXT_PUBLIC_FORMSPREE_FORM_ID` in the Vercel project's environment
+variables before promoting to production.
