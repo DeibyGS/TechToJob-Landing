@@ -67,6 +67,15 @@ skill, invoked during section implementation).
 | `brand-teal` | Section backgrounds, button fills (paired with `brand-dark` text), icon fills, borders, large decorative shapes | Body copy text color on white, any small text |
 | `brand-white` | Base page background, text on `brand-dark` | Text on `brand-teal` |
 
+**Audit note (PR4)**: this rule was violated 3 times before catching it —
+a small numeral (`HowItWorksSection`, shipped in PR3), a text badge, and a
+link hover state all used `text-brand-teal` on small text. Fixed by moving
+teal to backgrounds/icon-fills only (`bg-brand-teal text-brand-dark` for
+badges, `text-brand-dark/40` for muted small text, `hover:underline`
+instead of a color change for link hover). **When adding new small text,
+grep `text-brand-teal` across `src/components/` before shipping** — icon
+`className` usage is fine, `<span>`/`<p>`/`<a>` text color usage is not.
+
 Recommended CTA pairing: `bg-brand-teal text-brand-dark`. Verify the real
 contrast ratio with Lighthouse before shipping; if it falls short at the
 chosen button size, fall back to `bg-brand-dark text-brand-white` and keep

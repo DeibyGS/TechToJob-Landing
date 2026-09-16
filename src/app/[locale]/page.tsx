@@ -5,6 +5,11 @@ import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
 import { TalentSection } from "@/components/sections/TalentSection";
 import { CompanySection } from "@/components/sections/CompanySection";
 import { TournamentsSection } from "@/components/sections/TournamentsSection";
+import { NetworkingSection } from "@/components/sections/NetworkingSection";
+import { NewsSection } from "@/components/sections/NewsSection";
+import { NewsletterSection } from "@/components/sections/NewsletterSection";
+import { ClosingSection } from "@/components/sections/ClosingSection";
+import { FooterSection } from "@/components/sections/FooterSection";
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
@@ -19,7 +24,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <TalentSection />
         <CompanySection />
         <TournamentsSection />
+        <NetworkingSection />
+        <NewsSection />
+        <NewsletterSection />
+        <ClosingSection />
       </main>
+      <FooterSection />
     </>
   );
 }
