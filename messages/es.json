@@ -78,5 +78,69 @@
         "description": "[TODO]"
       }
     ]
+  },
+  "Networking": {
+    "headline": "[TODO] Título de Networking",
+    "description": "[TODO] Descripción breve.",
+    "channels": [
+      "[TODO] #canal-1",
+      "[TODO] #canal-2",
+      "[TODO] #canal-3",
+      "[TODO] #canal-4",
+      "[TODO] #canal-5"
+    ]
+  },
+  "News": {
+    "headline": "[TODO] Título de Noticias",
+    "items": [
+      {
+        "title": "[TODO] Noticia 1",
+        "date": "Sep 2026",
+        "category": "[TODO] Categoría",
+        "summary": "[TODO] Resumen breve de la noticia 1."
+      },
+      {
+        "title": "[TODO] Noticia 2",
+        "date": "Ago 2026",
+        "category": "[TODO] Categoría",
+        "summary": "[TODO] Resumen breve de la noticia 2."
+      },
+      {
+        "title": "[TODO] Noticia 3",
+        "date": "Jul 2026",
+        "category": "[TODO] Categoría",
+        "summary": "[TODO] Resumen breve de la noticia 3."
+      }
+    ]
+  },
+  "Newsletter": {
+    "headline": "[TODO] Título del Newsletter",
+    "description": "[TODO] Descripción breve.",
+    "placeholder": "tu@correo.com",
+    "submitLabel": "[TODO] Quiero recibirlas",
+    "successMessage": "[TODO] Mensaje de éxito.",
+    "errorMessage": "[TODO] Algo falló, inténtalo de nuevo.",
+    "configNotice": "Formulario no configurado todavía."
+  },
+  "Closing": {
+    "headline": "[TODO] Titular de cierre",
+    "description": "[TODO] Última frase antes del footer."
+  },
+  "Footer": {
+    "columns": {
+      "talent": {
+        "title": "Talento",
+        "links": ["[TODO] Ofrécete como talento", "[TODO] Torneos"]
+      },
+      "companies": {
+        "title": "Empresas",
+        "links": ["[TODO] Publica como empresa"]
+      },
+      "community": {
+        "title": "Comunidad",
+        "links": ["[TODO] Discord", "[TODO] Networking"]
+      }
+    },
+    "legalNotice": "[TODO] Aviso legal."
   }
 }

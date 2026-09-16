@@ -88,38 +88,64 @@ Task sizes: S (<1h) | M (1-3h) | L (3-6h, consider splitting)
 
 ## PR4 — `feat/cc-sections-6-to-10-formspree`
 
-- [ ] T12 — `NetworkingSection` + `Networking` namespace (channel list) [S]
+- [x] T12 — `NetworkingSection` + `Networking` namespace (channel list) [S]
   [P] — implements AC-06, AC-16 — Depends on: T2
-  - Done when: channel list renders from a messages array.
-- [ ] T13 — `NewsSection` + `News` namespace (3 items), reusing `Card` [S]
+  - Done when: channel list renders from a messages array. Pill-list
+    layout with a `Hash` icon per channel.
+- [x] T13 — `NewsSection` + `News` namespace (3 items), reusing `Card` [S]
   [P] — implements AC-07, AC-16 — Depends on: T2
   - Done when: exactly 3 cards render via `.map()` over `News.items`,
-    never a hardcoded 4th.
-- [ ] T14 — `NewsletterForm.tsx` (client component, Formspree `fetch`,
+    never a hardcoded 4th. Asymmetric layout (1 featured full-width +
+    2 below, `md:grid-cols-2`) — avoids the banned "3 equal generic
+    cards" pattern and the "empty trailing bento cell" bug an earlier
+    3-column version had (caught by visual review, fixed).
+- [x] T14 — `NewsletterForm.tsx` (client component, Formspree `fetch`,
   idle/pending/success/error states) [M] — implements AC-08, AC-27, AC-28,
   AC-29, AC-31, AC-E1 — Depends on: T2
   - Done when: valid submission shows `Newsletter.successMessage`; a
     simulated failed submission shows `Newsletter.errorMessage` without
     clearing the email input; missing env var disables submit with a
-    configuration notice instead of firing a request.
-- [ ] T15 — `NewsletterSection` + `Newsletter` namespace, renders
+    configuration notice instead of firing a request. All 3 states
+    verified interactively via a headless-Chromium script (filled email,
+    submitted against a deliberately fake Formspree ID, confirmed the
+    error message rendered and the email stayed in the input).
+- [x] T15 — `NewsletterSection` + `Newsletter` namespace, renders
   `NewsletterForm` [S] — implements AC-08 — Depends on: T14
   - Done when: `NewsletterSection.tsx` contains zero Formspree-specific
-    code (verified via `grep -ri formspree src/components/sections/`).
-- [ ] T16 — `ClosingSection` + `Closing` namespace, reuses `Button` +
+    code (verified via `grep -ri formspree src/components/sections/` —
+    zero matches).
+- [x] T16 — `ClosingSection` + `Closing` namespace, reuses `Button` +
   same Discord CTA as Hero [S] [P] — implements AC-09, AC-16 — Depends on: T2
-  - Done when: CTA href matches `SOCIAL_LINKS.discord`.
-- [ ] T17 — `FooterSection` + `Footer` namespace (4 link columns + social
+  - Done when: CTA href matches `SOCIAL_LINKS.discord`. Centered
+    editorial/manifesto layout (the one deliberate exception to the
+    anti-centered-hero rule — this is the final message moment, not a
+    generic split).
+- [x] T17 — `FooterSection` + `Footer` namespace (4 link columns + social
   links + legal notice) [M] [P] — implements AC-10, AC-16 — Depends on: T2
   - Done when: all 4 social hrefs come from `SOCIAL_LINKS`, no inline URL.
-- [ ] T18 — Assemble sections 6-10 in `[locale]/page.tsx`, completing the
+    Real brand icons via Simple Icons CDN (`lucide-react` doesn't ship
+    brand logos) — except LinkedIn, absent from the Simple Icons dataset
+    (confirmed via the published icon list, not a lookup mistake), so it
+    gets a `bg-brand-teal text-brand-dark` "in" text badge instead of a
+    reproduced logo mark.
+- [x] T18 — Assemble sections 6-10 in `[locale]/page.tsx`, completing the
   full 10-section order [S] — implements AC-06–AC-10 (integration) —
   Depends on: T12, T13, T15, T16, T17
   - Done when: `npm run build` succeeds, all 10 sections render on both
-    locales in rubric order.
-- [ ] T19 — Unsupported-locale 404 check (`app/[locale]/layout.tsx`
+    locales in rubric order. Verified visually (full-page + per-section
+    screenshots after scroll-triggering `Reveal`), zero console errors on
+    the real interaction test.
+- [x] T19 — Unsupported-locale 404 check (`app/[locale]/layout.tsx`
   `notFound()` path) [S] — implements AC-E2 — Depends on: T1
   - Done when: visiting `/fr` returns a 404 on the production build.
+    **Verified, mechanism is slightly different than assumed**: next-intl's
+    proxy (locale-prefix mode `always`) redirects a bare `/fr` to
+    `/es/fr` (307) before our layout ever sees it, and `/es/fr` then
+    404s via Next's native routing (no matching page for segment `fr`
+    under `[locale]=es`) — not our own `notFound()` call. Our layout's
+    `hasLocale` guard stays as a defensive backstop for a locale segment
+    that reaches the layout directly; end-to-end user-facing behavior
+    (a 404) matches the AC either way.
 
 ## PR5 — `feat/cc-seo-i18n-polish`
 

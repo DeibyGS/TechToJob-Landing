@@ -78,5 +78,69 @@
         "description": "[TODO]"
       }
     ]
+  },
+  "Networking": {
+    "headline": "[TODO] Networking title",
+    "description": "[TODO] Short description.",
+    "channels": [
+      "[TODO] #channel-1",
+      "[TODO] #channel-2",
+      "[TODO] #channel-3",
+      "[TODO] #channel-4",
+      "[TODO] #channel-5"
+    ]
+  },
+  "News": {
+    "headline": "[TODO] News title",
+    "items": [
+      {
+        "title": "[TODO] News item 1",
+        "date": "Sep 2026",
+        "category": "[TODO] Category",
+        "summary": "[TODO] Short summary of news item 1."
+      },
+      {
+        "title": "[TODO] News item 2",
+        "date": "Aug 2026",
+        "category": "[TODO] Category",
+        "summary": "[TODO] Short summary of news item 2."
+      },
+      {
+        "title": "[TODO] News item 3",
+        "date": "Jul 2026",
+        "category": "[TODO] Category",
+        "summary": "[TODO] Short summary of news item 3."
+      }
+    ]
+  },
+  "Newsletter": {
+    "headline": "[TODO] Newsletter title",
+    "description": "[TODO] Short description.",
+    "placeholder": "you@email.com",
+    "submitLabel": "[TODO] I want it in my inbox",
+    "successMessage": "[TODO] Success message.",
+    "errorMessage": "[TODO] Something failed, try again.",
+    "configNotice": "Form not configured yet."
+  },
+  "Closing": {
+    "headline": "[TODO] Closing headline",
+    "description": "[TODO] Last line before the footer."
+  },
+  "Footer": {
+    "columns": {
+      "talent": {
+        "title": "Talent",
+        "links": ["[TODO] Offer yourself as talent", "[TODO] Tournaments"]
+      },
+      "companies": {
+        "title": "Companies",
+        "links": ["[TODO] Post as a company"]
+      },
+      "community": {
+        "title": "Community",
+        "links": ["[TODO] Discord", "[TODO] Networking"]
+      }
+    },
+    "legalNotice": "[TODO] Legal notice."
   }
 }

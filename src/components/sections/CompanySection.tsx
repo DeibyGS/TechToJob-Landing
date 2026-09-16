@@ -10,7 +10,7 @@ export async function CompanySection() {
   const bullets = t.raw("bullets") as string[];
 
   return (
-    <SectionContainer background="light">
+    <SectionContainer id="companies" background="light">
       <div className="grid items-center gap-12 md:grid-cols-2">
         <Reveal className="md:order-2">
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">

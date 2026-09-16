@@ -12,7 +12,7 @@ export async function TournamentsSection() {
   const steps = t.raw("steps") as { title: string; description: string }[];
 
   return (
-    <SectionContainer background="dark">
+    <SectionContainer id="tournaments" background="dark">
       <Reveal>
         <h2 className="max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">
           {t("headline")}
