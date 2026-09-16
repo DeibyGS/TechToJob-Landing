@@ -5,5 +5,78 @@
   },
   "Common": {
     "ctaDiscord": "Join the community"
+  },
+  "Hero": {
+    "headline": "[TODO] Hero headline (max 2 lines)",
+    "subheadline": "[TODO] Hero subheadline, max 20 words."
+  },
+  "HowItWorks": {
+    "headline": "[TODO] How it works section title",
+    "steps": [
+      {
+        "title": "[TODO] Step 1",
+        "description": "[TODO] Short description of step 1."
+      },
+      {
+        "title": "[TODO] Step 2",
+        "description": "[TODO] Short description of step 2."
+      },
+      {
+        "title": "[TODO] Step 3",
+        "description": "[TODO] Short description of step 3."
+      }
+    ]
+  },
+  "Talent": {
+    "headline": "[TODO] Offer yourself as talent title",
+    "description": "[TODO] Short description.",
+    "bullets": [
+      "[TODO] Benefit 1",
+      "[TODO] Benefit 2",
+      "[TODO] Benefit 3"
+    ],
+    "exampleCard": {
+      "stackLabel": "Stack",
+      "stackValue": "[TODO]",
+      "levelLabel": "Level",
+      "levelValue": "[TODO]",
+      "availabilityLabel": "Availability",
+      "availabilityValue": "[TODO]"
+    }
+  },
+  "Company": {
+    "headline": "[TODO] Post as a company title",
+    "description": "[TODO] Short description.",
+    "bullets": [
+      "[TODO] Benefit 1",
+      "[TODO] Benefit 2",
+      "[TODO] Benefit 3"
+    ],
+    "exampleCard": {
+      "stackLabel": "Stack needed",
+      "stackValue": "[TODO]",
+      "levelLabel": "Level",
+      "levelValue": "[TODO]",
+      "engagementLabel": "Type",
+      "engagementValue": "[TODO]"
+    }
+  },
+  "Tournaments": {
+    "headline": "[TODO] Tournaments title",
+    "description": "[TODO] Short description.",
+    "steps": [
+      {
+        "title": "[TODO] Challenge",
+        "description": "[TODO]"
+      },
+      {
+        "title": "[TODO] Submissions",
+        "description": "[TODO]"
+      },
+      {
+        "title": "[TODO] Jury",
+        "description": "[TODO]"
+      }
+    ]
   }
 }

@@ -79,6 +79,9 @@ teal strictly decorative.
 | `Button` | `src/components/ui/Button.tsx` | Hero CTA, Newsletter submit, Closing CTA | A one-off styled `<a>`/`<button>` per section |
 | `SectionContainer` | `src/components/ui/SectionContainer.tsx` | Max-width/padding/background wrapper for all 10 sections | Per-section ad-hoc container divs |
 | `Card` | `src/components/ui/Card.tsx` | News items (×3), Tournaments steps | A near-duplicate card variant per section |
+| `Reveal` | `src/components/ui/Reveal.tsx` | Scroll-reveal wrapper (`motion` `whileInView`, respects `useReducedMotion`) — used by every section | A per-section custom `motion.div` |
+| `DefinitionRow` | `src/components/ui/DefinitionRow.tsx` | Label/value row inside Talent's and Company's example cards | A near-duplicate row per section (was duplicated once, extracted in PR3) |
+| `BulletList` | `src/components/ui/BulletList.tsx` | Checkmark bullet list (Talent, Company) | A near-duplicate `<ul>` per section (was duplicated once, extracted in PR3) |
 
 Update this table whenever a new reusable component is added.
 

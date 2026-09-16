@@ -5,5 +5,78 @@
   },
   "Common": {
     "ctaDiscord": "Entrar a la comunidad"
+  },
+  "Hero": {
+    "headline": "[TODO] Titular del hero (máx. 2 líneas)",
+    "subheadline": "[TODO] Subtítulo del hero, máximo 20 palabras."
+  },
+  "HowItWorks": {
+    "headline": "[TODO] Título de la sección Cómo funciona",
+    "steps": [
+      {
+        "title": "[TODO] Paso 1",
+        "description": "[TODO] Descripción breve del paso 1."
+      },
+      {
+        "title": "[TODO] Paso 2",
+        "description": "[TODO] Descripción breve del paso 2."
+      },
+      {
+        "title": "[TODO] Paso 3",
+        "description": "[TODO] Descripción breve del paso 3."
+      }
+    ]
+  },
+  "Talent": {
+    "headline": "[TODO] Título de Ofrécete como talento",
+    "description": "[TODO] Descripción breve.",
+    "bullets": [
+      "[TODO] Beneficio 1",
+      "[TODO] Beneficio 2",
+      "[TODO] Beneficio 3"
+    ],
+    "exampleCard": {
+      "stackLabel": "Stack",
+      "stackValue": "[TODO]",
+      "levelLabel": "Nivel",
+      "levelValue": "[TODO]",
+      "availabilityLabel": "Disponibilidad",
+      "availabilityValue": "[TODO]"
+    }
+  },
+  "Company": {
+    "headline": "[TODO] Título de Publica como empresa",
+    "description": "[TODO] Descripción breve.",
+    "bullets": [
+      "[TODO] Beneficio 1",
+      "[TODO] Beneficio 2",
+      "[TODO] Beneficio 3"
+    ],
+    "exampleCard": {
+      "stackLabel": "Stack buscado",
+      "stackValue": "[TODO]",
+      "levelLabel": "Nivel",
+      "levelValue": "[TODO]",
+      "engagementLabel": "Tipo",
+      "engagementValue": "[TODO]"
+    }
+  },
+  "Tournaments": {
+    "headline": "[TODO] Título de Torneos",
+    "description": "[TODO] Descripción breve.",
+    "steps": [
+      {
+        "title": "[TODO] Reto",
+        "description": "[TODO]"
+      },
+      {
+        "title": "[TODO] Entregas",
+        "description": "[TODO]"
+      },
+      {
+        "title": "[TODO] Jurado",
+        "description": "[TODO]"
+      }
+    ]
   }
 }
