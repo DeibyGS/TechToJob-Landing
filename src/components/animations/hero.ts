@@ -20,36 +20,57 @@ export function initHeroAnimation(container: HTMLElement): () => void {
     const mockupRoot = container.querySelector("[data-mockup-root]");
     const mockupMessages = container.querySelectorAll("[data-mockup-message]");
 
+    // --- Entrance: use gsap.to() so final values are explicit (no leftover
+    //     inline styles from gsap.from() that could compete with scrub) ---
     const entrance = gsap.timeline();
 
     if (mockupRoot) {
-      entrance.from(mockupRoot, { opacity: 0, scale: 0.96, duration: 0.8, ease: EASE.entrance }, 0);
+      entrance.fromTo(
+        mockupRoot,
+        { opacity: 0, scale: 0.96 },
+        { opacity: 1, scale: 1, duration: 0.8, ease: EASE.entrance },
+        0,
+      );
     }
     if (headline) {
-      entrance.from(
+      entrance.fromTo(
         headline,
-        { opacity: 0, y: 12, clipPath: "inset(0 0 100% 0)", duration: 0.7, ease: EASE.entrance },
+        { opacity: 0, y: 12, clipPath: "inset(0 0 100% 0)" },
+        { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", duration: 0.7, ease: EASE.entrance },
         0.1,
       );
     }
     if (subheadline) {
-      entrance.from(subheadline, { opacity: 0, y: 10, duration: 0.5, ease: EASE.entranceSoft }, 0.4);
+      entrance.fromTo(
+        subheadline,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5, ease: EASE.entranceSoft },
+        0.4,
+      );
     }
     if (cta) {
-      entrance.from(cta, { opacity: 0, scale: 0.95, duration: 0.4, ease: EASE.cta }, 0.6);
+      entrance.fromTo(
+        cta,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: EASE.cta },
+        0.6,
+      );
     }
     if (mockupMessages.length) {
-      entrance.from(
+      entrance.fromTo(
         mockupMessages,
-        { opacity: 0, y: 8, duration: 0.35, stagger: 0.06, ease: EASE.entranceSoft },
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: EASE.entranceSoft },
         0.35,
       );
     }
 
+    // --- Desktop/tablet scroll behaviors ---
     const mm = gsap.matchMedia();
 
     mm.add(MEDIA_TABLET_UP, () => {
       if (mockupRoot) {
+        // Mockup scroll exit: scrub-linked fade + scale
         gsap.to(mockupRoot, {
           scale: 0.92,
           y: -40,
@@ -58,6 +79,7 @@ export function initHeroAnimation(container: HTMLElement): () => void {
           scrollTrigger: { trigger: container, start: "top top", end: "+=40%", scrub: true },
         });
 
+        // Idle float: runs only while the section is on-screen
         gsap.to(mockupRoot, {
           y: -6,
           duration: 3.5,
@@ -69,11 +91,12 @@ export function initHeroAnimation(container: HTMLElement): () => void {
             trigger: container,
             start: "top bottom",
             end: "bottom top",
-            toggleActions: "play pause play pause",
           },
         });
       }
 
+      // Text scroll exit: scrub-linked fade — tied to the SAME scrollTrigger
+      // config as the mockup exit so both reverse together
       const textEls = [headline, subheadline, cta].filter((el): el is Element => el !== null);
       if (textEls.length) {
         gsap.to(textEls, {
