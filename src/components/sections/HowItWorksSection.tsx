@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { Reveal } from "@/components/ui/Reveal";
+import { HowItWorksStage } from "@/components/sections/HowItWorksStage";
 
 export async function HowItWorksSection() {
   const t = await getTranslations("HowItWorks");
@@ -13,7 +14,8 @@ export async function HowItWorksSection() {
           {t("headline")}
         </h2>
       </Reveal>
-      <div className="mt-12 grid gap-8 md:grid-cols-3">
+
+      <div className="mt-12 grid gap-8 lg:hidden md:grid-cols-3">
         {steps.map((step, index) => (
           <Reveal
             key={step.title}
@@ -27,6 +29,10 @@ export async function HowItWorksSection() {
             <p className="text-brand-dark/70">{step.description}</p>
           </Reveal>
         ))}
+      </div>
+
+      <div className="mt-12">
+        <HowItWorksStage steps={steps} />
       </div>
     </SectionContainer>
   );
