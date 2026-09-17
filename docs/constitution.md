@@ -1,7 +1,7 @@
 # Project Constitution — TechToJob-Landing
 
-Version: 1.0.0
-Last updated: 2026-09-16
+Version: 1.1.0
+Last updated: 2026-09-17
 
 Non-negotiable principles. Every spec, plan, and task must comply with these.
 AI agents are strictly forbidden from violating this file. Changes here should
@@ -12,11 +12,31 @@ be rare — only when a fundamental project decision changes, not per-feature.
 - Static-first: every page/route is statically generated (`generateStaticParams`).
   No server-side data fetching, no database, no server actions.
 - Server Components by default; a component becomes `"use client"` only when
-  it needs interactivity (currently: only the newsletter form).
+  it needs interactivity (currently: the newsletter form, scroll-reveal
+  wrappers using `motion`, and the GSAP-driven Hero/HowItWorks animation
+  hooks — see Animation Stack below).
 - One third-party integration point (Formspree) is allowed for the newsletter
   form; no other external service calls without updating this file first.
 - No dynamic CMS, no auth, no user accounts — this is a marketing landing
   page, not the future job platform itself.
+
+## Animation Stack (hybrid — see ADR-001)
+
+- **`motion`** (existing) is the animation library for simple `whileInView`
+  reveals on non-flagship sections — unchanged, still drives `Reveal.tsx`.
+- **GSAP core + `gsap/ScrollTrigger` + Lenis** (added in `specs/002-cinematic-
+  motion-hero-howitworks`) are approved *only* for sections that need real
+  pin/scrub scroll choreography (Hero, HowItWorks as of Phase 1). GSAP code
+  lives exclusively under `src/components/animations/*.ts`, dynamically
+  imported so it never enters the shared bundle for sections that don't use
+  it.
+- **Hard rule**: GSAP and `motion` are never mixed on the same DOM subtree.
+  Adding GSAP to a new section, or any GSAP plugin beyond core +
+  ScrollTrigger, requires updating this file and (if architecturally
+  significant) a new ADR — see `docs/adr/ADR-001-hybrid-motion-gsap-stack.md`.
+- All scroll-linked/entrance animation must respect `prefers-reduced-motion`
+  completely (smooth scroll, pin, scrub, and parallax all disabled; content
+  remains fully usable) — non-negotiable regardless of library.
 
 ## Technology Stack
 
@@ -27,7 +47,7 @@ be rare — only when a fundamental project decision changes, not per-feature.
 | Framework | Next.js 16 (App Router) | `--src-dir`, Turbopack |
 | Styling | Tailwind CSS v4 | CSS-first `@theme`, no `tailwind.config.js` |
 | i18n | next-intl | `app/[locale]/`, locales `es` (default) + `en` |
-| Animation | motion (ex-Framer Motion) | respects `prefers-reduced-motion` |
+| Animation | motion (ex-Framer Motion) + GSAP core/ScrollTrigger + Lenis | hybrid, see Animation Stack above; all respect `prefers-reduced-motion` |
 | Icons | lucide-react | no emoji anywhere in the UI |
 | Forms | Formspree (plain `fetch`, no SDK) | isolated in `NewsletterForm.tsx` |
 | Database | none | static site, no persistence |

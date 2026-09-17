@@ -1,146 +1,163 @@
 {
   "Metadata": {
-    "title": "TechToJob — Developer and tech company community",
-    "description": "[TODO] English SEO description, written by Deiby."
+    "title": "TechToJob — A Tech Community for Talent and Companies",
+    "description": "Connect with tech talent, discover opportunities, build projects and prove your skills in a community built to grow together."
   },
   "Common": {
     "ctaDiscord": "Join the community"
   },
   "Hero": {
-    "headline": "[TODO] Hero headline (max 2 lines)",
-    "subheadline": "[TODO] Hero subheadline, max 20 words."
+    "headline": "Your tech talent deserves a real opportunity.",
+    "subheadline": "Connect, build projects, join tournaments and discover opportunities within a growing tech community."
+  },
+  "HeroMockup": {
+    "channelLabel": "[TODO] Illustrative channel name, e.g. #general",
+    "onlineLabel": "[TODO] Online members label, e.g. 128 online",
+    "messages": [
+      { "sender": "[TODO] Name 1", "text": "[TODO] Short illustrative message 1" },
+      { "sender": "[TODO] Name 2", "text": "[TODO] Short illustrative message 2" },
+      { "sender": "[TODO] Name 3", "text": "[TODO] Short illustrative message 3" }
+    ]
   },
   "HowItWorks": {
-    "headline": "[TODO] How it works section title",
+    "headline": "One community. More opportunities.",
     "steps": [
       {
-        "title": "[TODO] Step 1",
-        "description": "[TODO] Short description of step 1."
+        "title": "Join",
+        "description": "Join the community, complete your profile and meet people from across the tech industry."
       },
       {
-        "title": "[TODO] Step 2",
-        "description": "[TODO] Short description of step 2."
+        "title": "Show what you can do",
+        "description": "Take part in real projects and challenges to build experience you can actually showcase."
       },
       {
-        "title": "[TODO] Step 3",
-        "description": "[TODO] Short description of step 3."
+        "title": "Find opportunities",
+        "description": "Connect with companies, discover job opportunities and open new doors for your career."
       }
     ]
   },
   "Talent": {
-    "headline": "[TODO] Offer yourself as talent title",
-    "description": "[TODO] Short description.",
+    "headline": "Let your work speak for you",
+    "description": "You don't need years of experience to prove your potential. Build, participate and make your skills visible.",
     "bullets": [
-      "[TODO] Benefit 1",
-      "[TODO] Benefit 2",
-      "[TODO] Benefit 3"
+      "Build real projects for your portfolio",
+      "Take part in tournaments and skill-based challenges",
+      "Connect directly with companies and other tech professionals"
     ],
     "exampleCard": {
       "stackLabel": "Stack",
-      "stackValue": "[TODO]",
+      "stackValue": "React · Next.js · Node.js",
       "levelLabel": "Level",
-      "levelValue": "[TODO]",
+      "levelValue": "Junior",
       "availabilityLabel": "Availability",
-      "availabilityValue": "[TODO]"
+      "availabilityValue": "Available"
     }
   },
   "Company": {
-    "headline": "[TODO] Post as a company title",
-    "description": "[TODO] Short description.",
+    "headline": "Find talent beyond the CV",
+    "description": "Discover professionals through what they build, how they work and how they solve problems. Post opportunities and connect with tech talent.",
     "bullets": [
-      "[TODO] Benefit 1",
-      "[TODO] Benefit 2",
-      "[TODO] Benefit 3"
+      "Discover talent through projects and challenges",
+      "Connect with tech professionals from the community",
+      "Post opportunities and find relevant candidates"
     ],
     "exampleCard": {
-      "stackLabel": "Stack needed",
-      "stackValue": "[TODO]",
+      "stackLabel": "Stack",
+      "stackValue": "React · Node.js",
       "levelLabel": "Level",
-      "levelValue": "[TODO]",
+      "levelValue": "Junior / Mid",
       "engagementLabel": "Type",
-      "engagementValue": "[TODO]"
+      "engagementValue": "Full-time"
     }
   },
   "Tournaments": {
-    "headline": "[TODO] Tournaments title",
-    "description": "[TODO] Short description.",
+    "headline": "Compete. Build. Stand out.",
+    "description": "Real-world challenges to prove your skills, learn from others and turn your work into meaningful experience.",
     "steps": [
       {
-        "title": "[TODO] Challenge",
-        "description": "[TODO]"
+        "title": "Challenge",
+        "description": "Get a clear brief and solve a real problem with your own approach."
       },
       {
-        "title": "[TODO] Submissions",
-        "description": "[TODO]"
+        "title": "Submit",
+        "description": "Build your solution and submit your work within the given deadline."
       },
       {
-        "title": "[TODO] Jury",
-        "description": "[TODO]"
+        "title": "Judging",
+        "description": "Your project is evaluated by a jury using clear and transparent criteria."
       }
     ]
   },
   "Networking": {
-    "headline": "[TODO] Networking title",
-    "description": "[TODO] Short description.",
+    "headline": "Meet the people building the future of tech",
+    "description": "Ask questions, find collaborators, learn from experienced professionals and discover new opportunities.",
     "channels": [
-      "[TODO] #channel-1",
-      "[TODO] #channel-2",
-      "[TODO] #channel-3",
-      "[TODO] #channel-4",
-      "[TODO] #channel-5"
+      "#jobs",
+      "#projects",
+      "#frontend",
+      "#backend",
+      "#networking"
     ]
   },
   "News": {
-    "headline": "[TODO] News title",
+    "headline": "What's happening at TechToJob",
     "items": [
       {
-        "title": "[TODO] News item 1",
+        "title": "New web development tournament",
         "date": "Sep 2026",
-        "category": "[TODO] Category",
-        "summary": "[TODO] Short summary of news item 1."
+        "category": "Tournaments",
+        "summary": "The community competes to build a real landing page that will become part of the TechToJob project."
       },
       {
-        "title": "[TODO] News item 2",
+        "title": "The community keeps growing",
         "date": "Aug 2026",
-        "category": "[TODO] Category",
-        "summary": "[TODO] Short summary of news item 2."
+        "category": "Community",
+        "summary": "More tech professionals are joining to share knowledge, build projects and discover new opportunities."
       },
       {
-        "title": "[TODO] News item 3",
+        "title": "New challenges for tech talent",
         "date": "Jul 2026",
-        "category": "[TODO] Category",
-        "summary": "[TODO] Short summary of news item 3."
+        "category": "Opportunities",
+        "summary": "New initiatives are giving developers more ways to showcase their skills and gain visibility."
       }
     ]
   },
   "Newsletter": {
-    "headline": "[TODO] Newsletter title",
-    "description": "[TODO] Short description.",
+    "headline": "Don't miss the next opportunity",
+    "description": "Get TechToJob news, tournaments, opportunities and community updates straight to your inbox.",
     "placeholder": "you@email.com",
-    "submitLabel": "[TODO] I want it in my inbox",
-    "successMessage": "[TODO] Success message.",
-    "errorMessage": "[TODO] Something failed, try again.",
+    "submitLabel": "Keep me updated",
+    "successMessage": "You're in! We'll let you know when there's something new.",
+    "errorMessage": "Something went wrong. Please try again.",
     "configNotice": "Form not configured yet."
   },
   "Closing": {
-    "headline": "[TODO] Closing headline",
-    "description": "[TODO] Last line before the footer."
+    "headline": "Your next opportunity could start here.",
+    "description": "Join TechToJob, meet the community and start building your path in tech."
   },
   "Footer": {
     "columns": {
       "talent": {
         "title": "Talent",
-        "links": ["[TODO] Offer yourself as talent", "[TODO] Tournaments"]
+        "links": [
+          "Join as talent",
+          "Tournaments"
+        ]
       },
       "companies": {
         "title": "Companies",
-        "links": ["[TODO] Post as a company"]
+        "links": [
+          "Post as a company"
+        ]
       },
       "community": {
         "title": "Community",
-        "links": ["[TODO] Discord", "[TODO] Networking"]
+        "links": [
+          "Discord",
+          "Networking"
+        ]
       }
     },
-    "legalNotice": "[TODO] Legal notice."
+    "legalNotice": "© 2026 TechToJob. All rights reserved."
   }
 }

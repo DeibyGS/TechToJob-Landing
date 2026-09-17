@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 
 type CardBorder = "dark" | "light";
 
@@ -7,16 +7,15 @@ const BORDER_CLASSES: Record<CardBorder, string> = {
   light: "border-brand-white/15",
 };
 
-type CardProps = {
-  children: ReactNode;
-  className?: string;
+type CardProps = ComponentPropsWithoutRef<"div"> & {
   border?: CardBorder;
 };
 
-export function Card({ children, className, border = "dark" }: CardProps) {
+export function Card({ children, className, border = "dark", ...rest }: CardProps) {
   return (
     <div
       className={`rounded-2xl border ${BORDER_CLASSES[border]} p-6 ${className ?? ""}`}
+      {...rest}
     >
       {children}
     </div>

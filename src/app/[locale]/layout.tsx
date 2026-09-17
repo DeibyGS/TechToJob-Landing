@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { Sora } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { SITE_URL, SOCIAL_LINKS } from "@/lib/constants";
+import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import "../globals.css";
 
 const sora = Sora({
@@ -75,7 +76,9 @@ export default async function LocaleLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
         />
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <SmoothScrollProvider>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   );
