@@ -149,24 +149,103 @@ Task sizes: S (<1h) | M (1-3h) | L (3-6h, consider splitting)
 
 ## PR5 — `feat/cc-seo-i18n-polish`
 
-- [ ] T20 — `src/app/sitemap.ts` listing both locale URLs [S] [P] —
+- [x] T20 — `src/app/sitemap.ts` listing both locale URLs [S] [P] —
   implements AC-18 — Depends on: T11, T18
-  - Done when: `/sitemap.xml` lists `/es` and `/en`.
-- [ ] T21 — `src/app/robots.ts` [S] [P] — implements AC-19 — Depends on: T1
-  - Done when: `/robots.txt` resolves and allows crawling.
-- [ ] T22 — JSON-LD `Organization` structured data in `[locale]/layout.tsx`
+  - Done when: `/sitemap.xml` lists `/es` and `/en`. Verified via curl on
+    the production build — both entries present with cross `hreflang`
+    alternates. `SITE_URL` extracted to `lib/constants.ts` (now reused by
+    sitemap/robots/layout — 3 places, justified extraction).
+- [x] T21 — `src/app/robots.ts` [S] [P] — implements AC-19 — Depends on: T1
+  - Done when: `/robots.txt` resolves and allows crawling. Verified via
+    curl, points to `/sitemap.xml`.
+- [x] T22 — JSON-LD `Organization` structured data in `[locale]/layout.tsx`
   using only confirmed `SOCIAL_LINKS` [S] — implements AC-21 — Depends on: T1
   - Done when: structured-data testing shows valid `Organization` schema,
-    no invented member/company counts.
-- [ ] T23 — Full hreflang/lang audit across all 10 sections + README
+    no invented member/company counts. Verified present in the raw HTML
+    (`<script type="application/ld+json">`), fields: name, url, logo,
+    `sameAs` (all 4 real social links) — no member/company counts.
+- [x] T23 — Full hreflang/lang audit across all 10 sections + README
   "Verifying a change" checklist run [M] — implements AC-13, AC-14, AC-15,
   AC-17, AC-24, AC-26 (final verification pass) — Depends on: T18, T20
   - Done when: every item in `README.md` → "Verifying a change" passes,
-    including Lighthouse accessibility/contrast.
+    including Lighthouse accessibility/contrast. **Ran real Lighthouse**
+    (not just manual spot-checks) against the production build:
+    Performance 97-98, Accessibility 100 (after 2 real contrast fixes —
+    see below), Best Practices 100, SEO 92 (only remaining item is
+    `canonical`, a localhost-vs-placeholder-production-domain testing
+    artifact, not a real defect — `SITE_URL` is `https://techtojob.com`
+    per `lib/constants.ts`, will self-resolve once deployed to the real
+    domain). `hreflang`/`lang`/canonical all confirmed present via curl on
+    the raw HTML (note: React/Next serialize the attribute as `hrefLang`,
+    which is valid — HTML attribute names are case-insensitive).
+    **2 real contrast bugs found by Lighthouse and fixed** (neither was a
+    `text-brand-teal` case, so the earlier grep-based audit in PR4 missed
+    them): `LanguageSwitcher`'s inactive locale link
+    (`text-brand-dark/50` on white = 2.86:1, needed 4.5:1 — fixed by
+    switching to underline-based active/inactive styling instead of
+    opacity), and the footer legal notice (`text-brand-white/50` on
+    `brand-dark` = 4.4:1, just under threshold — bumped to `/70`).
+    **Lesson for future audits**: grep for `text-brand-teal` catches one
+    failure mode, but any low-opacity text color can independently fail
+    contrast — an actual Lighthouse/axe run is the only reliable check,
+    not a pattern-matching grep.
 
-## Traceability note
+## Traceability matrix
 
-Every `[MUST]` AC in `spec.md` maps to at least one task above. AC-23
-(brand colors dominate) and AC-25 (no emoji) are cross-cutting — verified
-per-section during code review (T6–T17) rather than a single dedicated
-task, and re-checked in T23's final audit pass.
+No automated test suite (see `docs/TESTING.md`) — the "Verification"
+column is the manual/tooled check actually run this session, not a test
+file path.
+
+| AC ID | Priority | Task ID | Verification | Status |
+|---|---|---|---|---|
+| AC-01 | MUST | T6 | Manual + screenshot | PASS |
+| AC-02 | MUST | T7 | Manual + screenshot | PASS |
+| AC-03 | MUST | T8 | Manual + screenshot | PASS |
+| AC-04 | MUST | T9 | Manual + screenshot | PASS |
+| AC-05 | MUST | T10 | Manual + screenshot | PASS |
+| AC-06 | MUST | T12 | Manual + screenshot | PASS |
+| AC-07 | MUST | T13 | Manual + screenshot | PASS |
+| AC-08 | MUST | T14, T15 | Playwright interaction script | PASS |
+| AC-09 | MUST | T16 | Manual + screenshot | PASS |
+| AC-10 | MUST | T17 | Manual + screenshot | PASS |
+| AC-11 | MUST | T1 | curl (`/` → `/es`) | PASS |
+| AC-12 | MUST | T1 | `npm run build` output (SSG both locales) | PASS |
+| AC-13 | MUST | T1, T23 | curl raw HTML | PASS |
+| AC-14 | MUST | T5, T23 | curl raw HTML | PASS |
+| AC-15 | MUST | T3, T23 | next-intl `Link` (real href, no JS needed) | PASS |
+| AC-16 | MUST | all sections | Code review (no hardcoded strings) | PASS |
+| AC-17 | MUST | T23 | `npm run build` (next-intl throws on missing key) | PASS |
+| AC-18 | MUST | T20 | curl `/sitemap.xml` | PASS |
+| AC-19 | MUST | T21 | curl `/robots.txt` | PASS |
+| AC-20 | MUST | T4 | Manual (favicon tab, OG image file) | PASS |
+| AC-21 | SHOULD | T22 | curl raw HTML (JSON-LD block) | PASS |
+| AC-22 | MUST | T1 | Manual (Sora font applied) | PASS |
+| AC-23 | MUST | all sections | Visual review each PR | PASS |
+| AC-24 | MUST | T23 | Lighthouse `color-contrast` audit | PASS (100 after 2 fixes) |
+| AC-25 | MUST | all sections | Code review (lucide-react only, no emoji) | PASS |
+| AC-26 | SHOULD | T23 | Lighthouse Accessibility score | PASS (100) |
+| AC-27 | MUST | T14 | Playwright interaction script | PASS |
+| AC-28 | MUST | T14 | Playwright interaction script (code path; real Formspree ID not available this session) | PASS (logic verified, real ID pending Deiby) |
+| AC-29 | MUST | T15 | `grep -ri formspree src/components/sections/` (zero matches) | PASS |
+| AC-30 | MUST | all PRs | No API routes/DB/auth exist in `src/app/` | PASS |
+| AC-31 | SHOULD | T14 | Manual (no env var → config notice) | PASS |
+| AC-E1 | MUST | T14 | Playwright interaction script (fake Formspree ID) | PASS |
+| AC-E2 | MUST | T19 | curl production build (`/fr` → 404, via redirect) | PASS |
+
+Every `[MUST]` and `[SHOULD]` AC has a task and a verification method.
+AC-28 (Formspree success path) was verified for its code logic (the
+`response.ok` branch and success-state render), not against a real live
+Formspree endpoint — no real form ID exists yet, only the fake-ID error
+path was exercised end-to-end. Flagging this explicitly rather than
+overclaiming a PASS that wasn't actually observed against Formspree's real
+API — Deiby should do one real test submission once a real form ID is set,
+before the competition deadline.
+
+### Drift check (Step 6b)
+
+No scope drift: no functions/endpoints exist outside `spec.md`, no files
+were modified outside `plan.md`'s "Affected files" table beyond the 2
+contrast bugfixes (documented inline in each PR). No behavior differs from
+what the spec describes. No adversarial verification run (`/adversarial-test`)
+— this feature doesn't touch auth/permissions/money/migrations/state
+machines per the SKIP criteria in the SDD process.

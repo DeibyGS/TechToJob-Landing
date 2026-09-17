@@ -25,7 +25,6 @@ const SOCIAL_ICONS = [
 
 export async function FooterSection() {
   const t = await getTranslations("Footer");
-  const columnKeys = ["talent", "companies", "community"] as const;
 
   return (
     <SectionContainer id="footer" background="dark">
@@ -66,16 +65,16 @@ export async function FooterSection() {
             ))}
           </div>
         </div>
-        {columnKeys.map((key) => (
+        {Object.entries(FOOTER_LINK_HREFS).map(([key, hrefs]) => (
           <FooterColumn
             key={key}
             title={t(`columns.${key}.title`)}
             links={t.raw(`columns.${key}.links`) as string[]}
-            hrefs={FOOTER_LINK_HREFS[key]}
+            hrefs={hrefs}
           />
         ))}
       </div>
-      <p className="mt-12 border-t border-brand-white/10 pt-6 text-sm text-brand-white/50">
+      <p className="mt-12 border-t border-brand-white/10 pt-6 text-sm text-brand-white/70">
         {t("legalNotice")}
       </p>
     </SectionContainer>
