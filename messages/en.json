@@ -11,12 +11,12 @@
     "subheadline": "Connect, build projects, join tournaments and discover opportunities within a growing tech community."
   },
   "HeroMockup": {
-    "channelLabel": "[TODO] Illustrative channel name, e.g. #general",
-    "onlineLabel": "[TODO] Online members label, e.g. 128 online",
+    "channelLabel": "#jobs",
+    "onlineLabel": "128 online",
     "messages": [
-      { "sender": "[TODO] Name 1", "text": "[TODO] Short illustrative message 1" },
-      { "sender": "[TODO] Name 2", "text": "[TODO] Short illustrative message 2" },
-      { "sender": "[TODO] Name 3", "text": "[TODO] Short illustrative message 3" }
+      { "sender": "Ana_R", "text": "Just passed the React challenge!" },
+      { "sender": "DevMarco", "text": "Anyone up for the backend tournament?" },
+      { "sender": "Lucia.ts", "text": "New repo available in #projects" }
     ]
   },
   "HowItWorks": {
