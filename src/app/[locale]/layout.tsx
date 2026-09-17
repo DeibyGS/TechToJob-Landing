@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Sora } from "next/font/google";
 import { routing } from "@/i18n/routing";
+import { SITE_URL, SOCIAL_LINKS } from "@/lib/constants";
 import "../globals.css";
 
 const sora = Sora({
@@ -14,7 +15,19 @@ const sora = Sora({
   display: "swap",
 });
 
-const SITE_URL = "https://techtojob.com";
+const ORGANIZATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "TechToJob",
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo/logo-positive.svg`,
+  sameAs: [
+    SOCIAL_LINKS.discord,
+    SOCIAL_LINKS.linkedin,
+    SOCIAL_LINKS.x,
+    SOCIAL_LINKS.instagram,
+  ],
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -58,6 +71,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={sora.variable}>
       <body className="min-h-screen bg-brand-white text-brand-dark antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
+        />
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>

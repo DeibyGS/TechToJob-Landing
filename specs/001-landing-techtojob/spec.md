@@ -1,6 +1,6 @@
 # Spec: TechToJob landing page
 
-### Status: APPROVED
+### Status: IMPLEMENTED
 ### Version: 1.0
 
 ### Recovered context

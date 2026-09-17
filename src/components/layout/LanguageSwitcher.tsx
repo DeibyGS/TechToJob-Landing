@@ -22,8 +22,8 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
             aria-current={isCurrent ? "true" : undefined}
             className={
               isCurrent
-                ? "text-brand-dark"
-                : "text-brand-dark/50 hover:text-brand-dark"
+                ? "font-bold text-brand-dark underline underline-offset-4"
+                : "text-brand-dark hover:underline"
             }
           >
             {locale.toUpperCase()}
