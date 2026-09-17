@@ -37,6 +37,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Claude Code session-local docs (never committed)
+HANDOFF.md
+TRANSITION.md
+summary-*.md
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
