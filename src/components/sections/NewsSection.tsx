@@ -26,7 +26,7 @@ export async function NewsSection() {
         {items.map((item, index) => (
           <Reveal
             key={item.title}
-            delay={index * 0.1}
+            delay={index === 0 ? 0 : 0.1 + (index - 1) * 0.1}
             className={index === 0 ? "md:col-span-2" : undefined}
           >
             <NewsCard item={item} featured={index === 0} />

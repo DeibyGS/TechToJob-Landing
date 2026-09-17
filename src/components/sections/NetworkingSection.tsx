@@ -16,14 +16,15 @@ export async function NetworkingSection() {
         <p className="mt-4 max-w-2xl text-brand-dark/70">{t("description")}</p>
       </Reveal>
       <Reveal delay={0.1} className="mt-8 flex flex-wrap gap-3">
-        {channels.map((channel) => (
-          <span
-            key={channel}
-            className="inline-flex items-center gap-1.5 rounded-full border border-brand-dark/10 bg-brand-teal/10 px-4 py-2 text-sm font-medium text-brand-dark"
-          >
-            <Hash className="h-4 w-4 text-brand-teal" strokeWidth={2} aria-hidden="true" />
-            {channel}
-          </span>
+        {channels.map((channel, index) => (
+          <Reveal key={channel} delay={0.15 + index * 0.05}>
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full border border-brand-dark/10 bg-brand-teal/10 px-4 py-2 text-sm font-medium text-brand-dark"
+            >
+              <Hash className="h-4 w-4 text-brand-teal" strokeWidth={2} aria-hidden="true" />
+              {channel}
+            </span>
+          </Reveal>
         ))}
       </Reveal>
     </SectionContainer>
