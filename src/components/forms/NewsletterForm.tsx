@@ -87,7 +87,13 @@ export function NewsletterForm({
           spacer exactly, and on hover it's free to grow rightward past the
           spacer's edge — an absolutely positioned element's overflow
           doesn't feed back into its parent's box size, so the input never
-          resizes, at rest or on hover. */}
+          resizes, at rest or on hover. `!absolute` (not plain `absolute`)
+          is required here: Button's own base classes already include
+          `relative`, and Tailwind v4 emits `.absolute` before `.relative`
+          in the generated stylesheet — with equal specificity the
+          later-defined `.relative` wins the cascade, silently leaving the
+          button in normal flow and defeating this whole technique. The
+          `!` forces `position: absolute` regardless of that ordering. */}
       <div className="relative shrink-0">
         <span
           aria-hidden="true"
@@ -101,7 +107,7 @@ export function NewsletterForm({
           label={submitLabel}
           icon={<Mail />}
           loading={status === "pending"}
-          className="absolute inset-y-0 left-0"
+          className="!absolute inset-y-0 left-0"
         />
       </div>
       {status === "error" && (

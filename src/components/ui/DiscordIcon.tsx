@@ -6,7 +6,7 @@ import Image from "next/image";
 // unaware that "Discord" is a special case.
 const DISCORD_ICON_COLOR = "2f3436";
 
-export function DiscordIcon({ className }: { className?: string; "aria-hidden"?: boolean }) {
+export function DiscordIcon({ className, "aria-hidden": ariaHidden }: { className?: string; "aria-hidden"?: boolean }) {
   return (
     <Image
       src={`https://cdn.simpleicons.org/discord/${DISCORD_ICON_COLOR}`}
@@ -15,6 +15,7 @@ export function DiscordIcon({ className }: { className?: string; "aria-hidden"?:
       height={16}
       unoptimized
       className={className}
+      aria-hidden={ariaHidden}
     />
   );
 }
