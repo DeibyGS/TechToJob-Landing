@@ -20,6 +20,10 @@ section[id] {
   scroll-margin-top: 5rem;
 }
 
+/* HowItWorks watermark — pure CSS, doesn't interfere with GSAP ScrollTrigger.
+   Uses backgroundDecoration on SectionContainer instead of ::after to ensure
+   it renders behind the content div's stacking context. */
+
 /* Channel marquee strip (layout/ChannelMarquee.tsx) — seamless loop via 6
    copies of the content translated by exactly one copy's width
    (100% / 6 of the total track). Fewer copies leave a visible gap once the
@@ -220,3 +224,34 @@ section[id] {
     gap: 0.75rem;
   }
 }
+
+/* ── Logo color-cycle keyframes ─────────────────────────────────────── */
+/* 3 PNG variants crossfade: negativo → positivo → degradado            */
+/* Total 6s, runs once. Each variant 2s with ~0.3s crossfade            */
+
+@keyframes logo-cycle-0 {
+  0% { opacity: 1; }
+  33.3% { opacity: 1; }
+  38.3% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes logo-cycle-1 {
+  0% { opacity: 0; }
+  33.3% { opacity: 0; }
+  38.3% { opacity: 1; }
+  66.7% { opacity: 1; }
+  71.7% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes logo-cycle-2 {
+  0% { opacity: 0; }
+  66.7% { opacity: 0; }
+  71.7% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.logo-cycle-0 { animation: logo-cycle-0 6s ease-in-out 1 forwards; }
+.logo-cycle-1 { animation: logo-cycle-1 6s ease-in-out 1 forwards; }
+.logo-cycle-2 { animation: logo-cycle-2 6s ease-in-out 1 forwards; }

@@ -164,6 +164,9 @@
         ]
       }
     },
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "backToTop": "Volver arriba",
     "legalNotice": "© 2026 TechToJob. Todos los derechos reservados."
   }
 }

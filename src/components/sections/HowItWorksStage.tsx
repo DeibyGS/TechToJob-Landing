@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { UserPlus, Code2, Briefcase } from "lucide-react";
 import { initHowItWorksScroll } from "@/components/animations/howItWorks";
 import { useGsapScope } from "@/components/animations/utils";
@@ -125,21 +124,6 @@ export function HowItWorksStage({ headline, steps, ctaHref }: HowItWorksStagePro
           </div>
         </div>
       </div>
-      {/* The real fused logo lockup (icon + "Tech to Job", same asset
-          Header.tsx's wordmark styling is based on) — not a plain-text
-          span, so it actually reads as the brand mark instead of ad-hoc
-          tracked-out text. `logo-positive.svg` (dark, for light sections)
-          per docs/DESIGN.md's Logo usage matrix. A sibling of the two
-          content rows above, at the pinned root's own level, so it stays
-          put across all 3 step transitions instead of being part of any
-          single step's fade. */}
-      <Image
-        src="/logo/logo-positive.svg"
-        alt=""
-        width={613}
-        height={340}
-        className="pointer-events-none absolute bottom-0 left-0 h-12 w-auto opacity-15"
-      />
     </div>
   );
 }
