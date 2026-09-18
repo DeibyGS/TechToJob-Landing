@@ -65,8 +65,19 @@ export function initHowItWorksScroll(container: HTMLElement): () => void {
 
         timeline.to(steps[index - 1], { opacity: 0, y: -16, ease: EASE.crossfade }, at);
         timeline.to(step, { opacity: 1, y: 0, ease: EASE.crossfade }, at);
-        timeline.set(steps[index - 1], { pointerEvents: "none" }, at);
-        timeline.set(step, { pointerEvents: "auto" }, at);
+        // `.set()` is instantaneous — unlike the `.to()`s above, it doesn't
+        // interpolate. Placing it at the SAME position `at` as the opacity
+        // tween made pointerEvents flip the instant the timeline is created
+        // (progress 0, i.e. before any real scroll), while opacity was still
+        // fading and visually reads as fully opaque — so hovering step N's
+        // still-fully-visible button was actually hovering step N+1's
+        // already-interactive one underneath it (confirmed via devtools:
+        // inspecting "step 1"'s button highlighted step 2's `<a>`). ">"
+        // positions these right after the opacity tween above finishes, so
+        // interactivity only hands off once the outgoing step is actually
+        // invisible.
+        timeline.set(steps[index - 1], { pointerEvents: "none" }, ">");
+        timeline.set(step, { pointerEvents: "auto" }, ">");
 
         if (anchor) {
           timeline.fromTo(
