@@ -146,3 +146,26 @@ section[id] {
     display: none;
   }
 }
+
+/* Online indicator pulse — very subtle breathing animation for the green
+   dot in the community status bar. Purely decorative, paused under
+   reduced motion. */
+@keyframes online-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.online-dot {
+  animation: online-pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .online-dot {
+    animation: none;
+  }
+}

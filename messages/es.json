@@ -6,6 +6,14 @@
   "Common": {
     "ctaDiscord": "Entrar a la comunidad"
   },
+  "HeroCommunity": {
+    "members": "1,284 miembros",
+    "online": "248 online",
+    "channels": ["#empleo", "#proyectos", "#desarrollo", "#networking"],
+    "channelOnline": "86 online",
+    "ctaLabel": "UNIRSE A LA COMUNIDAD",
+    "ctaHoverLabel": "CONECTAR CON LA COMUNIDAD"
+  },
   "Nav": {
     "links": {
       "howItWorks": "Cómo funciona",

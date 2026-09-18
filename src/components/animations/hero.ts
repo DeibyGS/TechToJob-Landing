@@ -2,15 +2,15 @@ import gsap from "gsap";
 import { EASE, MEDIA_TABLET_UP, prefersReducedMotion, runInScope } from "./utils";
 
 /**
- * Hero staged entrance (word-by-word headline → subheadline → CTA → logo
- * signature → showcase crossfade) plus, on tablet/desktop only, a
- * scroll-linked exit, mouse-driven depth parallax + subtle tilt on the
- * showcase card, and a paused-when-offscreen crossfade loop. Mobile gets
- * the entrance only — parallax/tilt/scroll-exit aren't worth their cost
- * at that scale, and cursor-driven effects don't apply to touch input.
- * The tablet/desktop behaviors are registered via `gsap.matchMedia()` so
- * they activate/revert live if the viewport crosses the breakpoint.
- * No-ops entirely under reduced motion.
+ * Hero staged entrance (word-by-word headline → subheadline → logo
+ * signature → showcase crossfade → community status bar) plus, on
+ * tablet/desktop only, a scroll-linked exit, mouse-driven depth parallax
+ * + subtle tilt on the showcase card, and a paused-when-offscreen
+ * crossfade loop. Mobile gets the entrance only — parallax/tilt/scroll-exit
+ * aren't worth their cost at that scale, and cursor-driven effects don't
+ * apply to touch input. The tablet/desktop behaviors are registered via
+ * `gsap.matchMedia()` so they activate/revert live if the viewport
+ * crosses the breakpoint. No-ops entirely under reduced motion.
  */
 export function initHeroAnimation(container: HTMLElement): () => void {
   if (prefersReducedMotion()) return () => {};
@@ -19,13 +19,13 @@ export function initHeroAnimation(container: HTMLElement): () => void {
     const wordInners = container.querySelectorAll("[data-hero-word-inner]");
     const headline = container.querySelector("[data-hero-headline]");
     const subheadline = container.querySelector("[data-hero-subheadline]");
-    const cta = container.querySelector("[data-hero-cta]");
     const icon = container.querySelector("[data-hero-icon]");
     const showcaseGlow = container.querySelector("[data-mockup-glow]");
     const showcaseCards = container.querySelectorAll("[data-hero-showcase-card]");
     const bgLayer = container.querySelector("[data-hero-bg-layer]");
     const midLayer = container.querySelector("[data-hero-mid-layer]");
     const showcaseWrap = container.querySelector("[data-mockup-wrap]");
+    const communityBar = container.querySelector("[data-hero-community]");
     const scrollIndicator = container.querySelector("[data-hero-scroll-indicator]");
 
     // --- Entrance: staged reveal with dramatic rhythm ---
@@ -68,20 +68,11 @@ export function initHeroAnimation(container: HTMLElement): () => void {
         subheadline,
         { opacity: 0, y: 10 },
         { opacity: 1, y: 0, duration: 0.5, ease: EASE.entranceSoft },
-        0.6, // pause after headline — more dramatic rhythm
+        0.6,
       );
     }
 
-    if (cta) {
-      entrance.fromTo(
-        cta,
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.4, ease: EASE.cta },
-        0.8, // pause after subheadline
-      );
-    }
-
-    // Logo as "signature" — subtle fade, appears last
+    // Logo as "signature" — subtle fade, appears after subheadline
     if (icon) {
       entrance.fromTo(
         icon,
@@ -105,7 +96,17 @@ export function initHeroAnimation(container: HTMLElement): () => void {
         showcaseCards[0],
         { opacity: 0, y: 8 },
         { opacity: 1, y: 0, duration: 0.5, ease: EASE.entranceSoft },
-        1.1, // after glow
+        1.1,
+      );
+    }
+
+    // Community status bar — fades in after showcase cards
+    if (communityBar) {
+      entrance.fromTo(
+        communityBar,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6, ease: EASE.entranceSoft },
+        1.3,
       );
     }
 
@@ -146,10 +147,9 @@ export function initHeroAnimation(container: HTMLElement): () => void {
 
     mm.add(MEDIA_TABLET_UP, () => {
       // Scroll exit: driven off ONE shared timeline + ScrollTrigger
-      const textEls = [headline, subheadline, cta].filter((el): el is Element => el !== null);
+      const textEls = [headline, subheadline].filter((el): el is Element => el !== null);
       const exitTl = gsap.timeline({
         scrollTrigger: { trigger: container, start: "top top", end: "+=40%", scrub: true },
-        // Pause the crossfade loop when scroll exit begins
         onStart: () => cycle?.pause(),
         onReverseComplete: () => cycle?.resume(),
       });
@@ -158,6 +158,14 @@ export function initHeroAnimation(container: HTMLElement): () => void {
           showcaseWrap,
           { opacity: 1, scale: 1 },
           { opacity: 0, scale: 0.92, ease: EASE.scrub, duration: 40 },
+          0,
+        );
+      }
+      if (communityBar) {
+        exitTl.fromTo(
+          communityBar,
+          { opacity: 1 },
+          { opacity: 0, ease: EASE.scrub, duration: 10 },
           0,
         );
       }

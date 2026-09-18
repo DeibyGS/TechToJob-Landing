@@ -6,10 +6,10 @@ import { SOCIAL_LINKS } from "@/lib/constants";
 type ShowcaseItem = { title: string; category: string };
 
 export async function HeroSection() {
-  const [t, tCommon, tNews] = await Promise.all([
+  const [t, tNews, tCommunity] = await Promise.all([
     getTranslations("Hero"),
-    getTranslations("Common"),
     getTranslations("News"),
+    getTranslations("HeroCommunity"),
   ]);
   const rawItems = tNews.raw("items") as unknown[];
   const showcaseItems = rawItems.filter(
@@ -22,9 +22,16 @@ export async function HeroSection() {
       <HeroStage
         headline={t("headline")}
         subheadline={t("subheadline")}
-        ctaLabel={tCommon("ctaDiscord")}
-        ctaHref={SOCIAL_LINKS.discord}
         showcaseItems={showcaseItems}
+        community={{
+          members: tCommunity("members"),
+          online: tCommunity("online"),
+          channels: tCommunity.raw("channels") as string[],
+          channelOnline: tCommunity("channelOnline"),
+          ctaLabel: tCommunity("ctaLabel"),
+          ctaHoverLabel: tCommunity("ctaHoverLabel"),
+          ctaHref: SOCIAL_LINKS.discord,
+        }}
       />
     </SectionContainer>
   );

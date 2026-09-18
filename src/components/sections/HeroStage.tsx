@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { ArrowDown, Tag } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { CommunityBar } from "@/components/sections/CommunityBar";
 import { initHeroAnimation } from "@/components/animations/hero";
 import { useGsapScope } from "@/components/animations/utils";
 
@@ -13,21 +13,26 @@ type ShowcaseItem = { title: string; category: string };
 type HeroStageProps = {
   headline: string;
   subheadline: string;
-  ctaLabel: string;
-  ctaHref: string;
   showcaseItems: ShowcaseItem[];
+  community: {
+    members: string;
+    online: string;
+    channels: string[];
+    channelOnline: string;
+    ctaLabel: string;
+    ctaHoverLabel: string;
+    ctaHref: string;
+  };
 };
 
 /**
  * Client boundary for the Hero's animated content. GSAP (see animations/hero.ts)
- * targets the `data-hero-*` elements directly, except the CTA — that stays
- * wrapped in a plain span so GSAP animates the wrapper, never the `motion.a`
- * button itself (constitution's "never mix motion + GSAP on the same DOM
- * subtree" rule).
+ * targets the `data-hero-*` elements directly.
  *
  * Layout: centered column with oversized headline leading the composition.
- * Logo is a small "signature" below the CTA, not the focal point.
- * Showcase cards are reduced in prominence — they provide context, not drama.
+ * Logo is a small "signature" below the headline. Showcase cards are reduced
+ * in prominence — they provide context, not drama. Community status bar
+ * sits at the bottom, above the scroll indicator.
  *
  * Depth layers, back to front, each on its own element so a mouse-parallax
  * transform (animations/hero.ts, gsap.quickTo) never competes with another
@@ -36,7 +41,7 @@ type HeroStageProps = {
  *   midground  (data-hero-mid-layer): 2 small floating teal accents
  *   foreground (data-mockup-wrap): the showcase card stack + its glow
  */
-export function HeroStage({ headline, subheadline, ctaLabel, ctaHref, showcaseItems }: HeroStageProps) {
+export function HeroStage({ headline, subheadline, showcaseItems, community }: HeroStageProps) {
   const containerRef = useGsapScope<HTMLDivElement>(initHeroAnimation);
   const reduceMotion = useReducedMotion();
 
@@ -75,12 +80,7 @@ export function HeroStage({ headline, subheadline, ctaLabel, ctaHref, showcaseIt
         {subheadline}
       </p>
 
-      {/* ── 3. CTA ── */}
-      <span data-hero-cta className="inline-block">
-        <Button href={ctaHref}>{ctaLabel}</Button>
-      </span>
-
-      {/* ── 4. Logo — small "signature", below the CTA ── */}
+      {/* ── 4. Logo — small "signature" ── */}
       <Image
         data-hero-icon
         src="/logo/logo-negative.svg"
@@ -115,7 +115,10 @@ export function HeroStage({ headline, subheadline, ctaLabel, ctaHref, showcaseIt
         </div>
       </div>
 
-      {/* ── 6. Scroll indicator ── */}
+      {/* ── 6. Community status bar ── */}
+      <CommunityBar {...community} />
+
+      {/* ── 7. Scroll indicator ── */}
       <div data-hero-scroll-indicator className="absolute bottom-8 left-1/2 -translate-x-1/2">
         {!reduceMotion && (
           <motion.div
