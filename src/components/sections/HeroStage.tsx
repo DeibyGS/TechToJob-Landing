@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { ArrowDown, Sparkles, Trophy, Users } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { DiscordCtaButton } from "@/components/ui/DiscordCtaButton";
+import { Button } from "@/components/ui/Button";
+import { DiscordIcon } from "@/components/ui/DiscordIcon";
 import { initHeroAnimation } from "@/components/animations/hero";
 import { useGsapScope } from "@/components/animations/utils";
 
@@ -141,7 +142,15 @@ export function HeroStage({
       </div>
 
       {/* ── 6. Community status bar ── */}
-      <DiscordCtaButton {...community} />
+      <Button
+        data-hero-community
+        label={community.ctaLabel}
+        hoverLabel={community.ctaHoverLabel}
+        href={community.ctaHref}
+        icon={<DiscordIcon />}
+        target="_blank"
+        rel="noopener noreferrer"
+      />
 
       {/* ── 7. Scroll indicator — in normal flow (not absolute) so it never
           overlaps the CTA above it regardless of how tall the Hero's

@@ -3,7 +3,7 @@
 import { UserPlus, Code2, Briefcase } from "lucide-react";
 import { initHowItWorksScroll } from "@/components/animations/howItWorks";
 import { useGsapScope } from "@/components/animations/utils";
-import { DiscordCtaButton } from "@/components/ui/DiscordCtaButton";
+import { Button } from "@/components/ui/Button";
 
 type Step = { title: string; description: string; cta: string };
 
@@ -90,17 +90,15 @@ export function HowItWorksStage({ headline, steps, ctaHref }: HowItWorksStagePro
                   </span>
                   <h3 className="text-2xl font-semibold">{step.title}</h3>
                   <p className="text-brand-dark/70">{step.description}</p>
-                  {/* Same expand-on-hover CTA as Hero/Closing
-                      (DiscordCtaButton — zero `motion` dependency by
-                      design, so it's safe inside this GSAP-pinned subtree
-                      per the constitution's hybrid-stack rule), not a
-                      one-off lookalike, so every CTA on the landing behaves
+                  {/* Same expand-on-hover CTA as Hero/Closing (Button
+                      variant="cta" — zero `motion` dependency by design, so
+                      it's safe inside this GSAP-pinned subtree per the
+                      constitution's hybrid-stack rule), not a one-off
+                      lookalike, so every CTA on the landing behaves
                       identically. Leading icon reuses this step's own
                       STEP_ICONS entry — the same icon already shown in the
-                      anchor circle for this step — via DiscordCtaButton's
-                      `icon` override (default is the Discord glyph).
-                      ctaLabel/ctaHoverLabel are the same string on
-                      purpose: there's no distinct "hover" phrasing per
+                      anchor circle for this step. `hoverLabel` is omitted
+                      on purpose: there's no distinct "hover" phrasing per
                       step, so hovering only reveals the arrow (width
                       still animates to make room for it) rather than
                       swapping text. Part of the step's own fading div
@@ -109,7 +107,13 @@ export function HowItWorksStage({ headline, steps, ctaHref }: HowItWorksStagePro
                       automatically, so it crossfades in sync with the rest
                       of the step's content for free. */}
                   <div className="mt-1">
-                    <DiscordCtaButton icon={Icon} ctaLabel={step.cta} ctaHoverLabel={step.cta} ctaHref={ctaHref} />
+                    <Button
+                      icon={<Icon />}
+                      label={step.cta}
+                      href={ctaHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
                   </div>
                 </div>
               );

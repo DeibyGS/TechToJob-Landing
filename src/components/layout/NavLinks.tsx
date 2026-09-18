@@ -5,6 +5,7 @@ import { useReducedMotion } from "motion/react";
 import { getLenis } from "@/components/animations/smoothScroll";
 import { beginNavScroll, commitNavScroll } from "@/components/layout/HeaderReveal";
 import { HEADER_SCROLL_OFFSET_PX } from "@/lib/constants";
+import { Button } from "@/components/ui/Button";
 
 type NavLink = { id: string; label: string };
 
@@ -113,24 +114,18 @@ export function NavLinks({ links }: NavLinksProps) {
       aria-label="Sections"
       className="hidden items-center gap-1 rounded-full border border-brand-teal/25 bg-brand-white p-1 text-sm font-semibold shadow-[0_4px_16px_rgba(132,192,191,0.2)] md:flex"
     >
-      {links.map(({ id, label }) => {
-        const isActive = activeId === id;
-        return (
-          <a
-            key={id}
-            href={`#${id}`}
-            onClick={(event) => handleClick(event, id)}
-            aria-current={isActive ? "true" : undefined}
-            className={
-              isActive
-                ? "rounded-full bg-brand-teal px-3 py-1.5 text-brand-dark"
-                : "rounded-full px-3 py-1.5 text-brand-dark/70 transition-colors hover:bg-brand-teal hover:text-brand-dark"
-            }
-          >
-            {label}
-          </a>
-        );
-      })}
+      {links.map(({ id, label }) => (
+        <Button
+          key={id}
+          variant="pill"
+          className="px-3 py-1.5"
+          label={label}
+          href={`#${id}`}
+          onClick={(event: React.MouseEvent<HTMLAnchorElement>) => handleClick(event, id)}
+          isActive={activeId === id}
+          aria-current={activeId === id ? "true" : undefined}
+        />
+      ))}
     </nav>
   );
 }

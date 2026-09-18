@@ -34,6 +34,23 @@ export function commitNavScroll() {
   triggerInstance?.enable();
 }
 
+// HeaderLogo's color-cycle animation is wasted if it runs on mount: the
+// header is translated off-screen for the entire Hero, so by the time it's
+// actually revealed the animation already finished. This lets HeaderLogo
+// defer starting it until the header is revealed for the first time —
+// subsequent reveals (scrolling back up into Hero and down again) don't
+// re-trigger it, matching the "runs once" intent.
+let hasRevealedOnce = false;
+let firstRevealListener: (() => void) | null = null;
+
+export function onFirstReveal(listener: () => void) {
+  if (hasRevealedOnce) {
+    listener();
+    return;
+  }
+  firstRevealListener = listener;
+}
+
 /**
  * Hides the header off-screen while the Hero (id="hero") is the active
  * viewport, sliding it into view once the visitor scrolls past it —
@@ -55,7 +72,14 @@ export function HeaderReveal({ children }: { children: ReactNode }) {
       // but see beginNavScroll above for why nav clicks don't rely on this
       // alone.
       start: `bottom top+=${HEADER_REVEAL_BUFFER_PX}`,
-      onEnter: () => el.classList.remove("-translate-y-full"),
+      onEnter: () => {
+        el.classList.remove("-translate-y-full");
+        if (!hasRevealedOnce) {
+          hasRevealedOnce = true;
+          firstRevealListener?.();
+          firstRevealListener = null;
+        }
+      },
       onLeaveBack: () => el.classList.add("-translate-y-full"),
     });
     triggerInstance = trigger;

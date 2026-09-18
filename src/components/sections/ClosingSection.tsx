@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { SectionContainer } from "@/components/ui/SectionContainer";
-import { DiscordCtaButton } from "@/components/ui/DiscordCtaButton";
+import { Button } from "@/components/ui/Button";
+import { DiscordIcon } from "@/components/ui/DiscordIcon";
 import { Reveal } from "@/components/ui/Reveal";
 import { SOCIAL_LINKS } from "@/lib/constants";
 
@@ -21,10 +22,13 @@ export async function ClosingSection() {
             not a look-alike. Its dark drop-shadow/teal glow carry contrast
             on their own regardless of this section's light background. */}
         <Reveal delay={0.15} className="mt-8 flex justify-center">
-          <DiscordCtaButton
-            ctaLabel={tCommunity("ctaLabel")}
-            ctaHoverLabel={tCommunity("ctaHoverLabel")}
-            ctaHref={SOCIAL_LINKS.discord}
+          <Button
+            label={tCommunity("ctaLabel")}
+            hoverLabel={tCommunity("ctaHoverLabel")}
+            href={SOCIAL_LINKS.discord}
+            icon={<DiscordIcon />}
+            target="_blank"
+            rel="noopener noreferrer"
           />
         </Reveal>
       </div>
