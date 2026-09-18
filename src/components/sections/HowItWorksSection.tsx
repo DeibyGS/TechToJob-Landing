@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { UserPlus, Code2, Briefcase } from "lucide-react";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { Reveal } from "@/components/ui/Reveal";
@@ -13,7 +14,21 @@ export async function HowItWorksSection() {
   const steps = t.raw("steps") as { title: string; description: string; cta: string }[];
 
   return (
-    <SectionContainer id="how-it-works" background="light">
+    <SectionContainer
+      id="how-it-works"
+      background="light"
+      backgroundDecoration={
+        <div className="pointer-events-none flex h-full items-center justify-end" aria-hidden="true">
+          <Image
+            src="/logo/simbolo-negativo.svg"
+            alt=""
+            width={800}
+            height={800}
+            className="h-[90%] w-auto opacity-[0.12]"
+          />
+        </div>
+      }
+    >
       {/* lg:hidden — the desktop-pinned HowItWorksStage below renders its
           own copy of this same headline, INSIDE the div GSAP pins, so it
           stays visible across all 3 steps instead of scrolling away before

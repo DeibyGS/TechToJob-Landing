@@ -3,34 +3,45 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 
+const LOGO_VARIANTS = [
+  { src: "/logo/v1-negativo.png", alt: "TechToJob" },
+  { src: "/logo/v1-positivo.png", alt: "" },
+  { src: "/logo/v1-degradado.png", alt: "" },
+] as const;
+
 /**
- * Two-stage entrance (icon, then wordmark rising in after it) on first
- * paint. Split into icon + real text instead of the fused logo-positive.svg
- * so each piece can animate independently — see docs/DESIGN.md's Logo usage
- * matrix for the header-specific exception this creates.
+ * Header logo with color-cycling animation.
+ *
+ * The logo cycles through 4 color variants (negativo → degradado → black → positivo)
+ * using CSS keyframe opacity crossfades. Runs once on mount, ~6s total.
+ * Under prefers-reduced-motion, shows the final positivo variant immediately.
  */
 export function HeaderLogo() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <a href="#hero" className="flex items-center gap-2">
+    <a href="#hero" className="relative flex items-center">
       <motion.span
         initial={reduceMotion ? false : { opacity: 0, scale: 0.5, rotate: -20 }}
         animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        transition={
+          reduceMotion
+            ? { duration: 0 }
+            : { type: "spring", stiffness: 260, damping: 20 }
+        }
+        className="relative h-8 w-[140px]"
       >
-        <Image src="/logo/symbol-positive.svg" alt="" width={32} height={32} priority className="h-8 w-8" />
-      </motion.span>
-      {/* Clip-path reveal — same signature move as the Hero headline's
-          entrance (animations/hero.ts), for a brand-specific reveal instead
-          of a generic fade+slide. */}
-      <motion.span
-        initial={reduceMotion ? false : { clipPath: "inset(0 0 100% 0)" }}
-        animate={{ clipPath: "inset(0 0 0% 0)" }}
-        transition={{ duration: 0.5, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-        className="font-sora text-xl font-bold tracking-tight text-brand-dark md:text-2xl"
-      >
-        TechToJob
+        {LOGO_VARIANTS.map(({ src, alt }, i) => (
+          <Image
+            key={src}
+            src={src}
+            alt={alt}
+            fill
+            sizes="140px"
+            priority={i === 0}
+            className={`object-contain ${reduceMotion ? "" : `logo-cycle-${i}`}`}
+          />
+        ))}
       </motion.span>
     </a>
   );
