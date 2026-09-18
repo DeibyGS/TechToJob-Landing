@@ -21,12 +21,15 @@ export function initHowItWorksScroll(container: HTMLElement): () => void {
       const anchor = container.querySelector("[data-howitworks-anchor]");
       const steps = Array.from(container.querySelectorAll("[data-howitworks-step]"));
       const dots = Array.from(container.querySelectorAll("[data-howitworks-dot]"));
+      const icons = Array.from(container.querySelectorAll("[data-howitworks-icon]"));
       if (steps.length < 2) return;
 
       gsap.set(steps, { position: "absolute", inset: 0 });
       gsap.set(steps.slice(1), { opacity: 0, y: 16 });
       gsap.set(dots, { opacity: 0 });
       if (dots[0]) gsap.set(dots[0], { opacity: 1 });
+      gsap.set(icons.slice(1), { opacity: 0 });
+      if (icons[0]) gsap.set(icons[0], { opacity: 1 });
 
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -56,6 +59,10 @@ export function initHowItWorksScroll(container: HTMLElement): () => void {
         if (dots[index]) {
           timeline.to(dots, { opacity: 0 }, at);
           timeline.to(dots[index], { opacity: 1 }, at);
+        }
+        if (icons[index - 1] && icons[index]) {
+          timeline.to(icons[index - 1], { opacity: 0 }, at);
+          timeline.to(icons[index], { opacity: 1 }, at);
         }
       });
     });

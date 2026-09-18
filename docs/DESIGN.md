@@ -86,11 +86,15 @@ teal strictly decorative.
 | Component | Location | Used for | Do NOT recreate as |
 |---|---|---|---|
 | `Button` | `src/components/ui/Button.tsx` | Hero CTA, Newsletter submit, Closing CTA | A one-off styled `<a>`/`<button>` per section |
-| `SectionContainer` | `src/components/ui/SectionContainer.tsx` | Max-width/padding/background wrapper for all 10 sections | Per-section ad-hoc container divs |
+| `SectionContainer` | `src/components/ui/SectionContainer.tsx` | Max-width/padding/background wrapper for all 10 sections; optional `fullHeight` prop fills the initial viewport (`min-h-[100dvh]`, vertically centered) — currently only Hero opts in | Per-section ad-hoc container divs |
 | `Card` | `src/components/ui/Card.tsx` | News items (×3), Tournaments steps | A near-duplicate card variant per section |
-| `Reveal` | `src/components/ui/Reveal.tsx` | Scroll-reveal wrapper (`motion` `whileInView`, respects `useReducedMotion`) — used by every section | A per-section custom `motion.div` |
+| `Reveal` | `src/components/ui/Reveal.tsx` | Scroll-reveal wrapper (`motion` `whileInView`, respects `useReducedMotion`); optionally accepts `whileHover`/`whileTap` pass-through (used by Networking's pills) — used by every section | A per-section custom `motion.div` |
 | `DefinitionRow` | `src/components/ui/DefinitionRow.tsx` | Label/value row inside Talent's and Company's example cards | A near-duplicate row per section (was duplicated once, extracted in PR3) |
 | `BulletList` | `src/components/ui/BulletList.tsx` | Checkmark bullet list (Talent, Company) | A near-duplicate `<ul>` per section (was duplicated once, extracted in PR3) |
+| `HeaderLogo` | `src/components/layout/HeaderLogo.tsx` | Header icon+wordmark two-stage entrance animation | A one-off `<Image>`+`<span>` pair re-implemented per usage |
+| `NavLinks` | `src/components/layout/NavLinks.tsx` | Header anchor-scroll navigation, Lenis-synced | A one-off `<nav>` re-implemented per usage |
+| `ChannelMarquee` | `src/components/layout/ChannelMarquee.tsx` | Auto-scrolling channel strip under the header | A second marquee elsewhere on the page (max one per page) |
+| `HeaderReveal` | `src/components/layout/HeaderReveal.tsx` | Keeps the header hidden (`fixed`, off-screen) while Hero is in view, sliding it in once scrolled past | A sticky header that's always visible (Hero is a full-viewport dark moment; the header would otherwise sit on top of it from the first frame) |
 
 Update this table whenever a new reusable component is added.
 
@@ -128,10 +132,11 @@ connection; respect `prefers-reduced-motion`.
 
 | Context | Asset | Background |
 |---|---|---|
-| Favicon / small icon | `Símbolo*` family (SVG + rasterized PNG for `.ico`/apple-touch-icon) | any |
-| Header logo | `v2Positivo.svg` | Light (`brand-white`) sections |
-| Footer / dark sections | `v2Negativo.svg` | `brand-dark` background |
-| OG image (1200×630) | Composited: `v2Negativo` logo (teal mark, `#84c0bf`) on a `brand-dark` (`#2f3436`) canvas | Static, one per site (not per-locale) — corrected during PR2 asset prep: `Negativo` variants are teal-on-transparent, not white, confirmed from the SVG source, so they pair with `brand-dark` exactly as the naming implies |
+| Favicon / small icon | `symbol-*` family (SVG + rasterized PNG for `.ico`/apple-touch-icon) | any |
+| Header logo | `symbol-positive.svg` (icon) + HTML wordmark ("TechToJob", Sora Bold 700, `text-brand-dark`) — split into two elements for independent entrance animation via `HeaderLogo.tsx`; the fused `logo-positive.svg` is no longer used in the header | Light (`brand-white`) sections |
+| Footer / dark sections | `logo-negative.svg` (fused icon+wordmark, unchanged) | `brand-dark` background |
+| OG image (1200×630) | Composited: `logo-negative` logo (teal mark, `#84c0bf`) on a `brand-dark` (`#2f3436`) canvas | Static, one per site (not per-locale) — corrected during PR2 asset prep: negative variants are teal-on-transparent, not white, confirmed from the SVG source, so they pair with `brand-dark` exactly as the naming implies |
+| Hero brand mark | `logo-negative.svg` (fused icon+wordmark, same asset as Footer), visible and legible (`h-24`/`h-32`), centered above the headline | `brand-dark` background (Hero only — the section's `background="dark"` is a deliberate exception; it's the first thing a visitor sees, distinct from the alternating light/dark pattern every other section follows). Needed because the header (with its own "TechToJob" wordmark) is hidden until scrolled past — this is the only brand-name text visible on first load |
 
 `Degradado` and `Black` logo variants stay out of `public/` — risk of
 clashing with the flat brand palette the rubric grades; source files remain

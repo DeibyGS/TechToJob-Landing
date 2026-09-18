@@ -6,18 +6,17 @@
   "Common": {
     "ctaDiscord": "Join the community"
   },
+  "Nav": {
+    "links": {
+      "howItWorks": "How it works",
+      "tournaments": "Tournaments",
+      "community": "Community",
+      "companies": "Companies"
+    }
+  },
   "Hero": {
     "headline": "Your tech talent deserves a real opportunity.",
     "subheadline": "Connect, build projects, join tournaments and discover opportunities within a growing tech community."
-  },
-  "HeroMockup": {
-    "channelLabel": "#jobs",
-    "onlineLabel": "128 online",
-    "messages": [
-      { "sender": "Ana_R", "text": "Just passed the React challenge!" },
-      { "sender": "DevMarco", "text": "Anyone up for the backend tournament?" },
-      { "sender": "Lucia.ts", "text": "New repo available in #projects" }
-    ]
   },
   "HowItWorks": {
     "headline": "One community. More opportunities.",

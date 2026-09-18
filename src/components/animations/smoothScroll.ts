@@ -5,6 +5,17 @@ import { prefersReducedMotion } from "./utils";
 
 // ScrollTrigger is registered once in ./utils (imported above).
 
+let activeLenis: Lenis | null = null;
+
+/**
+ * Exposes the active Lenis instance so anchor-nav clicks (NavLinks) can
+ * scroll through Lenis instead of desyncing it with a native jump. Returns
+ * null when smooth scroll is off (reduced motion, or before mount).
+ */
+export function getLenis(): Lenis | null {
+  return activeLenis;
+}
+
 /**
  * Starts Lenis-driven smooth scrolling synced to GSAP's ticker/ScrollTrigger.
  * No-ops under prefers-reduced-motion — native scroll is used instead.
@@ -16,6 +27,7 @@ export function initSmoothScroll(): () => void {
   }
 
   const lenis = new Lenis();
+  activeLenis = lenis;
   const onTick = (time: number) => lenis.raf(time * 1000);
 
   lenis.on("scroll", ScrollTrigger.update);
@@ -25,5 +37,6 @@ export function initSmoothScroll(): () => void {
   return () => {
     gsap.ticker.remove(onTick);
     lenis.destroy();
+    activeLenis = null;
   };
 }
