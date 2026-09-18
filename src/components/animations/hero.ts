@@ -3,14 +3,14 @@ import { EASE, MEDIA_TABLET_UP, prefersReducedMotion, runInScope } from "./utils
 
 /**
  * Hero staged entrance (word-by-word headline → subheadline → logo
- * signature → showcase crossfade → community status bar) plus, on
+ * signature → showcase bento tiles → community status bar) plus, on
  * tablet/desktop only, a scroll-linked exit, mouse-driven depth parallax
- * + subtle tilt on the showcase card, and a paused-when-offscreen
- * crossfade loop. Mobile gets the entrance only — parallax/tilt/scroll-exit
- * aren't worth their cost at that scale, and cursor-driven effects don't
- * apply to touch input. The tablet/desktop behaviors are registered via
- * `gsap.matchMedia()` so they activate/revert live if the viewport
- * crosses the breakpoint. No-ops entirely under reduced motion.
+ * + subtle tilt on the showcase wrap. Mobile gets the entrance only —
+ * parallax/tilt/scroll-exit aren't worth their cost at that scale, and
+ * cursor-driven effects don't apply to touch input. The tablet/desktop
+ * behaviors are registered via `gsap.matchMedia()` so they activate/revert
+ * live if the viewport crosses the breakpoint. No-ops entirely under
+ * reduced motion.
  */
 export function initHeroAnimation(container: HTMLElement): () => void {
   if (prefersReducedMotion()) return () => {};
@@ -22,7 +22,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
     const icon = container.querySelector("[data-hero-icon]");
     const showcaseGlow = container.querySelector("[data-mockup-glow]");
     const showcaseCards = container.querySelectorAll("[data-hero-showcase-card]");
-    const bgLayer = container.querySelector("[data-hero-bg-layer]");
     const midLayer = container.querySelector("[data-hero-mid-layer]");
     const showcaseWrap = container.querySelector("[data-mockup-wrap]");
     const communityBar = container.querySelector("[data-hero-community]");
@@ -30,10 +29,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
 
     // --- Entrance: staged reveal with dramatic rhythm ---
     const entrance = gsap.timeline();
-
-    if (bgLayer) {
-      entrance.fromTo(bgLayer, { opacity: 0 }, { opacity: 1, duration: 1, ease: EASE.entranceSoft }, 0);
-    }
 
     // Word-by-word headline reveal — each word gets clip-path + fade + y,
     // staggered by 0.08s. The wrapper (data-hero-word) has overflow-hidden
@@ -72,14 +67,11 @@ export function initHeroAnimation(container: HTMLElement): () => void {
       );
     }
 
-    // Logo as "signature" — subtle fade, appears after subheadline
+    // Brand mark — legible, leads the composition (per docs/DESIGN.md,
+    // this is the only readable "TechToJob" on first load, since the
+    // header's own wordmark stays hidden until scrolled past).
     if (icon) {
-      entrance.fromTo(
-        icon,
-        { opacity: 0, y: 8 },
-        { opacity: 0.5, y: 0, duration: 0.8, ease: EASE.entranceSoft },
-        1.2, // signature, not protagonist
-      );
+      entrance.fromTo(icon, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: EASE.entranceSoft }, 0);
     }
 
     if (showcaseGlow) {
@@ -93,9 +85,9 @@ export function initHeroAnimation(container: HTMLElement): () => void {
 
     if (showcaseCards.length) {
       entrance.fromTo(
-        showcaseCards[0],
+        showcaseCards,
         { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: 0.5, ease: EASE.entranceSoft },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: EASE.entranceSoft },
         1.1,
       );
     }
@@ -129,19 +121,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
       );
     }
 
-    // --- Showcase card auto-advance: real News.items, cycling on every
-    //     breakpoint (this is content, not a decorative flourish, so it
-    //     isn't gated behind MEDIA_TABLET_UP like the parallax below). ---
-    let cycle: gsap.core.Timeline | null = null;
-    if (showcaseCards.length > 1) {
-      cycle = gsap.timeline({ repeat: -1, delay: entrance.duration() + 1 });
-      showcaseCards.forEach((card, index) => {
-        const next = showcaseCards[(index + 1) % showcaseCards.length];
-        cycle!.to(card, { opacity: 0, duration: 0.6, ease: EASE.crossfade }, "+=3.4");
-        cycle!.to(next, { opacity: 1, duration: 0.6, ease: EASE.crossfade }, "<");
-      });
-    }
-
     // --- Desktop/tablet scroll + cursor behaviors ---
     const mm = gsap.matchMedia();
 
@@ -150,8 +129,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
       const textEls = [headline, subheadline].filter((el): el is Element => el !== null);
       const exitTl = gsap.timeline({
         scrollTrigger: { trigger: container, start: "top top", end: "+=40%", scrub: true },
-        onStart: () => cycle?.pause(),
-        onReverseComplete: () => cycle?.resume(),
       });
       if (showcaseWrap) {
         exitTl.fromTo(
@@ -183,11 +160,12 @@ export function initHeroAnimation(container: HTMLElement): () => void {
         );
       }
 
-      // Depth parallax: 3 layers move at different rates toward the cursor
-      if (bgLayer || midLayer || showcaseWrap) {
+      // Depth parallax: 2 layers move at different rates toward the cursor
+      // (the ambient wash used to be a 3rd layer here, but it now lives at
+      // section level via SectionContainer's backgroundDecoration slot —
+      // outside this GSAP scope — so it keeps its own CSS drift only).
+      if (midLayer || showcaseWrap) {
         const quickToOpts = { duration: 0.6, ease: "power3.out" };
-        const bgX = bgLayer ? gsap.quickTo(bgLayer, "x", quickToOpts) : null;
-        const bgY = bgLayer ? gsap.quickTo(bgLayer, "y", quickToOpts) : null;
         const midX = midLayer ? gsap.quickTo(midLayer, "x", quickToOpts) : null;
         const midY = midLayer ? gsap.quickTo(midLayer, "y", quickToOpts) : null;
         const fgX = showcaseWrap ? gsap.quickTo(showcaseWrap, "x", quickToOpts) : null;
@@ -207,8 +185,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
           const relX = (event.clientX - rect.left) / rect.width - 0.5;
           const relY = (event.clientY - rect.top) / rect.height - 0.5;
 
-          bgX?.(relX * 20);
-          bgY?.(relY * 20);
           midX?.(relX * 8);
           midY?.(relY * 8);
           fgX?.(relX * 3);

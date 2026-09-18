@@ -32,6 +32,12 @@ section[id] {
 
 .marquee-track {
   animation: marquee 28s linear infinite;
+  /* Promotes the track to its own compositor layer up front — without this,
+     a continuous transform can visibly stutter whenever anything else on
+     the page repaints nearby (e.g. the GSAP-driven Hero directly above it),
+     since the browser may not otherwise bother compositing it separately
+     until the animation is already running. */
+  will-change: transform;
 }
 
 .marquee-track:hover {
@@ -50,24 +56,44 @@ section[id] {
   }
 }
 
-/* Hero ambient background wash (sections/HeroSection.tsx) — slow, transform-only
-   drift on blurred teal circles, purely decorative. */
+/* Hero ambient background wash (sections/HeroSection.tsx) — a flat tinted
+   `background-color` UNDER layered radial-gradients, not gradients alone:
+   any radial-gradient, however wide, still fades out approaching its own
+   edge by definition, which read as a soft "container" boundary even at
+   very generous radii (confirmed against a real screenshot — widening the
+   gradients further wasn't fixing it, because fading isn't a sizing bug).
+   A flat color has no falloff, so it's what guarantees genuinely uniform
+   coverage; the gradients on top only add texture/depth variation.
+   Gradient stops are percentages of the element's own box, so both layers
+   scale to any viewport width by construction. Slightly oversized (110%)
+   and centered so the slow drift below never reveals its own edge. */
+.hero-wash {
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  background-color: rgba(132, 192, 191, 0.09);
+  background-image:
+    radial-gradient(ellipse 95% 85% at 15% 15%, rgba(132, 192, 191, 0.14), transparent 80%),
+    radial-gradient(ellipse 95% 85% at 85% 15%, rgba(132, 192, 191, 0.12), transparent 80%),
+    radial-gradient(ellipse 110% 100% at 50% 50%, rgba(132, 192, 191, 0.16), transparent 80%),
+    radial-gradient(ellipse 95% 85% at 12% 88%, rgba(132, 192, 191, 0.12), transparent 80%),
+    radial-gradient(ellipse 95% 85% at 88% 85%, rgba(132, 192, 191, 0.12), transparent 80%);
+  animation: hero-wash-drift 20s ease-in-out infinite;
+}
+
 @keyframes hero-wash-drift {
   0%,
   100% {
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(4%, -3%);
+    transform: translate(2%, -1.5%);
   }
 }
 
-.hero-wash-blob {
-  animation: hero-wash-drift 20s ease-in-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .hero-wash-blob {
+  .hero-wash {
     animation: none;
   }
 }
@@ -116,6 +142,29 @@ section[id] {
   }
 }
 
+/* Hero showcase card idle drift (sections/HeroStage.tsx) — very subtle,
+   continuous life between GSAP crossfades so the card doesn't read as a
+   frozen frame while it waits for the next auto-advance. */
+@keyframes hero-showcase-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.hero-showcase-float {
+  animation: hero-showcase-drift 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-showcase-float {
+    animation: none;
+  }
+}
+
 /* Hero grain texture — very subtle SVG noise overlay for depth. Applied via
    the `.hero-grain` class on the HeroStage container. Uses a data-URI SVG
    with feTurbulence for lightweight procedural noise (~0.3KB). */
@@ -147,25 +196,27 @@ section[id] {
   }
 }
 
-/* Online indicator pulse — very subtle breathing animation for the green
-   dot in the community status bar. Purely decorative, paused under
-   reduced motion. */
-@keyframes online-pulse {
-  0%,
-  100% {
-    opacity: 1;
+/* Short-viewport fit (sections/HeroStage.tsx) — on real browser windows the
+   available height is often well under 900px once toolbar/tab/bookmark
+   chrome is subtracted (confirmed on macOS: as low as ~700px), and the
+   Hero's content — sized for a tall viewport — was overflowing below the
+   fold, hiding the CTA and scroll indicator entirely.
+   A `dvh`-based fluid font-size was tried here and reverted: shrinking
+   font-size continuously crosses the headline's line-wrap boundary (2
+   lines vs. 3) at an unpredictable point, and a few px of font-size either
+   side of that boundary swing the headline's rendered height by 150px+ —
+   a cliff, not a curve, so "fluid" made the fit LESS predictable, not
+   more. A discrete breakpoint, verified at the exact threshold and just
+   above it (not just sampled points), is more reliable for text that
+   wraps. Threshold raised from an earlier 820px to 1000px after that
+   first attempt still overflowed at the very common 900px laptop
+   viewport. */
+@media (max-height: 1000px) {
+  [data-hero-headline] {
+    font-size: clamp(1.75rem, 4vw + 0.5rem, 3.75rem);
   }
-  50% {
-    opacity: 0.5;
-  }
-}
 
-.online-dot {
-  animation: online-pulse 2s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .online-dot {
-    animation: none;
+  [data-hero-content] {
+    gap: 0.75rem;
   }
 }

@@ -11,7 +11,14 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Language" className="flex gap-2 text-sm font-medium">
+    // Same pill-group language as NavLinks (rounded-full, subtle border,
+    // near-transparent fill, teal on the active/hovered item) — both
+    // controls only ever render inside the header once it's revealed
+    // (light `brand-white` background), so they should read as one system.
+    <nav
+      aria-label="Language"
+      className="flex items-center gap-1 rounded-full border border-brand-teal/25 bg-brand-white p-1 text-xs font-semibold shadow-[0_4px_16px_rgba(132,192,191,0.2)]"
+    >
       {routing.locales.map((locale) => {
         const isCurrent = locale === currentLocale;
         return (
@@ -22,8 +29,8 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
             aria-current={isCurrent ? "true" : undefined}
             className={
               isCurrent
-                ? "font-bold text-brand-dark underline underline-offset-4"
-                : "text-brand-dark hover:underline"
+                ? "rounded-full bg-brand-teal px-2.5 py-1 text-brand-dark"
+                : "rounded-full px-2.5 py-1 text-brand-dark/70 transition-colors hover:bg-brand-teal hover:text-brand-dark"
             }
           >
             {locale.toUpperCase()}

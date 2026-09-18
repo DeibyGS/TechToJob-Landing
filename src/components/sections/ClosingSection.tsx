@@ -1,12 +1,12 @@
 import { getTranslations } from "next-intl/server";
 import { SectionContainer } from "@/components/ui/SectionContainer";
-import { Button } from "@/components/ui/Button";
+import { DiscordCtaButton } from "@/components/ui/DiscordCtaButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { SOCIAL_LINKS } from "@/lib/constants";
 
 export async function ClosingSection() {
   const t = await getTranslations("Closing");
-  const tCommon = await getTranslations("Common");
+  const tCommunity = await getTranslations("CommunityCta");
 
   return (
     <SectionContainer background="light" className="text-center">
@@ -17,10 +17,15 @@ export async function ClosingSection() {
           </h2>
           <p className="mt-4 text-brand-dark/70">{t("description")}</p>
         </Reveal>
-        <Reveal delay={0.15}>
-          <Button href={SOCIAL_LINKS.discord} className="mt-8">
-            {tCommon("ctaDiscord")}
-          </Button>
+        {/* Exactly the Hero's CTA — same component, same copy, same style,
+            not a look-alike. Its dark drop-shadow/teal glow carry contrast
+            on their own regardless of this section's light background. */}
+        <Reveal delay={0.15} className="mt-8 flex justify-center">
+          <DiscordCtaButton
+            ctaLabel={tCommunity("ctaLabel")}
+            ctaHoverLabel={tCommunity("ctaHoverLabel")}
+            ctaHref={SOCIAL_LINKS.discord}
+          />
         </Reveal>
       </div>
     </SectionContainer>

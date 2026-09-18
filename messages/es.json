@@ -3,16 +3,12 @@
     "title": "TechToJob — Comunidad tech para talento y empresas",
     "description": "Conecta con talento tech, encuentra oportunidades, participa en proyectos y demuestra lo que sabes en una comunidad creada para crecer juntos."
   },
-  "Common": {
-    "ctaDiscord": "Entrar a la comunidad"
+  "CommunityCta": {
+    "ctaLabel": "Unirse a la comunidad",
+    "ctaHoverLabel": "Conectar con la comunidad"
   },
-  "HeroCommunity": {
-    "members": "1,284 miembros",
-    "online": "248 online",
-    "channels": ["#empleo", "#proyectos", "#desarrollo", "#networking"],
-    "channelOnline": "86 online",
-    "ctaLabel": "UNIRSE A LA COMUNIDAD",
-    "ctaHoverLabel": "CONECTAR CON LA COMUNIDAD"
+  "HeroShowcase": {
+    "stats": ["Nuevo torneo", "+1.200 miembros", "4 oportunidades"]
   },
   "Nav": {
     "links": {
@@ -31,15 +27,18 @@
     "steps": [
       {
         "title": "Únete",
-        "description": "Entra en la comunidad, completa tu perfil y conoce a otros profesionales del mundo tech."
+        "description": "Entra en la comunidad, completa tu perfil y conoce a otros profesionales del mundo tech.",
+        "cta": "Unirse a la comunidad"
       },
       {
         "title": "Demuestra lo que sabes",
-        "description": "Participa en proyectos y retos reales para construir experiencia que puedas enseñar."
+        "description": "Participa en proyectos y retos reales para construir experiencia que puedas enseñar.",
+        "cta": "Explorar retos y torneos"
       },
       {
         "title": "Encuentra oportunidades",
-        "description": "Conecta con empresas, descubre ofertas y abre nuevas puertas profesionales."
+        "description": "Conecta con empresas, descubre ofertas y abre nuevas puertas profesionales.",
+        "cta": "Descubrir oportunidades"
       }
     ]
   },
