@@ -1,7 +1,7 @@
 # Project Constitution — TechToJob-Landing
 
-Version: 1.1.0
-Last updated: 2026-09-17
+Version: 1.2.0
+Last updated: 2026-09-18
 
 Non-negotiable principles. Every spec, plan, and task must comply with these.
 AI agents are strictly forbidden from violating this file. Changes here should
@@ -20,23 +20,34 @@ be rare — only when a fundamental project decision changes, not per-feature.
 - No dynamic CMS, no auth, no user accounts — this is a marketing landing
   page, not the future job platform itself.
 
-## Animation Stack (hybrid — see ADR-001)
+## Animation Stack (hybrid — see ADR-001, ADR-002)
 
 - **`motion`** (existing) is the animation library for simple `whileInView`
   reveals on non-flagship sections — unchanged, still drives `Reveal.tsx`.
 - **GSAP core + `gsap/ScrollTrigger` + Lenis** (added in `specs/002-cinematic-
   motion-hero-howitworks`) are approved *only* for sections that need real
-  pin/scrub scroll choreography (Hero, HowItWorks as of Phase 1). GSAP code
+  pin/scrub scroll choreography. Phase 1: Hero, HowItWorks. Phase 2
+  (`docs/adr/ADR-002-scroll-block-sections.md`, proposed): TournamentsSection
+  is approved to join this list once implemented — its `TournamentsStage.tsx`
+  has ordered internal state worth scrubbing, same as HowItWorks. GSAP code
   lives exclusively under `src/components/animations/*.ts`, dynamically
   imported so it never enters the shared bundle for sections that don't use
   it.
+- **Block-entrance sections** (ADR-002 Phase 2b): the 6 remaining sections
+  with no internal ordered state (Talent, Company, Networking, News,
+  Newsletter, Closing) do **not** get GSAP pin/scrub — they get CSS
+  `scroll-snap` (native, no new JS) combined with the existing `Reveal`
+  `whileInView` entrance. No constitution change needed for these beyond
+  recording the `scroll-snap` CSS addition here.
 - **Hard rule**: GSAP and `motion` are never mixed on the same DOM subtree.
   Adding GSAP to a new section, or any GSAP plugin beyond core +
   ScrollTrigger, requires updating this file and (if architecturally
-  significant) a new ADR — see `docs/adr/ADR-001-hybrid-motion-gsap-stack.md`.
+  significant) a new ADR — see `docs/adr/ADR-001-hybrid-motion-gsap-stack.md`
+  and `docs/adr/ADR-002-scroll-block-sections.md`.
 - All scroll-linked/entrance animation must respect `prefers-reduced-motion`
-  completely (smooth scroll, pin, scrub, and parallax all disabled; content
-  remains fully usable) — non-negotiable regardless of library.
+  completely (smooth scroll, pin, scrub, parallax, and `scroll-snap` all
+  disabled or inert; content remains fully usable) — non-negotiable
+  regardless of library.
 
 ## Technology Stack
 

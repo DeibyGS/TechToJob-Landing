@@ -3,16 +3,12 @@
     "title": "TechToJob — A Tech Community for Talent and Companies",
     "description": "Connect with tech talent, discover opportunities, build projects and prove your skills in a community built to grow together."
   },
-  "Common": {
-    "ctaDiscord": "Join the community"
+  "CommunityCta": {
+    "ctaLabel": "Join the community",
+    "ctaHoverLabel": "Connect with the community"
   },
-  "HeroCommunity": {
-    "members": "1,284 members",
-    "online": "248 online",
-    "channels": ["#jobs", "#projects", "#development", "#networking"],
-    "channelOnline": "86 online",
-    "ctaLabel": "JOIN THE COMMUNITY",
-    "ctaHoverLabel": "CONNECT WITH THE COMMUNITY"
+  "HeroShowcase": {
+    "stats": ["New tournament", "1,200+ members", "4 opportunities"]
   },
   "Nav": {
     "links": {
@@ -31,15 +27,18 @@
     "steps": [
       {
         "title": "Join",
-        "description": "Join the community, complete your profile and meet people from across the tech industry."
+        "description": "Join the community, complete your profile and meet people from across the tech industry.",
+        "cta": "Join the community"
       },
       {
         "title": "Show what you can do",
-        "description": "Take part in real projects and challenges to build experience you can actually showcase."
+        "description": "Take part in real projects and challenges to build experience you can actually showcase.",
+        "cta": "Explore challenges & tournaments"
       },
       {
         "title": "Find opportunities",
-        "description": "Connect with companies, discover job opportunities and open new doors for your career."
+        "description": "Connect with companies, discover job opportunities and open new doors for your career.",
+        "cta": "Discover opportunities"
       }
     ]
   },

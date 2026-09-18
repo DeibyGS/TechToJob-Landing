@@ -3,17 +3,23 @@ import { UserPlus, Code2, Briefcase } from "lucide-react";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { Reveal } from "@/components/ui/Reveal";
 import { HowItWorksStage } from "@/components/sections/HowItWorksStage";
+import { SOCIAL_LINKS } from "@/lib/constants";
 
 // Mirrors HowItWorksStage's STEP_ICONS mapping for the mobile sequential list.
 const STEP_ICONS = [UserPlus, Code2, Briefcase];
 
 export async function HowItWorksSection() {
   const t = await getTranslations("HowItWorks");
-  const steps = t.raw("steps") as { title: string; description: string }[];
+  const steps = t.raw("steps") as { title: string; description: string; cta: string }[];
 
   return (
     <SectionContainer id="how-it-works" background="light">
-      <Reveal>
+      {/* lg:hidden — the desktop-pinned HowItWorksStage below renders its
+          own copy of this same headline, INSIDE the div GSAP pins, so it
+          stays visible across all 3 steps instead of scrolling away before
+          the pin engages. This copy is mobile/tablet-only so the headline
+          still isn't duplicated in the DOM at any given breakpoint. */}
+      <Reveal className="lg:hidden">
         <h2 className="max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">
           {t("headline")}
         </h2>
@@ -40,7 +46,7 @@ export async function HowItWorksSection() {
       </div>
 
       <div className="mt-12">
-        <HowItWorksStage steps={steps} />
+        <HowItWorksStage headline={t("headline")} steps={steps} ctaHref={SOCIAL_LINKS.discord} />
       </div>
     </SectionContainer>
   );
