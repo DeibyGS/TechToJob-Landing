@@ -130,7 +130,7 @@
   },
   "Newsletter": {
     "headline": "No te pierdas la próxima oportunidad",
-    "description": "Recibe novedades, torneos, oportunidades y noticias de TechToJob directamente en tu correo.",
+    "description": "Novedades, torneos y oportunidades de TechToJob. Pocos emails, buenas oportunidades. Te das de baja cuando quieras.",
     "placeholder": "tu@correo.com",
     "submitLabel": "Quiero recibirlas",
     "successMessage": "¡Listo! Te avisaremos cuando haya novedades.",
