@@ -78,7 +78,7 @@ export function initHeroAnimation(container: HTMLElement): () => void {
         icon,
         { opacity: 0, y: 8 },
         { opacity: 0.5, y: 0, duration: 0.8, ease: EASE.entranceSoft },
-        1.2, // after CTA — signature, not protagonist
+        1.2, // signature, not protagonist
       );
     }
 
@@ -87,7 +87,7 @@ export function initHeroAnimation(container: HTMLElement): () => void {
         showcaseGlow,
         { opacity: 0, scale: 0.8 },
         { opacity: 1, scale: 1.1, duration: 0.8, ease: EASE.entranceSoft },
-        1.0, // subtle, after CTA
+        1.0, // subtle, after logo
       );
     }
 
@@ -106,7 +106,7 @@ export function initHeroAnimation(container: HTMLElement): () => void {
         communityBar,
         { opacity: 0, y: 12 },
         { opacity: 1, y: 0, duration: 0.6, ease: EASE.entranceSoft },
-        1.3,
+        1.2,
       );
     }
 

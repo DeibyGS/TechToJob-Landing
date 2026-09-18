@@ -39,7 +39,7 @@ export function CommunityBar({
       <div className="flex items-center gap-3 text-sm text-brand-white/60">
         <span className="flex items-center gap-1.5">
           <span
-            className={`online-dot inline-block h-2 w-2 rounded-full bg-emerald-400${reduceMotion ? " motion-reduce:animate-none" : ""}`}
+            className="online-dot inline-block h-2 w-2 rounded-full bg-emerald-400"
             aria-hidden
           />
           <span className="font-medium text-brand-white/80">{members}</span>
