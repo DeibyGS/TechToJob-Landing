@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
+import { ChannelMarquee } from "@/components/layout/ChannelMarquee";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
 import { TalentSection } from "@/components/sections/TalentSection";
@@ -18,6 +19,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   return (
     <>
       <Header locale={locale} />
+      <ChannelMarquee />
       <main>
         <HeroSection />
         <HowItWorksSection />

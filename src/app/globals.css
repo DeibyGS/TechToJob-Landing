@@ -12,3 +12,160 @@ body {
   background: var(--color-brand-white);
   color: var(--color-brand-dark);
 }
+
+/* The header (layout/HeaderReveal.tsx) is `fixed` once revealed past the
+   Hero — anchor targets need room reserved so the fixed bar doesn't cover
+   their top edge on jump/scroll-to. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Channel marquee strip (layout/ChannelMarquee.tsx) — seamless loop via 6
+   copies of the content translated by exactly one copy's width
+   (100% / 6 of the total track). Fewer copies leave a visible gap once the
+   viewport is wider than a single copy's content. */
+@keyframes marquee {
+  to {
+    transform: translateX(-16.6667%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+  }
+
+  .marquee-track > *:nth-child(n + 2) {
+    display: none;
+  }
+}
+
+/* Hero ambient background wash (sections/HeroSection.tsx) — slow, transform-only
+   drift on blurred teal circles, purely decorative. */
+@keyframes hero-wash-drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(4%, -3%);
+  }
+}
+
+.hero-wash-blob {
+  animation: hero-wash-drift 20s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-wash-blob {
+    animation: none;
+  }
+}
+
+/* HowItWorks anchor decorative ring (sections/HowItWorksStage.tsx) — slow,
+   transform-only rotation, purely decorative. */
+@keyframes howitworks-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.howitworks-ring {
+  animation: howitworks-ring-spin 20s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .howitworks-ring {
+    animation: none;
+  }
+}
+
+/* Hero floating accent dots (sections/HeroStage.tsx) — small independent
+   drift, staggered via animation-delay so the two dots don't move in sync. */
+@keyframes hero-accent-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.hero-accent-float {
+  animation: hero-accent-drift 5s ease-in-out infinite;
+}
+
+.hero-accent-float:nth-of-type(2) {
+  animation-delay: 1.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-accent-float {
+    animation: none;
+  }
+}
+
+/* Hero grain texture — very subtle SVG noise overlay for depth. Applied via
+   the `.hero-grain` class on the HeroStage container. Uses a data-URI SVG
+   with feTurbulence for lightweight procedural noise (~0.3KB). */
+.hero-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-grain::after {
+    opacity: 0.03;
+  }
+}
+
+/* Scroll indicator — hidden under reduced motion (the bounce animation is
+   handled by motion in HeroStage.tsx, but the element itself should be
+   fully removed for users who prefer no motion). */
+@media (prefers-reduced-motion: reduce) {
+  [data-hero-scroll-indicator] {
+    display: none;
+  }
+}
+
+/* Online indicator pulse — very subtle breathing animation for the green
+   dot in the community status bar. Purely decorative, paused under
+   reduced motion. */
+@keyframes online-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.online-dot {
+  animation: online-pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .online-dot {
+    animation: none;
+  }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { UserPlus, Code2, Briefcase } from "lucide-react";
 import { initHowItWorksScroll } from "@/components/animations/howItWorks";
 import { useGsapScope } from "@/components/animations/utils";
 
@@ -9,6 +9,10 @@ type Step = { title: string; description: string };
 type HowItWorksStageProps = {
   steps: Step[];
 };
+
+// Index-mapped to `steps` (Join / Show what you can do / Find opportunities),
+// same pattern as TournamentsStage's STEP_ICONS.
+const STEP_ICONS = [UserPlus, Code2, Briefcase];
 
 /**
  * Desktop-only (>=1024px) pinned/scrubbed variant of HowItWorks. Hidden
@@ -20,11 +24,30 @@ export function HowItWorksStage({ steps }: HowItWorksStageProps) {
 
   return (
     <div ref={containerRef} className="hidden lg:grid lg:grid-cols-2 lg:items-center lg:gap-16">
-      <div
-        data-howitworks-anchor
-        className="flex h-64 w-64 items-center justify-center justify-self-center rounded-full bg-brand-teal/10"
-      >
-        <Image src="/logo/symbol-positive.svg" alt="" width={140} height={140} className="h-28 w-28" />
+      <div className="relative flex h-64 w-64 items-center justify-center justify-self-center">
+        <span
+          aria-hidden
+          className="howitworks-ring absolute h-80 w-80 rounded-full border border-dashed border-brand-teal/20"
+        />
+        <div
+          data-howitworks-anchor
+          className="relative flex h-64 w-64 items-center justify-center rounded-full bg-brand-teal/10"
+        >
+          <span aria-hidden className="absolute h-48 w-48 rounded-full bg-brand-teal/5" />
+          {steps.map((step, index) => {
+            const Icon = STEP_ICONS[index];
+            if (!Icon) return null;
+            return (
+              <Icon
+                key={step.title}
+                data-howitworks-icon
+                aria-hidden
+                className="absolute h-16 w-16 text-brand-teal md:h-20 md:w-20"
+                style={{ opacity: index === 0 ? 1 : 0 }}
+              />
+            );
+          })}
+        </div>
       </div>
       <div className="relative min-h-[240px]">
         {steps.map((step, index) => (
