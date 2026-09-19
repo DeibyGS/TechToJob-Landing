@@ -26,6 +26,7 @@ export function initHeroAnimation(container: HTMLElement): () => void {
     const showcaseWrap = container.querySelector("[data-mockup-wrap]");
     const communityBar = container.querySelector("[data-hero-community]");
     const scrollIndicator = container.querySelector("[data-hero-scroll-indicator]");
+    const chatFragments = container.querySelectorAll("[data-hero-chat-fragment]");
 
     // --- Entrance: staged reveal with dramatic rhythm ---
     const entrance = gsap.timeline();
@@ -160,16 +161,38 @@ export function initHeroAnimation(container: HTMLElement): () => void {
         );
       }
 
-      // Depth parallax: 2 layers move at different rates toward the cursor
+      // Chat fragments — fade out with the headline
+      if (chatFragments.length) {
+        exitTl.fromTo(
+          chatFragments,
+          { opacity: 1 },
+          { opacity: 0, ease: EASE.scrub, duration: 12 },
+          0,
+        );
+      }
+
+      // Depth parallax: 3 layers move at different rates toward the cursor
       // (the ambient wash used to be a 3rd layer here, but it now lives at
       // section level via SectionContainer's backgroundDecoration slot —
       // outside this GSAP scope — so it keeps its own CSS drift only).
-      if (midLayer || showcaseWrap) {
+      if (midLayer || showcaseWrap || chatFragments.length) {
         const quickToOpts = { duration: 0.6, ease: "power3.out" };
         const midX = midLayer ? gsap.quickTo(midLayer, "x", quickToOpts) : null;
         const midY = midLayer ? gsap.quickTo(midLayer, "y", quickToOpts) : null;
         const fgX = showcaseWrap ? gsap.quickTo(showcaseWrap, "x", quickToOpts) : null;
         const fgY = showcaseWrap ? gsap.quickTo(showcaseWrap, "y", quickToOpts) : null;
+
+        // Chat fragments parallax — different speeds per depth layer
+        const chatXFns: gsap.QuickToFunc[] = [];
+        const chatYFns: gsap.QuickToFunc[] = [];
+        chatFragments.forEach((frag) => {
+          const layer = frag.getAttribute("data-layer");
+          const speed = layer === "fg" ? 5 : layer === "mid" ? 12 : 18;
+          chatXFns.push(gsap.quickTo(frag, "x", { ...quickToOpts, duration: 0.8 }));
+          chatYFns.push(gsap.quickTo(frag, "y", { ...quickToOpts, duration: 0.8 }));
+          // Store speed as data attribute for the mouse handler
+          (frag as HTMLElement).dataset.parallaxSpeed = String(speed);
+        });
 
         // Subtle 3D tilt on the showcase wrapper
         let tiltX: gsap.QuickToFunc | null = null;
@@ -191,6 +214,13 @@ export function initHeroAnimation(container: HTMLElement): () => void {
           fgY?.(relY * 3);
           tiltX?.(relX * -6);
           tiltY?.(relY * 6);
+
+          // Chat fragments — each at its own speed based on depth layer
+          chatFragments.forEach((frag, i) => {
+            const speed = Number((frag as HTMLElement).dataset.parallaxSpeed ?? 10);
+            chatXFns[i]?.(relX * speed);
+            chatYFns[i]?.(relY * speed);
+          });
         };
 
         container.addEventListener("mousemove", onMouseMove);

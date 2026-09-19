@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
-import { Briefcase, FolderGit2, Layout, Server, Users, Hash } from "lucide-react";
+import { Trophy, Users, Briefcase, Palette, GitBranch, Sparkles, Terminal, Hash } from "lucide-react";
 
-const CHANNEL_ICONS = [Briefcase, FolderGit2, Layout, Server, Users];
+const CHANNEL_ICONS = [Trophy, Users, Briefcase, Palette, GitBranch, Sparkles, Terminal, Hash];
 const FALLBACK_CHANNEL_ICON = Hash;
 
 // Copies of the channel list rendered back-to-back for the loop. The
@@ -33,7 +33,11 @@ export async function ChannelMarquee() {
   });
 
   return (
-    <div className="overflow-hidden bg-brand-dark py-2.5">
+    <div className="relative overflow-hidden bg-brand-dark py-2.5">
+      {/* Left fade */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-brand-dark to-transparent" />
+      {/* Right fade */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-brand-dark to-transparent" />
       <div aria-hidden="true" className="marquee-track flex w-max">
         {Array.from({ length: COPY_COUNT }, (_, copyIndex) => (
           <div key={copyIndex} className="flex shrink-0">

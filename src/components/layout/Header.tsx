@@ -9,9 +9,10 @@ export async function Header({ locale }: { locale: string }) {
 
   const links = [
     { id: "how-it-works", label: tNav("links.howItWorks") },
+    { id: "companies", label: tNav("links.companies") },
     { id: "tournaments", label: tNav("links.tournaments") },
     { id: "networking", label: tNav("links.community") },
-    { id: "companies", label: tNav("links.companies") },
+    { id: "testimonials", label: tNav("links.testimonials") },
   ];
 
   return (

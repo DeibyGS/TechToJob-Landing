@@ -161,7 +161,7 @@ export function HeroStage({
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <ArrowDown className="h-5 w-5 text-brand-white/40" />
+            <ArrowDown className="h-5 w-5 text-brand-white/60" />
           </motion.div>
         )}
       </div>
