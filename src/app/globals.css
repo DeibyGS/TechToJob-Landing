@@ -120,32 +120,6 @@ section[id] {
   }
 }
 
-/* Hero floating accent dots (sections/HeroStage.tsx) — small independent
-   drift, staggered via animation-delay so the two dots don't move in sync. */
-@keyframes hero-accent-drift {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.hero-accent-float {
-  animation: hero-accent-drift 5s ease-in-out infinite;
-}
-
-.hero-accent-float:nth-of-type(2) {
-  animation-delay: 1.5s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-accent-float {
-    animation: none;
-  }
-}
-
 /* Hero showcase card idle drift (sections/HeroStage.tsx) — very subtle,
    continuous life between GSAP crossfades so the card doesn't read as a
    frozen frame while it waits for the next auto-advance. */
@@ -220,7 +194,8 @@ section[id] {
     font-size: clamp(1.75rem, 4vw + 0.5rem, 3.75rem);
   }
 
-  [data-hero-content] {
+  [data-hero-content],
+  [data-hero-top-cluster] {
     gap: 0.75rem;
   }
 }
@@ -290,4 +265,12 @@ section[id] {
   25%      { transform: translateY(-5px) translateX(-2px); }
   50%      { transform: translateY(7px) translateX(4px); }
   75%      { transform: translateY(-3px) translateX(-1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fragment-drift-a,
+  .hero-fragment-drift-b,
+  .hero-fragment-drift-c {
+    animation: none;
+  }
 }

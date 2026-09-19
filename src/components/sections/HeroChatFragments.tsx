@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useReducedMotion } from "motion/react";
 
 export type Fragment = {
   username: string;
@@ -17,31 +16,31 @@ type HeroChatFragmentsProps = {
  * Floating chat conversation fragments layered behind the hero headline.
  * Purely decorative — aria-hidden, pointer-events-none. Creates the
  * impression of a living community with conversations happening around
- * the visitor. 3 depth layers: background (heavy blur), midground,
- * foreground (sharp, near edges, partially cropped).
- *
- * Integrates with GSAP parallax via data-hero-chat-fragment attributes.
+ * the visitor. 3 depth layers: background (blurred, atmospheric),
+ * midground and foreground (both legible — depth comes from opacity and
+ * the panel's own backdrop-blur, not from blurring the text itself).
  */
 export function HeroChatFragments({ fragments }: HeroChatFragmentsProps) {
-  const reduceMotion = useReducedMotion();
-
-  // Layout config: position, depth layer, visibility
+  // Layout config: position, depth layer, visibility.
+  // Only `bg` carries a content blur — it's meant to stay atmospheric.
+  // `mid`/`fg` rely on opacity + panelBlur (blurs what's behind the glass
+  // panel, not the text drawn on it) so they stay readable.
   const layout = [
-    // Background layer (3) — heavy blur, low opacity, far corners
-    { top: "8%", left: "3%", blur: "blur(12px)", opacity: 0.2, layer: "bg", show: "md" },
-    { top: "15%", right: "4%", blur: "blur(14px)", opacity: 0.15, layer: "bg", show: "md" },
-    { bottom: "12%", left: "5%", blur: "blur(10px)", opacity: 0.2, layer: "bg", show: "md" },
+    // Background layer (3) — blurred, low opacity, far corners
+    { top: "8%", left: "3%", blur: "blur(8px)", opacity: 0.2, panelBlur: "backdrop-blur-sm", layer: "bg", show: "md" },
+    { top: "15%", right: "4%", blur: "blur(12px)", opacity: 0.18, panelBlur: "backdrop-blur-sm", layer: "bg", show: "md" },
+    { bottom: "12%", left: "5%", blur: "blur(10px)", opacity: 0.22, panelBlur: "backdrop-blur-sm", layer: "bg", show: "md" },
 
-    // Midground layer (4) — moderate blur, medium opacity, laterals
-    { top: "25%", left: "2%", blur: "blur(6px)", opacity: 0.35, layer: "mid", show: "md" },
-    { top: "10%", right: "2%", blur: "blur(5px)", opacity: 0.4, layer: "mid", show: "always" },
-    { bottom: "20%", right: "3%", blur: "blur(7px)", opacity: 0.3, layer: "mid", show: "md" },
-    { bottom: "30%", left: "1%", blur: "blur(6px)", opacity: 0.35, layer: "mid", show: "md" },
+    // Midground layer (4) — legible, medium-high opacity, laterals
+    { top: "25%", left: "2%", opacity: 0.55, panelBlur: "backdrop-blur-md", layer: "mid", show: "md" },
+    { top: "10%", right: "2%", opacity: 0.65, panelBlur: "backdrop-blur-md", layer: "mid", show: "always" },
+    { bottom: "20%", right: "3%", opacity: 0.55, panelBlur: "backdrop-blur-md", layer: "mid", show: "md" },
+    { bottom: "30%", left: "1%", opacity: 0.6, panelBlur: "backdrop-blur-md", layer: "mid", show: "md" },
 
-    // Foreground layer (3) — sharp, higher opacity, edges (partially cropped)
-    { top: "40%", left: "-2%", blur: "blur(2px)", opacity: 0.55, layer: "fg", show: "md" },
-    { top: "20%", right: "-1%", blur: "blur(1px)", opacity: 0.6, layer: "fg", show: "md" },
-    { bottom: "15%", right: "0%", blur: "blur(2px)", opacity: 0.5, layer: "fg", show: "always" },
+    // Foreground layer (3) — near-fully legible, edges (partially cropped)
+    { top: "40%", left: "-2%", opacity: 0.85, panelBlur: "backdrop-blur-md", layer: "fg", show: "md" },
+    { top: "20%", right: "-1%", opacity: 0.95, panelBlur: "backdrop-blur-md", layer: "fg", show: "md" },
+    { bottom: "15%", right: "0%", opacity: 0.9, panelBlur: "backdrop-blur-md", layer: "fg", show: "always" },
   ] as const;
 
   // Drift animation variants (CSS classes in globals.css)
@@ -50,6 +49,15 @@ export function HeroChatFragments({ fragments }: HeroChatFragmentsProps) {
     "hero-fragment-drift-b",
     "hero-fragment-drift-c",
   ];
+
+  // Full literal class names per layer — Tailwind's JIT scanner needs the
+  // complete class string in source, so these can't be built by
+  // interpolating an opacity number into a template string at runtime.
+  const TEXT_CLASSES = {
+    bg: { username: "text-brand-white/45", time: "text-white/20", message: "text-white/35" },
+    mid: { username: "text-brand-white/70", time: "text-white/35", message: "text-white/65" },
+    fg: { username: "text-brand-white/90", time: "text-white/45", message: "text-white/85" },
+  } as const;
 
   // Connection lines between selected fragments (SVG coordinates are % of container)
   const connections = [
@@ -100,8 +108,8 @@ export function HeroChatFragments({ fragments }: HeroChatFragmentsProps) {
           bottom: "bottom" in config ? config.bottom : undefined,
           left: "left" in config ? config.left : undefined,
           right: "right" in config ? config.right : undefined,
-          filter: config.blur,
-          opacity: reduceMotion ? config.opacity : undefined,
+          filter: "blur" in config ? config.blur : undefined,
+          opacity: config.opacity,
         };
 
         return (
@@ -113,7 +121,7 @@ export function HeroChatFragments({ fragments }: HeroChatFragmentsProps) {
             style={positionStyle}
           >
             <div
-              className="flex items-start gap-2 rounded-xl border border-white/[0.08] bg-white/[0.05] p-2.5 backdrop-blur-md"
+              className={`flex items-start gap-2 rounded-xl border border-white/[0.08] bg-white/[0.05] p-2.5 ${config.panelBlur}`}
               style={{ maxWidth: "220px" }}
             >
               {/* Avatar */}
@@ -131,10 +139,16 @@ export function HeroChatFragments({ fragments }: HeroChatFragmentsProps) {
               {/* Content */}
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline justify-between gap-1">
-                  <span className="text-[10px] font-semibold text-brand-teal">{fragment.username}</span>
-                  <span className="flex-shrink-0 text-[9px] text-white/25">{fragment.time}</span>
+                  <span className={`text-[11px] font-semibold ${TEXT_CLASSES[config.layer].username}`}>
+                    {fragment.username}
+                  </span>
+                  <span className={`flex-shrink-0 text-[9px] ${TEXT_CLASSES[config.layer].time}`}>
+                    {fragment.time}
+                  </span>
                 </div>
-                <p className="mt-0.5 text-[11px] leading-snug text-white/50">{fragment.message}</p>
+                <p className={`mt-0.5 text-xs leading-snug ${TEXT_CLASSES[config.layer].message}`}>
+                  {fragment.message}
+                </p>
               </div>
             </div>
           </div>
