@@ -29,6 +29,12 @@ export function SectionContainer({
       ? "bg-brand-dark text-brand-white"
       : "bg-brand-white text-brand-dark";
   const heightClasses = fullHeight ? "flex min-h-[100dvh] flex-col justify-center" : "";
+  // `flex-1` lets a fullHeight section's content column fill the available
+  // height itself, instead of being centered as one fixed-height block —
+  // that's what lets a child layout (e.g. HeroStage) distribute its own
+  // content top-weighted vs. bottom-weighted instead of the whole stack
+  // landing wherever its combined height happens to center to.
+  const contentClasses = fullHeight ? "flex flex-1 flex-col" : "";
 
   return (
     <section id={id} className={`relative ${backgroundClasses} ${heightClasses} py-16 md:py-24`}>
@@ -37,7 +43,7 @@ export function SectionContainer({
           {backgroundDecoration}
         </div>
       )}
-      <div className={`relative mx-auto w-full max-w-7xl px-4 md:px-8 ${className ?? ""}`}>
+      <div className={`relative mx-auto w-full max-w-7xl px-4 md:px-8 ${contentClasses} ${className ?? ""}`}>
         {children}
       </div>
     </section>

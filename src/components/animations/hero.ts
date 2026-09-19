@@ -22,7 +22,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
     const icon = container.querySelector("[data-hero-icon]");
     const showcaseGlow = container.querySelector("[data-mockup-glow]");
     const showcaseCards = container.querySelectorAll("[data-hero-showcase-card]");
-    const midLayer = container.querySelector("[data-hero-mid-layer]");
     const showcaseWrap = container.querySelector("[data-mockup-wrap]");
     const communityBar = container.querySelector("[data-hero-community]");
     const scrollIndicator = container.querySelector("[data-hero-scroll-indicator]");
@@ -103,15 +102,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
       );
     }
 
-    if (midLayer) {
-      entrance.fromTo(
-        midLayer.children,
-        { opacity: 0, scale: 0.5 },
-        { opacity: 1, scale: 1, duration: 0.5, stagger: 0.15, ease: EASE.cta },
-        1.3, // last to appear — ambient
-      );
-    }
-
     // Scroll indicator — fade in after everything else
     if (scrollIndicator) {
       entrance.fromTo(
@@ -171,56 +161,33 @@ export function initHeroAnimation(container: HTMLElement): () => void {
         );
       }
 
-      // Depth parallax: 3 layers move at different rates toward the cursor
-      // (the ambient wash used to be a 3rd layer here, but it now lives at
-      // section level via SectionContainer's backgroundDecoration slot —
-      // outside this GSAP scope — so it keeps its own CSS drift only).
-      if (midLayer || showcaseWrap || chatFragments.length) {
+      // Depth parallax + tilt on the showcase wrapper — the one deliberate
+      // cursor-driven signature interaction left in the Hero. Chat fragments
+      // used to also get their own per-layer parallax here, but that ran
+      // concurrently with their CSS drift animating the same `transform`
+      // property — the exact conflict this file's own comment above already
+      // warns about for the showcase pills (a CSS keyframe and a GSAP tween
+      // fighting over one property causes visible jank). Fragments now move
+      // via CSS drift only (see globals.css).
+      if (showcaseWrap) {
         const quickToOpts = { duration: 0.6, ease: "power3.out" };
-        const midX = midLayer ? gsap.quickTo(midLayer, "x", quickToOpts) : null;
-        const midY = midLayer ? gsap.quickTo(midLayer, "y", quickToOpts) : null;
-        const fgX = showcaseWrap ? gsap.quickTo(showcaseWrap, "x", quickToOpts) : null;
-        const fgY = showcaseWrap ? gsap.quickTo(showcaseWrap, "y", quickToOpts) : null;
-
-        // Chat fragments parallax — different speeds per depth layer
-        const chatXFns: gsap.QuickToFunc[] = [];
-        const chatYFns: gsap.QuickToFunc[] = [];
-        chatFragments.forEach((frag) => {
-          const layer = frag.getAttribute("data-layer");
-          const speed = layer === "fg" ? 5 : layer === "mid" ? 12 : 18;
-          chatXFns.push(gsap.quickTo(frag, "x", { ...quickToOpts, duration: 0.8 }));
-          chatYFns.push(gsap.quickTo(frag, "y", { ...quickToOpts, duration: 0.8 }));
-          // Store speed as data attribute for the mouse handler
-          (frag as HTMLElement).dataset.parallaxSpeed = String(speed);
-        });
+        const fgX = gsap.quickTo(showcaseWrap, "x", quickToOpts);
+        const fgY = gsap.quickTo(showcaseWrap, "y", quickToOpts);
 
         // Subtle 3D tilt on the showcase wrapper
-        let tiltX: gsap.QuickToFunc | null = null;
-        let tiltY: gsap.QuickToFunc | null = null;
-        if (showcaseWrap) {
-          gsap.set(showcaseWrap, { transformPerspective: 800 });
-          tiltX = gsap.quickTo(showcaseWrap, "rotationY", quickToOpts);
-          tiltY = gsap.quickTo(showcaseWrap, "rotationX", quickToOpts);
-        }
+        gsap.set(showcaseWrap, { transformPerspective: 800 });
+        const tiltX = gsap.quickTo(showcaseWrap, "rotationY", quickToOpts);
+        const tiltY = gsap.quickTo(showcaseWrap, "rotationX", quickToOpts);
 
         const onMouseMove = (event: MouseEvent) => {
           const rect = container.getBoundingClientRect();
           const relX = (event.clientX - rect.left) / rect.width - 0.5;
           const relY = (event.clientY - rect.top) / rect.height - 0.5;
 
-          midX?.(relX * 8);
-          midY?.(relY * 8);
-          fgX?.(relX * 3);
-          fgY?.(relY * 3);
-          tiltX?.(relX * -6);
-          tiltY?.(relY * 6);
-
-          // Chat fragments — each at its own speed based on depth layer
-          chatFragments.forEach((frag, i) => {
-            const speed = Number((frag as HTMLElement).dataset.parallaxSpeed ?? 10);
-            chatXFns[i]?.(relX * speed);
-            chatYFns[i]?.(relY * speed);
-          });
+          fgX(relX * 3);
+          fgY(relY * 3);
+          tiltX(relX * -6);
+          tiltY(relY * 6);
         };
 
         container.addEventListener("mousemove", onMouseMove);
