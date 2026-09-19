@@ -255,3 +255,39 @@ section[id] {
 .logo-cycle-0 { animation: logo-cycle-0 6s ease-in-out 1 forwards; }
 .logo-cycle-1 { animation: logo-cycle-1 6s ease-in-out 1 forwards; }
 .logo-cycle-2 { animation: logo-cycle-2 6s ease-in-out 1 forwards; }
+
+/* Hero chat fragment drift — 3 variants with different durations/directions
+   for organic, non-synchronized floating. Each fragment gets one via the
+   .hero-fragment-drift-{a,b,c} class from HeroChatFragments.tsx. */
+.hero-fragment { will-change: transform; }
+
+.hero-fragment-drift-a {
+  animation: hero-fragment-float-a 18s ease-in-out infinite;
+}
+.hero-fragment-drift-b {
+  animation: hero-fragment-float-b 22s ease-in-out infinite;
+}
+.hero-fragment-drift-c {
+  animation: hero-fragment-float-c 25s ease-in-out infinite;
+}
+
+@keyframes hero-fragment-float-a {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25%      { transform: translateY(-8px) translateX(3px); }
+  50%      { transform: translateY(-4px) translateX(-2px); }
+  75%      { transform: translateY(-10px) translateX(1px); }
+}
+
+@keyframes hero-fragment-float-b {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25%      { transform: translateY(6px) translateX(-4px); }
+  50%      { transform: translateY(-6px) translateX(2px); }
+  75%      { transform: translateY(3px) translateX(-3px); }
+}
+
+@keyframes hero-fragment-float-c {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25%      { transform: translateY(-5px) translateX(-2px); }
+  50%      { transform: translateY(7px) translateX(4px); }
+  75%      { transform: translateY(-3px) translateX(-1px); }
+}

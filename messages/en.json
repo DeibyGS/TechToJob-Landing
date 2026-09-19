@@ -8,19 +8,34 @@
     "ctaHoverLabel": "Connect with the community"
   },
   "HeroShowcase": {
-    "stats": ["New tournament", "1,200+ members", "4 opportunities"]
+    "stats": ["1 active tournament", "Open community", "100% free"]
   },
   "Nav": {
     "links": {
       "howItWorks": "How it works",
       "tournaments": "Tournaments",
       "community": "Community",
-      "companies": "Companies"
+      "companies": "Companies",
+      "testimonials": "Testimonials"
     }
   },
   "Hero": {
-    "headline": "Your tech talent deserves a real opportunity.",
-    "subheadline": "Connect, build projects, join tournaments and discover opportunities within a growing tech community."
+    "headline": "Stop sending resumes into the void.",
+    "subheadline": "TechToJob is the developer and company community where you're known for what you do, not just what's on your CV."
+  },
+  "HeroFragments": {
+    "fragments": [
+      { "username": "María", "message": "Has anyone tried this with Next.js?", "time": "2h ago" },
+      { "username": "Carlos", "message": "Here's the repo, take a look", "time": "45m ago" },
+      { "username": "Ana", "message": "Who's joining the tournament?", "time": "1h ago" },
+      { "username": "Luis", "message": "Just uploaded the project to Discord", "time": "30m ago" },
+      { "username": "Sofía", "message": "Thanks, that helped me a lot", "time": "5h ago" },
+      { "username": "Diego", "message": "Anyone know someone hiring frontend devs?", "time": "3h ago" },
+      { "username": "Laura", "message": "Looking for collaborators on an open source project", "time": "20m ago" },
+      { "username": "Pedro", "message": "When is the next tournament?", "time": "10m ago" },
+      { "username": "Elena", "message": "Just got my first job through the community", "time": "4h ago" },
+      { "username": "Javi", "message": "Can anyone review my PR?", "time": "15m ago" }
+    ]
   },
   "HowItWorks": {
     "headline": "One community. More opportunities.",
@@ -98,10 +113,13 @@
     "headline": "Meet the people building the future of tech",
     "description": "Ask questions, find collaborators, learn from experienced professionals and discover new opportunities.",
     "channels": [
-      "#jobs",
-      "#projects",
-      "#frontend",
-      "#backend",
+      "#tournaments",
+      "#community",
+      "#opportunities",
+      "#design",
+      "#open-source",
+      "#AI",
+      "#devops",
       "#networking"
     ]
   },
@@ -136,6 +154,65 @@
     "successMessage": "You're in! We'll let you know when there's something new.",
     "errorMessage": "Something went wrong. Please try again.",
     "configNotice": "Form not configured yet."
+  },
+  "Testimonials": {
+    "headline": "Real conversations from the community",
+    "description": "This is what TechToJob sounds like when people help, share and build together.",
+    "channelLabel": "general",
+    "channelDescription": "Community testimonials",
+    "prevLabel": "Previous testimonials",
+    "nextLabel": "Next testimonials",
+    "slideLabel": "Testimonial {n}",
+    "items": [
+      {
+        "name": "Alex Dev",
+        "role": "Frontend Developer",
+        "quote": "I came to ask a React question and ended up collaborating on a project with people from the server.",
+        "avatar": "AD",
+        "timestamp": "2 days ago",
+        "channel": "frontend"
+      },
+      {
+        "name": "Lucía Code",
+        "role": "Full Stack Developer",
+        "quote": "What I value most is being able to show what I'm building. Here nobody dismisses you for being junior.",
+        "avatar": "LC",
+        "timestamp": "3 days ago",
+        "channel": "projects"
+      },
+      {
+        "name": "Marcos Front",
+        "role": "UI Developer",
+        "quote": "In the #frontend channel someone solved my problem in 10 minutes. In other places I've been stuck for days.",
+        "avatar": "MF",
+        "timestamp": "5 days ago",
+        "channel": "frontend"
+      },
+      {
+        "name": "Sara Ops",
+        "role": "DevOps Engineer",
+        "quote": "I joined a tournament without expecting anything and ended up with a real project for my portfolio.",
+        "avatar": "SO",
+        "timestamp": "1 week ago",
+        "channel": "tournaments"
+      },
+      {
+        "name": "Dani Back",
+        "role": "Backend Developer",
+        "quote": "Better than LinkedIn. Here you meet people before there's a job opening.",
+        "avatar": "DB",
+        "timestamp": "2 weeks ago",
+        "channel": "networking"
+      },
+      {
+        "name": "Nuria UX",
+        "role": "Product Designer",
+        "quote": "There's a channel where people share job openings that don't appear anywhere else.",
+        "avatar": "NU",
+        "timestamp": "3 weeks ago",
+        "channel": "jobs"
+      }
+    ]
   },
   "Closing": {
     "headline": "Your next opportunity could start here.",
