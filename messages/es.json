@@ -58,7 +58,7 @@
     ]
   },
   "Talent": {
-    "headline": "Haz que tu trabajo hable por ti",
+    "headline": "Tu portfolio es tu carta de presentación",
     "description": "No necesitas años de experiencia para demostrar tu potencial. Construye, participa y haz visible lo que sabes hacer.",
     "bullets": [
       "Construye proyectos reales para tu portfolio",
@@ -75,7 +75,7 @@
     }
   },
   "Company": {
-    "headline": "Encuentra talento más allá de un CV",
+    "headline": "Conoce al profesional antes de contratarlo",
     "description": "Conoce profesionales por lo que hacen, cómo trabajan y cómo resuelven problemas. Publica oportunidades y conecta con talento tech.",
     "bullets": [
       "Descubre talento a través de proyectos y retos",

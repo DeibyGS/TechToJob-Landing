@@ -1,8 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { SectionContainer } from "@/components/ui/SectionContainer";
-import { Card } from "@/components/ui/Card";
 import { BulletList } from "@/components/ui/BulletList";
-import { DefinitionRow } from "@/components/ui/DefinitionRow";
+import { TalentCard } from "@/components/ui/TalentCard";
 import { Reveal } from "@/components/ui/Reveal";
 
 export async function TalentSection() {
@@ -11,8 +10,14 @@ export async function TalentSection() {
 
   return (
     <SectionContainer id="talent" background="light">
-      <div className="grid items-center gap-12 md:grid-cols-2">
-        <div>
+      <div className="grid items-center gap-12 lg:grid-cols-2">
+        {/* Card visual — izquierda (orden invertido en mobile) */}
+        <Reveal className="order-2 lg:order-1">
+          <TalentCard />
+        </Reveal>
+
+        {/* Texto — derecha */}
+        <div className="order-1 lg:order-2">
           <Reveal>
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
               {t("headline")}
@@ -25,23 +30,6 @@ export async function TalentSection() {
             <BulletList bullets={bullets} />
           </Reveal>
         </div>
-        <Reveal delay={0.2}>
-          <Card className="bg-brand-dark/[0.03]">
-            <DefinitionRow
-              label={t("exampleCard.stackLabel")}
-              value={t("exampleCard.stackValue")}
-            />
-            <DefinitionRow
-              label={t("exampleCard.levelLabel")}
-              value={t("exampleCard.levelValue")}
-            />
-            <DefinitionRow
-              label={t("exampleCard.availabilityLabel")}
-              value={t("exampleCard.availabilityValue")}
-              isLast
-            />
-          </Card>
-        </Reveal>
       </div>
     </SectionContainer>
   );

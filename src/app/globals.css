@@ -274,3 +274,32 @@ section[id] {
     animation: none;
   }
 }
+
+/* ── Section divider animations (ui/SectionDivider.tsx) ────────────── */
+/* Subtle pulse glow on the central diamond + line shimmer on scroll.   */
+
+@keyframes divider-diamond-pulse {
+  0%, 100% { opacity: 0.5; transform: rotate(45deg) scale(1); }
+  50%      { opacity: 0.8; transform: rotate(45deg) scale(1.15); }
+}
+
+.section-divider-diamond {
+  animation: divider-diamond-pulse 3s ease-in-out infinite;
+}
+
+@keyframes divider-line-shimmer {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 0.3; }
+}
+
+.section-divider-line {
+  animation: divider-line-shimmer 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-divider-diamond,
+  .section-divider-line {
+    animation: none;
+  }
+}
