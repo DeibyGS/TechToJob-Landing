@@ -51,13 +51,13 @@ export async function FooterSection() {
                 className="object-contain"
               />
             </span>
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-6 flex items-center gap-2">
               {SOCIAL_ICONS.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
                   aria-label={social.name}
-                  className="text-brand-white/60 transition-colors duration-200 hover:text-brand-teal"
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-brand-white/60 transition-colors duration-200 hover:text-brand-teal"
                 >
                   {social.slug ? (
                     <Image

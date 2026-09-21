@@ -84,7 +84,7 @@ export function HeroStage({
         {/* ── 1. Headline — OVERSIZED, word-by-word reveal ── */}
         <h1
           data-hero-headline
-          className="max-w-4xl text-5xl font-bold tracking-tight text-balance drop-shadow-[0_8px_30px_rgba(0,0,0,0.45)] md:text-7xl lg:text-8xl"
+          className="max-w-4xl text-4xl font-bold tracking-tight text-balance drop-shadow-[0_8px_30px_rgba(0,0,0,0.45)] sm:text-5xl md:text-7xl lg:text-8xl"
         >
           {words.map((word, i) => (
             <span key={i} data-hero-word className="inline-block overflow-hidden">

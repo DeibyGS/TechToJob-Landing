@@ -65,7 +65,7 @@ export function CompanyCard({
       {/* CTA button */}
       <button
         type="button"
-        className="mt-5 w-full rounded-xl bg-teal-600 py-3 text-center text-sm font-medium text-white transition-colors duration-150 hover:bg-teal-700"
+        className="mt-5 w-full rounded-xl bg-brand-teal py-3 text-center text-sm font-medium text-brand-dark transition-colors duration-150 hover:bg-brand-teal/90"
       >
         {cta}
       </button>
