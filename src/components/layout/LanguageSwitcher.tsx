@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/Button";
 
 type LanguageSwitcherProps = {
   currentLocale: string;
+  /** Callback when language is switched (used by mobile menu to close itself). */
+  onSwitch?: () => void;
 };
 
-export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
+export function LanguageSwitcher({ currentLocale, onSwitch }: LanguageSwitcherProps) {
   const pathname = usePathname();
 
   return (
@@ -25,13 +27,14 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
           key={locale}
           variant="pill"
           as={Link}
-          className="px-2.5 py-1"
+          className="px-3 py-2"
           label={locale.toUpperCase()}
           href={pathname}
           locale={locale}
           scroll={false}
           isActive={locale === currentLocale}
           aria-current={locale === currentLocale ? "true" : undefined}
+          onClick={onSwitch}
         />
       ))}
     </nav>

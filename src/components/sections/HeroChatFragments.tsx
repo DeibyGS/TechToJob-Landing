@@ -33,14 +33,14 @@ export function HeroChatFragments({ fragments }: HeroChatFragmentsProps) {
 
     // Midground layer (4) — legible, medium-high opacity, laterals
     { top: "25%", left: "2%", opacity: 0.55, panelBlur: "backdrop-blur-md", layer: "mid", show: "md" },
-    { top: "10%", right: "2%", opacity: 0.65, panelBlur: "backdrop-blur-md", layer: "mid", show: "always" },
+    { top: "10%", right: "2%", opacity: 0.35, panelBlur: "backdrop-blur-md", layer: "mid", show: "always" },
     { bottom: "20%", right: "3%", opacity: 0.55, panelBlur: "backdrop-blur-md", layer: "mid", show: "md" },
     { bottom: "30%", left: "1%", opacity: 0.6, panelBlur: "backdrop-blur-md", layer: "mid", show: "md" },
 
     // Foreground layer (3) — near-fully legible, edges (partially cropped)
     { top: "40%", left: "-2%", opacity: 0.85, panelBlur: "backdrop-blur-md", layer: "fg", show: "md" },
     { top: "20%", right: "-1%", opacity: 0.95, panelBlur: "backdrop-blur-md", layer: "fg", show: "md" },
-    { bottom: "15%", right: "0%", opacity: 0.9, panelBlur: "backdrop-blur-md", layer: "fg", show: "always" },
+    { bottom: "15%", right: "0%", opacity: 0.45, panelBlur: "backdrop-blur-md", layer: "fg", show: "always" },
   ] as const;
 
   // Drift animation variants (CSS classes in globals.css)

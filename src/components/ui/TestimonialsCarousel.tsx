@@ -228,14 +228,14 @@ export function TestimonialsCarousel({
         <>
           <button
             onClick={prev}
-            className="absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-3 rounded-full border border-brand-white/10 bg-brand-dark/80 p-2 text-brand-white/60 backdrop-blur-sm transition-colors hover:bg-brand-dark hover:text-brand-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal md:-translate-x-5"
+            className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-brand-white/10 bg-brand-dark/80 text-brand-white/60 backdrop-blur-sm transition-colors hover:bg-brand-dark hover:text-brand-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal md:left-0 md:-translate-x-5"
             aria-label={prevLabel}
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
             onClick={next}
-            className="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-3 rounded-full border border-brand-white/10 bg-brand-dark/80 p-2 text-brand-white/60 backdrop-blur-sm transition-colors hover:bg-brand-dark hover:text-brand-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal md:translate-x-5"
+            className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-brand-white/10 bg-brand-dark/80 text-brand-white/60 backdrop-blur-sm transition-colors hover:bg-brand-dark hover:text-brand-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal md:right-0 md:translate-x-5"
             aria-label={nextLabel}
           >
             <ChevronRight className="h-5 w-5" />
@@ -245,7 +245,7 @@ export function TestimonialsCarousel({
 
       {/* Pagination dots */}
       {items.length > visibleCount && (
-        <div className="mt-4 flex justify-center gap-2" role="tablist" aria-label="Navegación de testimonios">
+        <div className="mt-4 flex justify-center gap-1" role="tablist" aria-label="Navegación de testimonios">
           {Array.from({ length: maxIndex + 1 }, (_, i) => (
             <button
               key={i}
@@ -253,10 +253,14 @@ export function TestimonialsCarousel({
               role="tab"
               aria-selected={i === clampedIndex}
               aria-label={slideLabels[i] ?? `Slide ${i + 1}`}
-              className={`h-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal ${
-                i === clampedIndex ? "w-6 bg-brand-teal" : "w-2 bg-brand-white/30 hover:bg-brand-white/50"
-              }`}
-            />
+              className="flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+            >
+              <span
+                className={`h-2 rounded-full transition-all ${
+                  i === clampedIndex ? "w-6 bg-brand-teal" : "w-2 bg-brand-white/30 hover:bg-brand-white/50"
+                }`}
+              />
+            </button>
           ))}
         </div>
       )}

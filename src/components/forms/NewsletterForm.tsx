@@ -60,7 +60,7 @@ export function NewsletterForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <form onSubmit={handleSubmit} className="flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:items-start">
       <label htmlFor="newsletter-email" className="sr-only">
         {placeholder}
       </label>

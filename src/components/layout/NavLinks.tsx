@@ -11,6 +11,10 @@ type NavLink = { id: string; label: string };
 
 type NavLinksProps = {
   links: NavLink[];
+  /** Vertical layout for mobile menu, horizontal for desktop nav. */
+  orientation?: "horizontal" | "vertical";
+  /** Callback when a link is clicked (used by mobile menu to close itself). */
+  onLinkClick?: () => void;
 };
 
 /**
@@ -25,7 +29,7 @@ type NavLinksProps = {
  * GSAP-only-in-animations/*.ts scope the constitution reserves for real
  * scroll-driven animation (Hero/HowItWorks).
  */
-export function NavLinks({ links }: NavLinksProps) {
+export function NavLinks({ links, orientation = "horizontal", onLinkClick }: NavLinksProps) {
   const reduceMotion = useReducedMotion();
   const [activeId, setActiveId] = useState<string | null>(null);
   // While a nav click's animated scroll is in flight, the viewport sweeps
@@ -88,6 +92,9 @@ export function NavLinks({ links }: NavLinksProps) {
       commitNavScroll();
     };
 
+    // Close mobile menu if callback provided
+    onLinkClick?.();
+
     const lenis = getLenis();
     if (lenis) {
       // Header is `fixed` once revealed (see HeaderReveal.tsx) — offset the
@@ -112,13 +119,17 @@ export function NavLinks({ links }: NavLinksProps) {
     // controls read as one consistent system instead of two different ones.
     <nav
       aria-label="Sections"
-      className="hidden items-center gap-1 rounded-full border border-brand-teal/25 bg-brand-white p-1 text-sm font-semibold shadow-[0_4px_16px_rgba(132,192,191,0.2)] md:flex"
+      className={
+        orientation === "vertical"
+          ? "flex flex-col gap-1"
+          : "hidden items-center gap-1 rounded-full border border-brand-teal/25 bg-brand-white p-1 text-sm font-semibold shadow-[0_4px_16px_rgba(132,192,191,0.2)] md:flex"
+      }
     >
       {links.map(({ id, label }) => (
         <Button
           key={id}
           variant="pill"
-          className="px-3 py-1.5"
+          className={orientation === "vertical" ? "w-full px-4 py-3 text-base" : "px-3 py-1.5"}
           label={label}
           href={`#${id}`}
           onClick={(event: React.MouseEvent<HTMLAnchorElement>) => handleClick(event, id)}

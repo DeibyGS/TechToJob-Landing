@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { HeaderLogo } from "@/components/layout/HeaderLogo";
 import { NavLinks } from "@/components/layout/NavLinks";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { MobileMenu } from "@/components/layout/MobileMenu";
 import { HeaderReveal } from "@/components/layout/HeaderReveal";
 
 export async function Header({ locale }: { locale: string }) {
@@ -17,10 +18,15 @@ export async function Header({ locale }: { locale: string }) {
 
   return (
     <HeaderReveal>
-      <header className="flex h-16 items-center justify-between gap-4 px-4 md:h-20 md:px-8">
+      <header className="relative flex h-16 items-center justify-between gap-4 px-4 md:h-20 md:px-8">
         <HeaderLogo />
-        <NavLinks links={links} />
-        <LanguageSwitcher currentLocale={locale} />
+        {/* Desktop: horizontal nav + language switcher */}
+        <div className="hidden items-center gap-2 md:flex">
+          <NavLinks links={links} />
+          <LanguageSwitcher currentLocale={locale} />
+        </div>
+        {/* Mobile: hamburger menu (contains nav + language switcher) */}
+        <MobileMenu links={links} currentLocale={locale} />
       </header>
     </HeaderReveal>
   );

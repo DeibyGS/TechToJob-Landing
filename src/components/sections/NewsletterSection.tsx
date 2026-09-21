@@ -18,7 +18,7 @@ export async function NewsletterSection() {
           <p className="mt-4 text-brand-white/70">{t("description")}</p>
         </Reveal>
         <Reveal delay={0.2}>
-          <div className="mt-8 text-left">
+          <div className="mt-8 text-center sm:text-left">
             <NewsletterForm
               placeholder={t("placeholder")}
               submitLabel={t("submitLabel")}

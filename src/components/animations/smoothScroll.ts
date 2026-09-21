@@ -26,6 +26,11 @@ export function initSmoothScroll(): () => void {
     return () => {};
   }
 
+  // Skip Lenis on mobile — native scroll is smoother on touch devices
+  if (window.innerWidth < 768) {
+    return () => {};
+  }
+
   const lenis = new Lenis();
   activeLenis = lenis;
   const onTick = (time: number) => lenis.raf(time * 1000);
