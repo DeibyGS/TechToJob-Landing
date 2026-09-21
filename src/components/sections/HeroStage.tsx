@@ -77,6 +77,7 @@ export function HeroStage({
           alt="TechToJob"
           width={613}
           height={340}
+          priority
           className="h-12 w-auto md:h-24"
         />
 
