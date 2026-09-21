@@ -30,6 +30,13 @@ const ORGANIZATION_JSON_LD = {
   ],
 };
 
+const WEBSITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "TechToJob",
+  url: SITE_URL,
+};
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -41,10 +48,14 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
-    title: t("title"),
+    metadataBase: new URL(SITE_URL),
+    title: {
+      template: `%s | TechToJob`,
+      default: t("title"),
+    },
     description: t("description"),
     alternates: {
-      canonical: `${SITE_URL}/${locale}`,
+      canonical: `/${locale}`,
       languages: {
         es: `${SITE_URL}/es`,
         en: `${SITE_URL}/en`,
@@ -52,6 +63,25 @@ export async function generateMetadata({
       },
     },
     openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: `${SITE_URL}/${locale}`,
+      siteName: "TechToJob",
+      locale: locale === "es" ? "es_ES" : "en_US",
+      type: "website",
+      images: [
+        {
+          url: `${SITE_URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: "TechToJob",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
       images: [`${SITE_URL}/og-image.png`],
     },
   };
@@ -75,6 +105,10 @@ export default async function LocaleLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
         />
         <SmoothScrollProvider>
           <NextIntlClientProvider>{children}</NextIntlClientProvider>

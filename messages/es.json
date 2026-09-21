@@ -163,6 +163,7 @@
     "prevLabel": "Testimonios anteriores",
     "nextLabel": "Siguientes testimonios",
     "slideLabel": "Testimonio {n}",
+    "paginationLabel": "Navegación de testimonios",
     "items": [
       {
         "name": "Alex Dev",

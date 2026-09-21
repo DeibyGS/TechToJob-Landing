@@ -163,6 +163,7 @@
     "prevLabel": "Previous testimonials",
     "nextLabel": "Next testimonials",
     "slideLabel": "Testimonial {n}",
+    "paginationLabel": "Testimonials navigation",
     "items": [
       {
         "name": "Alex Dev",

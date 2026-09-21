@@ -32,6 +32,7 @@ export async function TestimonialsSection() {
           prevLabel={t("prevLabel")}
           nextLabel={t("nextLabel")}
           slideLabels={slideLabels}
+          paginationLabel={t("paginationLabel")}
         />
       </Reveal>
     </SectionContainer>
