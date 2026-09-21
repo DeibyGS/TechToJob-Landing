@@ -101,6 +101,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={sora.variable}>
+      <head>
+        <link rel="preconnect" href="https://cdn.simpleicons.org" />
+        <link rel="preconnect" href="https://api.dicebear.com" />
+      </head>
       <body className="min-h-screen bg-brand-white text-brand-dark antialiased">
         <script
           type="application/ld+json"
