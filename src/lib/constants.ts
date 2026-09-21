@@ -5,9 +5,9 @@ export const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/techtojob",
 } as const;
 
-// Final production domain TBD — placeholder until the project owner
-// confirms it (see docs/ARCHITECTURE.md evolution notes).
-export const SITE_URL = "https://techtojob.com";
+// TODO: Switch to custom domain once DNS is configured and verified.
+// Tracked in docs/ARCHITECTURE.md evolution notes.
+export const SITE_URL = "https://tech-to-job-landing-nine.vercel.app";
 
 // The header's real rendered height at the desktop breakpoint every
 // scroll-position calculation below cares about (`Header.tsx`'s `md:h-20`

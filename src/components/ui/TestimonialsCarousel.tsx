@@ -22,6 +22,7 @@ type TestimonialsCarouselProps = {
   prevLabel: string;
   nextLabel: string;
   slideLabels: string[];
+  paginationLabel: string;
 };
 
 const VISIBLE_DESKTOP = 3;
@@ -36,6 +37,7 @@ export function TestimonialsCarousel({
   prevLabel,
   nextLabel,
   slideLabels,
+  paginationLabel,
 }: TestimonialsCarouselProps) {
   const reduceMotion = useReducedMotion();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -145,7 +147,7 @@ export function TestimonialsCarousel({
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="group"
-      aria-roledescription="carrusel"
+      aria-roledescription="carousel"
       aria-label={channelDescription}
     >
       {/* Discord-like channel header */}
@@ -174,7 +176,7 @@ export function TestimonialsCarousel({
               className="flex-shrink-0 px-3 py-1"
               style={{ width: `${100 / visibleCount}%` }}
               role="group"
-              aria-roledescription="diapositiva"
+              aria-roledescription="slide"
               aria-label={slideLabels[index] ?? `Slide ${index + 1}`}
             >
               <motion.article
@@ -245,7 +247,7 @@ export function TestimonialsCarousel({
 
       {/* Pagination dots */}
       {items.length > visibleCount && (
-        <div className="mt-4 flex justify-center gap-2" role="tablist" aria-label="Navegación de testimonios">
+        <div className="mt-4 flex justify-center gap-2" role="tablist" aria-label={paginationLabel}>
           {Array.from({ length: maxIndex + 1 }, (_, i) => (
             <button
               key={i}
