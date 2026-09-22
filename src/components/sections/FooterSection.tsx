@@ -27,13 +27,13 @@ export async function FooterSection() {
       id="footer"
       background="dark"
       backgroundDecoration={
-        <div className="pointer-events-none flex items-center justify-end" aria-hidden="true">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-end overflow-hidden" aria-hidden="true">
           <Image
             src="/logo/simbolo-negativo.svg"
             alt=""
-            width={500}
-            height={500}
-            className="h-auto w-[400px] opacity-[0.04]"
+            width={600}
+            height={600}
+            className="h-full w-auto opacity-[0.04] object-contain"
           />
         </div>
       }
@@ -100,10 +100,10 @@ export async function FooterSection() {
           ))}
         </div>
 
-        {/* Bottom bar: privacy/terms centered + copyright centered + back to top */}
+        {/* Bottom bar: privacy/terms left · copyright center · back to top right */}
         <div className="mt-12 border-t border-brand-teal/30 pt-6">
-          <div className="flex flex-col items-center gap-4">
-            {/* Privacy + Terms */}
+          <div className="flex flex-col items-center gap-3 md:flex-row md:justify-between">
+            {/* Privacy + Terms — left */}
             <div className="flex items-center gap-4 text-sm text-brand-white/50">
               <a href="#privacy" className="relative transition-colors duration-200 hover:text-brand-teal hover:drop-shadow-[0_0_6px_rgba(132,192,191,0.5)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-teal after:transition-all after:duration-300 hover:after:w-full">
                 {t("privacy")}
@@ -114,12 +114,12 @@ export async function FooterSection() {
               </a>
             </div>
 
-            {/* Copyright — centered */}
+            {/* Copyright — center */}
             <p className="text-sm text-brand-white/50">
               &copy; {year} TechToJob. {t("rights")}
             </p>
 
-            {/* Back to top */}
+            {/* Back to top — right */}
             <BackToTop label={t("backToTop")} />
           </div>
         </div>
