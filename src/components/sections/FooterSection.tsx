@@ -8,14 +8,12 @@ const FOOTER_LINK_HREFS: Record<string, string[]> = {
   talent: ["#talent", "#tournaments"],
   companies: ["#companies"],
   community: [SOCIAL_LINKS.discord, "#networking"],
-  legal: ["#privacy", "#terms"],
 };
 
 const SIMPLE_ICONS_COLOR = "84c0bf";
 
 const SOCIAL_ICONS = [
   { name: "Discord", href: SOCIAL_LINKS.discord, slug: "discord" },
-  { name: "LinkedIn", href: SOCIAL_LINKS.linkedin, slug: "linkedin" },
   { name: "X", href: SOCIAL_LINKS.x, slug: "x" },
   { name: "Instagram", href: SOCIAL_LINKS.instagram, slug: "instagram" },
 ] as const;
@@ -74,6 +72,20 @@ export async function FooterSection() {
                   />
                 </a>
               ))}
+              {/* LinkedIn — hand-coded badge for visual distinction */}
+              <a
+                href={SOCIAL_LINKS.linkedin}
+                aria-label="LinkedIn"
+                rel="noopener noreferrer"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-brand-white/60 transition-colors duration-200 hover:text-brand-teal"
+              >
+                <span
+                  aria-hidden="true"
+                  className="flex h-6 w-6 items-center justify-center rounded-sm bg-brand-teal text-xs font-bold text-brand-dark"
+                >
+                  in
+                </span>
+              </a>
             </div>
           </div>
 
@@ -88,13 +100,26 @@ export async function FooterSection() {
           ))}
         </div>
 
-        {/* Bottom bar: copyright + back to top */}
+        {/* Bottom bar: privacy/terms centered + copyright centered + back to top */}
         <div className="mt-12 border-t border-brand-teal/30 pt-6">
-          <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
+          <div className="flex flex-col items-center gap-4">
+            {/* Privacy + Terms */}
+            <div className="flex items-center gap-4 text-sm text-brand-white/50">
+              <a href="#privacy" className="relative transition-colors duration-200 hover:text-brand-teal hover:drop-shadow-[0_0_6px_rgba(132,192,191,0.5)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-teal after:transition-all after:duration-300 hover:after:w-full">
+                {t("privacy")}
+              </a>
+              <span aria-hidden="true">|</span>
+              <a href="#terms" className="relative transition-colors duration-200 hover:text-brand-teal hover:drop-shadow-[0_0_6px_rgba(132,192,191,0.5)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-teal after:transition-all after:duration-300 hover:after:w-full">
+                {t("terms")}
+              </a>
+            </div>
+
+            {/* Copyright — centered */}
             <p className="text-sm text-brand-white/50">
               &copy; {year} TechToJob. {t("rights")}
             </p>
 
+            {/* Back to top */}
             <BackToTop label={t("backToTop")} />
           </div>
         </div>

@@ -255,15 +255,10 @@
           "Discord",
           "Networking"
         ]
-      },
-      "legal": {
-        "title": "Legal",
-        "links": [
-          "Privacy",
-          "Terms"
-        ]
       }
     },
+    "privacy": "Privacy",
+    "terms": "Terms",
     "backToTop": "Back to top",
     "rights": "All rights reserved."
   }
