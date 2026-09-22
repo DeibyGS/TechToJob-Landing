@@ -97,15 +97,18 @@
     "steps": [
       {
         "title": "Reto",
-        "description": "Recibe un brief claro y resuelve un problema real con tu propio enfoque."
+        "description": "Recibe un brief claro y resuelve un problema real con tu propio enfoque.",
+        "gain": "Aprender haciendo con un caso real"
       },
       {
         "title": "Entrega",
-        "description": "Construye tu solución y presenta tu trabajo dentro del plazo establecido."
+        "description": "Construye tu solución y presenta tu trabajo dentro del plazo establecido.",
+        "gain": "Un proyecto deployado que mostrar"
       },
       {
         "title": "Jurado",
-        "description": "Tu proyecto se evalúa con criterios claros y públicos por un jurado."
+        "description": "Tu proyecto se evalúa con criterios claros y públicos por un jurado.",
+        "gain": "Feedback real de gente del sector"
       }
     ]
   },
@@ -121,7 +124,18 @@
       "#IA",
       "#devops",
       "#networking"
-    ]
+    ],
+    "channelDescriptions": [
+      "Resultados, discusiones y feedback de cada torneo",
+      "Charlas, proyectos y cosas que la gente está haciendo",
+      "Ofertas que alguien comparte porque conoce a quien contrata",
+      "UI, UX, brand y todo lo que se ve en pantalla",
+      "Repos, contribuciones y código abierto",
+      "Modelos, agentes, herramientas y tendencias",
+      "Infra, CI/CD, cloud y todo lo que mueve las apps",
+      "Conecta con gente del sector y amplía tu red"
+    ],
+    "activityStrip": "Canales activos · Temas abiertos · Gente respondiendo"
   },
   "News": {
     "headline": "Lo que está pasando en TechToJob",
@@ -220,6 +234,7 @@
     "description": "Únete a TechToJob, conoce a la comunidad y empieza a construir tu camino en tech."
   },
   "Footer": {
+    "tagline": "La comunidad donde desarrolladores y empresas se conocen antes de que exista una vacante.",
     "columns": {
       "talent": {
         "title": "Talento",
@@ -245,6 +260,6 @@
     "privacy": "Privacidad",
     "terms": "Términos",
     "backToTop": "Volver arriba",
-    "legalNotice": "© 2026 TechToJob. Todos los derechos reservados."
+    "rights": "Todos los derechos reservados."
   }
 }
