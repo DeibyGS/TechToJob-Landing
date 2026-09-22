@@ -8,19 +8,21 @@ const FOOTER_LINK_HREFS: Record<string, string[]> = {
   talent: ["#talent", "#tournaments"],
   companies: ["#companies"],
   community: [SOCIAL_LINKS.discord, "#networking"],
+  legal: ["#privacy", "#terms"],
 };
 
 const SIMPLE_ICONS_COLOR = "84c0bf";
 
 const SOCIAL_ICONS = [
   { name: "Discord", href: SOCIAL_LINKS.discord, slug: "discord" },
-  { name: "LinkedIn", href: SOCIAL_LINKS.linkedin, slug: null },
+  { name: "LinkedIn", href: SOCIAL_LINKS.linkedin, slug: "linkedin" },
   { name: "X", href: SOCIAL_LINKS.x, slug: "x" },
   { name: "Instagram", href: SOCIAL_LINKS.instagram, slug: "instagram" },
 ] as const;
 
 export async function FooterSection() {
   const t = await getTranslations("Footer");
+  const year = new Date().getFullYear();
 
   return (
     <SectionContainer
@@ -40,41 +42,36 @@ export async function FooterSection() {
     >
       <footer className="relative">
         <div className="grid gap-10 md:grid-cols-4">
-          {/* Logo + social icons */}
+          {/* Logo + tagline + social icons */}
           <div>
             <span className="relative block h-8 w-[140px]">
               <Image
-                src="/logo/v1Negativo.png"
+                src="/logo/logo-negative.svg"
                 alt="TechToJob"
                 fill
                 sizes="140px"
                 className="object-contain"
               />
             </span>
+            <p className="mt-3 max-w-[200px] text-xs leading-relaxed text-brand-white/40">
+              {t("tagline")}
+            </p>
             <div className="mt-6 flex items-center gap-2">
               {SOCIAL_ICONS.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
                   aria-label={social.name}
+                  rel="noopener noreferrer"
                   className="flex h-11 w-11 items-center justify-center rounded-full text-brand-white/60 transition-colors duration-200 hover:text-brand-teal"
                 >
-                  {social.slug ? (
-                    <Image
-                      src={`https://cdn.simpleicons.org/${social.slug}/${SIMPLE_ICONS_COLOR}`}
-                      alt=""
-                      width={24}
-                      height={24}
-                      unoptimized
-                    />
-                  ) : (
-                    <span
-                      aria-hidden="true"
-                      className="flex h-6 w-6 items-center justify-center rounded-sm bg-brand-teal text-xs font-bold text-brand-dark"
-                    >
-                      in
-                    </span>
-                  )}
+                  <Image
+                    src={`https://cdn.simpleicons.org/${social.slug}/${SIMPLE_ICONS_COLOR}`}
+                    alt=""
+                    width={24}
+                    height={24}
+                    unoptimized
+                  />
                 </a>
               ))}
             </div>
@@ -91,26 +88,13 @@ export async function FooterSection() {
           ))}
         </div>
 
-        {/* Bottom bar: legal links + copyright + back to top */}
+        {/* Bottom bar: copyright + back to top */}
         <div className="mt-12 border-t border-brand-teal/30 pt-6">
           <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
-            {/* Legal links */}
-            <div className="flex items-center gap-4 text-sm text-brand-white/50">
-              <a href="#privacy" className="relative transition-colors duration-200 hover:text-brand-teal hover:drop-shadow-[0_0_6px_rgba(132,192,191,0.5)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-teal after:transition-all after:duration-300 hover:after:w-full">
-                {t("privacy")}
-              </a>
-              <span aria-hidden="true">|</span>
-              <a href="#terms" className="relative transition-colors duration-200 hover:text-brand-teal hover:drop-shadow-[0_0_6px_rgba(132,192,191,0.5)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-teal after:transition-all after:duration-300 hover:after:w-full">
-                {t("terms")}
-              </a>
-            </div>
-
-            {/* Copyright */}
             <p className="text-sm text-brand-white/50">
-              {t("legalNotice")}
+              &copy; {year} TechToJob. {t("rights")}
             </p>
 
-            {/* Back to top */}
             <BackToTop label={t("backToTop")} />
           </div>
         </div>

@@ -234,6 +234,7 @@
     "description": "Únete a TechToJob, conoce a la comunidad y empieza a construir tu camino en tech."
   },
   "Footer": {
+    "tagline": "La comunidad donde desarrolladores y empresas se conocen antes de que exista una vacante.",
     "columns": {
       "talent": {
         "title": "Talento",
@@ -254,11 +255,16 @@
           "Discord",
           "Networking"
         ]
+      },
+      "legal": {
+        "title": "Legal",
+        "links": [
+          "Privacidad",
+          "Términos"
+        ]
       }
     },
-    "privacy": "Privacidad",
-    "terms": "Términos",
     "backToTop": "Volver arriba",
-    "legalNotice": "© 2026 TechToJob. Todos los derechos reservados."
+    "rights": "Todos los derechos reservados."
   }
 }

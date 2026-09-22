@@ -234,6 +234,7 @@
     "description": "Join TechToJob, meet the community and start building your path in tech."
   },
   "Footer": {
+    "tagline": "The community where developers and companies meet before a job opening exists.",
     "columns": {
       "talent": {
         "title": "Talent",
@@ -254,11 +255,16 @@
           "Discord",
           "Networking"
         ]
+      },
+      "legal": {
+        "title": "Legal",
+        "links": [
+          "Privacy",
+          "Terms"
+        ]
       }
     },
-    "privacy": "Privacy",
-    "terms": "Terms",
     "backToTop": "Back to top",
-    "legalNotice": "© 2026 TechToJob. All rights reserved."
+    "rights": "All rights reserved."
   }
 }
