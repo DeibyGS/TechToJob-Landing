@@ -26,6 +26,7 @@ export async function FooterSection() {
     <SectionContainer
       id="footer"
       background="dark"
+      padding="compact"
       backgroundDecoration={
         <div className="pointer-events-none absolute inset-0 flex items-center justify-end overflow-hidden" aria-hidden="true">
           <Image
@@ -101,7 +102,7 @@ export async function FooterSection() {
         </div>
 
         {/* Bottom bar: privacy/terms left · copyright center · back to top right */}
-        <div className="mt-12 border-t border-brand-teal/30 pt-6">
+        <div className="mt-8 border-t border-brand-teal/30 pt-5">
           <div className="flex flex-col items-center gap-3 md:flex-row md:justify-between">
             {/* Privacy + Terms — left */}
             <div className="flex items-center gap-4 text-sm text-brand-white/50">

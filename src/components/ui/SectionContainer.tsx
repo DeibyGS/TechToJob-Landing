@@ -5,6 +5,8 @@ type SectionContainerProps = {
   className?: string;
   background?: "light" | "dark";
   id?: string;
+  /** Vertical padding preset: "default" = py-16/py-24, "compact" = py-10/py-14, "none" = no padding. */
+  padding?: "default" | "compact" | "none";
   /** Fills the initial viewport height and vertically centers content — for
    * a section that should be the first full-screen impression (currently
    * only Hero). Opt-in, so every other section's layout is unaffected. */
@@ -16,11 +18,18 @@ type SectionContainerProps = {
   backgroundDecoration?: ReactNode;
 };
 
+const PADDING_CLASSES: Record<NonNullable<SectionContainerProps["padding"]>, string> = {
+  default: "py-16 md:py-24",
+  compact: "py-10 md:py-14",
+  none: "",
+};
+
 export function SectionContainer({
   children,
   className,
   background = "light",
   id,
+  padding = "default",
   fullHeight,
   backgroundDecoration,
 }: SectionContainerProps) {
@@ -37,7 +46,7 @@ export function SectionContainer({
   const contentClasses = fullHeight ? "flex flex-1 flex-col" : "";
 
   return (
-    <section id={id} className={`relative ${backgroundClasses} ${heightClasses} py-16 md:py-24`}>
+    <section id={id} className={`relative ${backgroundClasses} ${heightClasses} ${PADDING_CLASSES[padding]}`}>
       {backgroundDecoration && (
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           {backgroundDecoration}
