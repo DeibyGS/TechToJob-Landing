@@ -91,10 +91,10 @@ specs/                spec-driven development artifacts (kept public on purpose)
 
 ### Lighthouse
 
-| Device | Performance | Accessibility | Best Practices | SEO |
-|---|---|---|---|---|
-| Mobile | 96 | 100 | 100 | 100 |
-| Desktop | 100 | 100 | 100 | 100 |
+| Device | Performance | Accessibility | Best Practices | SEO | Agentic Browsing |
+|---|---|---|---|---|---|
+| Mobile | 94 | 100 | 100 | 100 | 2/2 |
+| Desktop | 100 | 100 | 100 | 100 | 2/2 |
 
 Measured with [PageSpeed Insights](https://pagespeed.web.dev) on the
 deployed site (clean browser, no extensions).
