@@ -1,7 +1,7 @@
 {
   "Metadata": {
     "title": "TechToJob — Comunidad tech para talento y empresas",
-    "description": "Conecta con talento tech, encuentra oportunidades, participa en proyectos y demuestra lo que sabes en una comunidad creada para crecer juntos."
+    "description": "Comunidad de desarrolladores y empresas tech en español. Entra al Discord, participa en torneos y deja que las empresas te vean trabajar antes de una vacante."
   },
   "CommunityCta": {
     "ctaLabel": "Unirse a la comunidad",
@@ -180,7 +180,7 @@
   },
   "Newsletter": {
     "headline": "No te pierdas la próxima oportunidad",
-    "description": "Novedades, torneos y oportunidades de TechToJob. Pocos emails, buenas oportunidades. Te das de baja cuando quieras.",
+    "description": "Novedades, torneos y oportunidades de TechToJob. Te llega un correo a la semana. Te das de baja cuando quieras.",
     "placeholder": "tu@correo.com",
     "submitLabel": "Quiero recibirlas",
     "successMessage": "¡Listo! Te avisaremos cuando haya novedades.",

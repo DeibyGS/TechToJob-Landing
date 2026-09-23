@@ -1,7 +1,7 @@
 {
   "Metadata": {
     "title": "TechToJob — A Tech Community for Talent and Companies",
-    "description": "Connect with tech talent, discover opportunities, build projects and prove your skills in a community built to grow together."
+    "description": "Spanish-speaking community of tech developers and companies. Join the Discord, compete in tournaments and let companies see you work before a job opens."
   },
   "CommunityCta": {
     "ctaLabel": "Join the community",
@@ -180,7 +180,7 @@
   },
   "Newsletter": {
     "headline": "Don't miss the next opportunity",
-    "description": "TechToJob news, tournaments and opportunities. Few emails, good opportunities. Unsubscribe whenever you want.",
+    "description": "TechToJob news, tournaments and opportunities. One email a week. Unsubscribe whenever you want.",
     "placeholder": "you@email.com",
     "submitLabel": "Keep me updated",
     "successMessage": "You're in! We'll let you know when there's something new.",

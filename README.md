@@ -1,60 +1,129 @@
-# TechToJob-Landing
+# TechToJob — Landing
 
-Static, bilingual (es/en) marketing landing for **TechToJob**, a Discord-first
-tech community — built for a design/dev competition. See `docs/ARCHITECTURE.md`
-for the full technical picture and `AGENTS.md` for AI-agent conventions.
+Landing page for **TechToJob**, a Spanish-speaking tech community on Discord
+where developers and companies get to know each other before a job opening
+exists. Built as an entry for **Torneo #2** of the TechToJob community.
+
+**Live:** https://tech-to-job-landing-nine.vercel.app
+
+> Positioning (from the brief): *TechToJob is not a job board, it's a
+> community.* Every section is written to support that idea — the page never
+> reads as one more job portal.
+
+---
+
+## Stack
+
+| Layer | Choice | Why |
+|---|---|---|
+| Framework | Next.js 16 (App Router), React 19 | Recommended stack in the brief — integrates as-is into the final site |
+| Language | TypeScript (strict) | |
+| Styling | Tailwind CSS v4 (CSS-first `@theme`, no config file) | Required by the brief |
+| i18n | `next-intl` — `/es` (default) and `/en` | Optional bilingual delivery from the rules update |
+| Motion | GSAP + ScrollTrigger (scroll choreography), Motion (component transitions), Lenis (desktop smooth scroll) | See [ADR-001](docs/adr/ADR-001-hybrid-motion-gsap-stack.md) |
+| Icons | `lucide-react` | No emoji anywhere in the UI |
+| Newsletter | Formspree (single POST from the form) | No backend of our own |
+| Hosting | Vercel | Fully static (SSG per locale) |
 
 ## Getting started
 
 ```bash
 npm install
-npm run dev
+cp .env.local.example .env.local   # set NEXT_PUBLIC_FORMSPREE_FORM_ID
+npm run dev                        # http://localhost:3000 → redirects to /es
 ```
 
-Open [http://localhost:3000](http://localhost:3000) — it redirects to the
-default locale (`/es`).
+| Command | What it does |
+|---|---|
+| `npm run build` | Production build (static `/es` and `/en`) |
+| `npm run lint` | ESLint |
+| `npx tsc --noEmit` | Type check |
 
-Copy `.env.local.example` to `.env.local` and set
-`NEXT_PUBLIC_FORMSPREE_FORM_ID` to enable the newsletter form.
+## Sections
 
-## Verifying a change
+All 11 required blocks, in the brief's suggested order (no reordering was
+needed):
 
-No automated test suite for v1 (see `docs/TESTING.md` for why). Before every
-PR, run:
+1. **Hero** — what TechToJob is, one single CTA: join the Discord
+2. **How it works** — the path from joining to an opportunity, in 3 steps
+3. **Talent** — publish your profile (stack, level, availability)
+4. **Companies** — publish what you're looking for, see people work
+5. **Tournaments** — challenge → submissions → public-criteria jury → real use
+6. **Networking** — area channels and a live-style Discord preview
+7. **Testimonials** — 5 placeholder cards with room for photo and profile link
+8. **News** — 3 sample entries (title, date, category, summary)
+9. **Newsletter** — what arrives, how often, no spam; button says what you get
+10. **Closing** — last push before the footer
+11. **Footer** — link blocks, social networks, legal
 
-```bash
-npm ci
-npm run build     # confirms SSG of /es and /en
-npm run lint
-npx tsc --noEmit
-npm run start      # smoke test the production build, not `next dev`
+## Project structure
+
+```
+src/
+  app/[locale]/       layout (metadata, JSON-LD, fonts) + page (section order)
+  components/
+    sections/         one file per landing section
+    layout/           header, nav, mobile menu, language switcher
+    ui/               reused primitives (Button, Card, SectionContainer…)
+    forms/            NewsletterForm — the only file that knows about Formspree
+    animations/       GSAP / Lenis setup, isolated from components
+  lib/constants.ts    social links, site URL, shared sizes
+messages/{es,en}.json all user-facing copy — nothing hardcoded in .tsx
+docs/                 constitution, architecture, design tokens, ADRs
+specs/                spec-driven development artifacts (kept public on purpose)
 ```
 
-Then manually check, on the running production build:
+## SEO and accessibility checklist
 
-- View source on `/es` and `/en`: `<html lang="es"|"en">` and
-  `<link rel="alternate" hreflang="es"|"en"|"x-default">` present in the
-  actual HTML.
-- Language switcher works with JavaScript disabled (it's a real link).
-- All 10 sections render in order; Hero and Closing CTAs open the Discord
-  invite; footer social links point to the confirmed LinkedIn/X/Instagram
-  URLs.
-- Newsletter form: submit a test address, confirm it lands in the Formspree
-  dashboard and the on-page success message renders.
-- Lighthouse (Performance/Accessibility/SEO/Best Practices) — check the
-  brand-teal contrast usage specifically passes the accessibility audit.
-- Responsive at 375px / 768px / 1440px — no horizontal overflow, no broken
-  wrapping on the longest placeholder strings in either locale.
+- One `<h1>` (Hero), h2/h3 hierarchy with no skipped levels
+- Semantic landmarks: `header`, `nav`, `main`, `section`, `article`, `footer`
+- Metadata API with `title.template` (`%s | TechToJob`) and `metadataBase`
+- Canonical, `hreflang` (`es`, `en`, `x-default`) and correct `lang` per locale
+- Open Graph + Twitter Card with a 1200×630 image
+- JSON-LD `Organization` (name, logo, URL, social profiles)
+- `sitemap.xml` and `robots.txt` generated by the app
+- Language switcher is a real link (works without JavaScript)
+- Sora via `next/font`, 3 weights (400/600/700)
+- Images in WebP through `next/image`, explicit sizes, lazy below the fold,
+  LCP image loaded eagerly with `fetchPriority="high"`
+- Touch targets ≥ 44×44 px, `prefers-reduced-motion` respected everywhere
+- Brand teal `#84c0bf` never used for small text on white (contrast rule)
 
-## Docs
+### Lighthouse (mobile)
 
-- `docs/ARCHITECTURE.md` — chosen architecture, alternatives, evolution path
-- `docs/DESIGN.md` — brand tokens, contrast rules, reusable components
-- `docs/API.md` / `docs/TESTING.md` — not applicable for v1 (see each file)
-- `docs/constitution.md` — non-negotiable project principles
+| Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|
+| 97 | 100 | 100 | 100 |
+
+Measured with [PageSpeed Insights](https://pagespeed.web.dev) on the
+deployed site (clean browser, no extensions).
+
+## Image and asset sources
+
+Every asset is free for commercial use, as the brief requires.
+
+| Asset | Source | License |
+|---|---|---|
+| TechToJob logo and symbol (`public/logo/`) | Provided by TechToJob in the tournament resources | Brand asset |
+| Photos and backgrounds in `public/images/` (testimonials, community, news, newsletter, closing) | AI-generated for this project with [Google Gemini](https://gemini.google.com). No real people are depicted. | Google does not claim ownership of generated content ([Generative AI terms](https://policies.google.com/terms/generative-ai)) |
+| UI icons | [Lucide](https://lucide.dev) | ISC |
+| Brand icons (Discord, X, Instagram) | [Simple Icons](https://simpleicons.org) | CC0 |
+| Fallback avatars | [DiceBear](https://www.dicebear.com) — *Avataaars* by Pablo Stanley | Free for personal and commercial use |
+| Typeface | [Sora](https://fonts.google.com/specimen/Sora) (Google Fonts) | SIL Open Font License |
+
+## Documentation
+
+- [`docs/constitution.md`](docs/constitution.md) — non-negotiable project principles
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — architecture, alternatives, evolution path
+- [`docs/DESIGN.md`](docs/DESIGN.md) — brand tokens, contrast rules, components
+- [`docs/adr/`](docs/adr) — architecture decision records
+- [`AGENTS.md`](AGENTS.md) — conventions for AI coding agents
 
 ## Deploy
 
-Deployed via Vercel, connected to this repo. Set
-`NEXT_PUBLIC_FORMSPREE_FORM_ID` in the Vercel project's environment
-variables before promoting to production.
+Deployed on Vercel from this repository. Set `NEXT_PUBLIC_FORMSPREE_FORM_ID`
+in the Vercel project's environment variables so the newsletter form works.
+
+## Author
+
+Deiby Gorrin — [GitHub @DeibyGS](https://github.com/DeibyGS)

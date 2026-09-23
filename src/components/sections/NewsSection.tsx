@@ -51,6 +51,7 @@ function NewsCard({
   if (featured) {
     return (
       <Card
+        as="article"
         border="light"
         className="relative flex h-full flex-col overflow-hidden bg-brand-dark text-brand-white md:flex-row md:items-center md:gap-10"
       >
@@ -70,7 +71,7 @@ function NewsCard({
           <CategoryBadge category={item.category} />
           <h3 className="mt-4 text-2xl font-semibold md:text-3xl">{item.title}</h3>
           <p className="mt-3 text-brand-white/70">{item.summary}</p>
-          <ReadMoreLink label={readMoreLabel} onDark />
+          <ReadMoreLink label={readMoreLabel} title={item.title} onDark />
         </div>
         <span className="relative mt-6 flex shrink-0 items-center gap-1.5 text-sm text-brand-white/50 md:mt-0">
           <Calendar className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
@@ -81,7 +82,7 @@ function NewsCard({
   }
 
   return (
-    <Card className="relative flex h-full flex-col overflow-hidden">
+    <Card as="article" className="relative flex h-full flex-col overflow-hidden">
       <Image
         src="/images/news/regular-card-texture.webp"
         alt=""
@@ -98,7 +99,7 @@ function NewsCard({
           <Calendar className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
           {item.date}
         </span>
-        <ReadMoreLink label={readMoreLabel} />
+        <ReadMoreLink label={readMoreLabel} title={item.title} />
       </div>
     </Card>
   );
@@ -115,7 +116,9 @@ function CategoryBadge({ category }: { category: string }) {
 
 // Same underline-grow + teal-glow hover as the footer's links — a deliberate
 // reused pattern so any interactive text link on the site reads the same way.
-function ReadMoreLink({ label, onDark }: { label: string; onDark?: boolean }) {
+// base.md bans bare "read more" link text: the visible label stays short,
+// but the accessible name (screen readers, crawlers) includes the entry title.
+function ReadMoreLink({ label, title, onDark }: { label: string; title: string; onDark?: boolean }) {
   return (
     <a
       href="#"
@@ -124,6 +127,7 @@ function ReadMoreLink({ label, onDark }: { label: string; onDark?: boolean }) {
       }`}
     >
       {label}
+      <span className="sr-only">: {title}</span>
     </a>
   );
 }
