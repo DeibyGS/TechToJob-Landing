@@ -40,8 +40,24 @@ export function HeroChatFragments({ fragments }: HeroChatFragmentsProps) {
     // Foreground layer (3) — near-fully legible, edges (partially cropped)
     { top: "40%", left: "-2%", opacity: 0.85, panelBlur: "backdrop-blur-md", layer: "fg", show: "md" },
     { top: "20%", right: "-1%", opacity: 0.95, panelBlur: "backdrop-blur-md", layer: "fg", show: "md" },
+    // On mobile this is the only fragment near the bottom, where the
+    // community CTA also sits — repositioned there (top-left, away from
+    // the CTA) via the `max-md:` overrides below instead of the desktop
+    // bottom-right spot.
     { bottom: "15%", right: "0%", opacity: 0.45, panelBlur: "backdrop-blur-md", layer: "fg", show: "always" },
   ] as const;
+
+  // Mobile-only overrides for the two fragments visible on small screens
+  // (`show: "always"`). Written as literal Tailwind classes (not built from
+  // the `layout` array) so the JIT scanner can see them — same constraint
+  // as TEXT_CLASSES above. Trailing `!` forces them over the desktop inline
+  // position/opacity, which otherwise wins on specificity.
+  const MOBILE_ALWAYS_OVERRIDES: Record<number, string> = {
+    // index 4 — top-right fragment: just soften it a bit, same spot
+    4: "max-md:opacity-[0.22]! max-md:blur-[2px]",
+    // index 9 — bottom-right fragment: move to top-left, clear of the CTA
+    9: "max-md:top-[6%]! max-md:left-[3%]! max-md:right-auto! max-md:bottom-auto! max-md:opacity-[0.3]! max-md:blur-[2px]",
+  };
 
   // Drift animation variants (CSS classes in globals.css)
   const driftClasses = [
@@ -117,7 +133,7 @@ export function HeroChatFragments({ fragments }: HeroChatFragmentsProps) {
             key={`${fragment.username}-${index}`}
             data-hero-chat-fragment
             data-layer={config.layer}
-            className={`hero-fragment absolute z-[1] ${driftClasses[index % 3]} ${isHiddenOnMobile ? "hidden md:block" : ""}`}
+            className={`hero-fragment absolute z-[1] ${driftClasses[index % 3]} ${isHiddenOnMobile ? "hidden md:block" : ""} ${MOBILE_ALWAYS_OVERRIDES[index] ?? ""}`}
             style={positionStyle}
           >
             <div

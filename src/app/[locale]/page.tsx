@@ -26,8 +26,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <HeroSection />
         <HowItWorksSection />
         <SectionDivider />
-        <CompanySection />
         <TalentSection />
+        <CompanySection />
         <TournamentsSection />
         <NetworkingSection />
         <TestimonialsSection />

@@ -4,16 +4,26 @@ import { BulletList } from "@/components/ui/BulletList";
 import { TalentCard } from "@/components/ui/TalentCard";
 import { Reveal } from "@/components/ui/Reveal";
 
+type ExampleCard = {
+  stackLabel: string;
+  stackValue: string;
+  levelLabel: string;
+  levelValue: string;
+  availabilityLabel: string;
+  availabilityValue: string;
+};
+
 export async function TalentSection() {
   const t = await getTranslations("Talent");
   const bullets = t.raw("bullets") as string[];
+  const exampleCard = t.raw("exampleCard") as ExampleCard;
 
   return (
     <SectionContainer id="talent" background="light">
       <div className="grid items-center gap-12 lg:grid-cols-2">
         {/* Card visual — izquierda (orden invertido en mobile) */}
         <Reveal className="order-2 lg:order-1">
-          <TalentCard />
+          <TalentCard {...exampleCard} />
         </Reveal>
 
         {/* Texto — derecha */}

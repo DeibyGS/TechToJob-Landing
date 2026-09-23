@@ -4,21 +4,18 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { useReducedMotion } from "motion/react";
 import { motion } from "motion/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 type Testimonial = {
   name: string;
   role: string;
   quote: string;
-  avatar: string;
-  timestamp: string;
-  channel?: string;
+  photo: string;
+  profileUrl?: string;
 };
 
 type TestimonialsCarouselProps = {
   items: Testimonial[];
-  channelLabel: string;
-  channelDescription: string;
   prevLabel: string;
   nextLabel: string;
   slideLabels: string[];
@@ -32,8 +29,6 @@ const SWIPE_THRESHOLD = 50;
 
 export function TestimonialsCarousel({
   items,
-  channelLabel,
-  channelDescription,
   prevLabel,
   nextLabel,
   slideLabels,
@@ -148,18 +143,11 @@ export function TestimonialsCarousel({
       tabIndex={0}
       role="group"
       aria-roledescription="carousel"
-      aria-label={channelDescription}
+      aria-label={paginationLabel}
     >
-      {/* Discord-like channel header */}
-      <div className="mb-4 flex items-center gap-2 rounded-t-xl border border-brand-white/10 bg-brand-white/5 px-4 py-2">
-        <span className="text-brand-teal" aria-hidden="true">#</span>
-        <span className="text-sm font-medium text-brand-white/70">{channelLabel}</span>
-        <span className="ml-auto hidden text-xs text-brand-white/40 sm:inline">{channelDescription}</span>
-      </div>
-
       {/* Carousel track */}
       <div
-        className="overflow-hidden rounded-b-xl border border-t-0 border-brand-white/10 bg-brand-white/5"
+        className="overflow-hidden rounded-xl border border-brand-white/10 bg-brand-white/5"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -170,7 +158,9 @@ export function TestimonialsCarousel({
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           aria-live="polite"
         >
-          {items.map((item, index) => (
+          {items.map((item, index) => {
+            const isVisibleSlide = index >= clampedIndex && index < clampedIndex + visibleCount;
+            return (
             <div
               key={item.name}
               className="flex-shrink-0 px-3 py-1"
@@ -178,6 +168,7 @@ export function TestimonialsCarousel({
               role="group"
               aria-roledescription="slide"
               aria-label={slideLabels[index] ?? `Slide ${index + 1}`}
+              aria-hidden={!isVisibleSlide}
             >
               <motion.article
                 initial={reduceMotion ? false : { opacity: 0, y: 12 }}
@@ -187,41 +178,48 @@ export function TestimonialsCarousel({
                   delay: reduceMotion ? 0 : index * 0.08,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="flex h-full gap-3 rounded-xl border border-brand-white/5 bg-brand-white/[0.03] p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-teal/20 hover:bg-brand-white/[0.06] hover:shadow-[0_8px_24px_rgba(132,192,191,0.1)]"
+                className="flex h-full flex-col overflow-hidden rounded-xl border border-brand-white/5 bg-brand-white/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-teal/20 hover:shadow-[0_8px_24px_rgba(132,192,191,0.1)]"
               >
-                {/* Avatar */}
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-brand-white/10">
+                {/* Portrait + quote overlay */}
+                <div className="relative aspect-[6/7] w-full overflow-hidden bg-brand-white/5">
                   <Image
-                    src={`https://api.dicebear.com/10.x/avataaars/svg?seed=${encodeURIComponent(item.name)}`}
-                    alt={item.name}
-                    width={40}
-                    height={40}
-                    unoptimized
-                    loading="lazy"
+                    src={item.photo}
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover"
                   />
+                  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+                  <p className="absolute inset-x-0 bottom-0 p-4 text-sm leading-relaxed text-white">
+                    <span className="mr-0.5 text-lg font-bold text-brand-teal/70" aria-hidden="true">&ldquo;</span>
+                    {item.quote}
+                    <span className="ml-0.5 text-lg font-bold text-brand-teal/70" aria-hidden="true">&rdquo;</span>
+                  </p>
                 </div>
 
-                {/* Content */}
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="truncate font-semibold text-brand-white">{item.name}</span>
-                    <span className="flex-shrink-0 text-xs text-brand-white/30">{item.timestamp}</span>
+                {/* Name, role and profile link */}
+                <div className="flex items-center justify-between gap-2 p-4">
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold text-brand-white">{item.name}</p>
+                    <p className="truncate text-xs text-brand-white/55">{item.role}</p>
                   </div>
-                  <p className="mt-0.5 text-xs text-brand-white/40">{item.role}</p>
-                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-brand-white/80">
-                    <span className="mr-0.5 text-lg font-bold text-brand-teal/30" aria-hidden="true">&ldquo;</span>
-                    {item.quote}
-                    <span className="ml-0.5 text-lg font-bold text-brand-teal/30" aria-hidden="true">&rdquo;</span>
-                  </p>
-                  {item.channel && (
-                    <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-brand-teal/10 px-2.5 py-0.5 text-xs text-brand-teal">
-                      <span aria-hidden="true">#</span>{item.channel}
-                    </span>
+                  {item.profileUrl && (
+                    <a
+                      href={item.profileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${item.name} — LinkedIn`}
+                      tabIndex={isVisibleSlide ? 0 : -1}
+                      className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-brand-white/10 text-brand-white/40 transition-colors hover:border-brand-teal/40 hover:text-brand-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
                   )}
                 </div>
               </motion.article>
             </div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
 

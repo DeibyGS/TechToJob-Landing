@@ -20,7 +20,7 @@ function TournamentsBackground() {
         aria-hidden
         src="/logo/simbolo-negativo.svg"
         alt=""
-        className="absolute -right-20 top-1/2 h-[400px] w-auto -translate-y-1/2 opacity-[0.03] select-none"
+        className="absolute -right-20 inset-y-0 h-full w-auto opacity-[0.03] select-none"
       />
     </>
   );

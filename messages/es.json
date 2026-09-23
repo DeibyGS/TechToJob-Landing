@@ -8,19 +8,20 @@
     "ctaHoverLabel": "Conectar con la comunidad"
   },
   "HeroShowcase": {
-    "stats": ["1 torneo activo", "Comunidad abierta", "100% gratuito"]
+    "badge": "Comunidad abierta"
   },
   "Nav": {
     "links": {
       "howItWorks": "Cómo funciona",
+      "talent": "Talento",
+      "companies": "Empresas",
       "tournaments": "Torneos",
       "community": "Comunidad",
-      "companies": "Empresas",
       "testimonials": "Testimonios"
     }
   },
   "Hero": {
-    "headline": "Deja de mandar CVs al vacío.",
+    "headline": "Que te conozcan antes de que exista la vacante.",
     "subheadline": "TechToJob es la comunidad de desarrolladores y empresas donde te conocen por lo que haces, no solo por lo que pone en tu CV."
   },
   "HeroFragments": {
@@ -42,7 +43,7 @@
     "steps": [
       {
         "title": "Únete",
-        "description": "Entra en la comunidad, completa tu perfil y conoce a otros profesionales del mundo tech.",
+        "description": "Entra al Discord, preséntate y conoce a otros profesionales tech. Sin formularios eternos.",
         "cta": "Unirse a la comunidad"
       },
       {
@@ -52,7 +53,7 @@
       },
       {
         "title": "Encuentra oportunidades",
-        "description": "Conecta con empresas, descubre ofertas y abre nuevas puertas profesionales.",
+        "description": "Conecta con empresas de la comunidad y abre nuevas puertas profesionales.",
         "cta": "Descubrir oportunidades"
       }
     ]
@@ -63,7 +64,8 @@
     "bullets": [
       "Construye proyectos reales para tu portfolio",
       "Participa en torneos y retos por especialidad",
-      "Conecta directamente con empresas y otros profesionales"
+      "Conecta directamente con empresas y otros profesionales",
+      "Sin filtros automáticos que descarten tu perfil antes de que lo lea alguien, y sin coste"
     ],
     "exampleCard": {
       "stackLabel": "Stack",
@@ -93,7 +95,7 @@
   },
   "Tournaments": {
     "headline": "Compite. Construye. Destaca.",
-    "description": "Retos reales para demostrar tus habilidades, aprender de otros y convertir tu trabajo en experiencia demostrable.",
+    "description": "Retos reales para demostrar tus habilidades, aprender de otros y convertir tu trabajo en experiencia demostrable. Esta misma web salió de un torneo así: lo que ganas se usa de verdad.",
     "steps": [
       {
         "title": "Reto",
@@ -113,8 +115,8 @@
     ]
   },
   "Networking": {
-    "headline": "Conoce a la gente que está construyendo el futuro tech",
-    "description": "Comparte dudas, encuentra colaboradores, aprende de perfiles con experiencia y descubre nuevas oportunidades.",
+    "headline": "Aquí es donde te enteras primero",
+    "description": "Comparte dudas, aprende de gente con experiencia y entérate de las oportunidades buenas antes de que sean un anuncio público.",
     "channels": [
       "#torneos",
       "#comunidad",
@@ -128,17 +130,29 @@
     "channelDescriptions": [
       "Resultados, discusiones y feedback de cada torneo",
       "Charlas, proyectos y cosas que la gente está haciendo",
-      "Ofertas que alguien comparte porque conoce a quien contrata",
+      "Puestos que comparte gente que ya está dentro de la empresa que contrata",
       "UI, UX, brand y todo lo que se ve en pantalla",
       "Repos, contribuciones y código abierto",
       "Modelos, agentes, herramientas y tendencias",
       "Infra, CI/CD, cloud y todo lo que mueve las apps",
       "Conecta con gente del sector y amplía tu red"
     ],
-    "activityStrip": "Canales activos · Temas abiertos · Gente respondiendo"
+    "chipQuotes": [
+      "Cada semana hay nuevos #torneos para compartir en comunidad.",
+      "En #comunidad siempre encuentro a alguien dispuesto a ayudar.",
+      "Me enteré de una vacante en #oportunidades antes de que fuera pública.",
+      "Compartí mi primer prototipo en #diseño y me dieron feedback real.",
+      "Contento de participar en mi primer proyecto de #open-source.",
+      "En #IA probamos herramientas nuevas antes de que se pongan de moda.",
+      "Resolví un problema de CI en minutos gracias a #devops.",
+      "Gracias al #networking he ampliado mi red de conocidos."
+    ],
+    "activityStrip": "Ahora mismo en el Discord de TechToJob",
+    "chatPlaceholder": "Mensaje #general"
   },
   "News": {
     "headline": "Lo que está pasando en TechToJob",
+    "readMoreLabel": "Leer más",
     "items": [
       {
         "title": "Nuevo torneo de desarrollo web",
@@ -170,10 +184,8 @@
     "configNotice": "Formulario no configurado todavía."
   },
   "Testimonials": {
-    "headline": "Conversaciones reales de la comunidad",
-    "description": "Así suena TechToJob cuando la gente se ayuda, comparte y construye junto.",
-    "channelLabel": "general",
-    "channelDescription": "Testimonios de la comunidad",
+    "headline": "Lo que dice la gente que ya está dentro",
+    "description": "Historias reales de quienes ya construyen, aprenden y encuentran oportunidades en TechToJob.",
     "prevLabel": "Testimonios anteriores",
     "nextLabel": "Siguientes testimonios",
     "slideLabel": "Testimonio {n}",
@@ -182,59 +194,37 @@
       {
         "name": "Alex Dev",
         "role": "Frontend Developer",
-        "quote": "Entré para preguntar una duda sobre React y acabé colaborando en un proyecto con gente del servidor.",
-        "avatar": "AD",
-        "timestamp": "hace 2 días",
-        "channel": "frontend"
+        "quote": "Entré para preguntar una duda sobre React y acabé colaborando en un proyecto con gente del servidor."
       },
       {
         "name": "Lucía Code",
         "role": "Full Stack Developer",
-        "quote": "Lo que más valoro es poder enseñar lo que voy construyendo. Aquí nadie te descarta por ser junior.",
-        "avatar": "LC",
-        "timestamp": "hace 3 días",
-        "channel": "proyectos"
-      },
-      {
-        "name": "Marcos Front",
-        "role": "UI Developer",
-        "quote": "En el canal de #frontend me resolvieron un problema en 10 minutos. En otros lados llevo días.",
-        "avatar": "MF",
-        "timestamp": "hace 5 días",
-        "channel": "frontend"
+        "quote": "Lo que más valoro es poder enseñar lo que voy construyendo. Aquí nadie te descarta por ser junior."
       },
       {
         "name": "Sara Ops",
         "role": "DevOps Engineer",
-        "quote": "Participé en un torneo sin esperar nada y acabé con un proyecto real para mi portfolio.",
-        "avatar": "SO",
-        "timestamp": "hace 1 semana",
-        "channel": "torneos"
+        "quote": "Participé en un torneo sin esperar nada y acabé con un proyecto real para mi portfolio."
       },
       {
         "name": "Dani Back",
         "role": "Backend Developer",
-        "quote": "Mejor que LinkedIn. Aquí conoces a la gente antes de que haya una oferta.",
-        "avatar": "DB",
-        "timestamp": "hace 2 semanas",
-        "channel": "networking"
+        "quote": "Mejor que LinkedIn. Aquí conoces a la gente antes de que haya una oferta."
       },
       {
         "name": "Nuria UX",
         "role": "Product Designer",
-        "quote": "Hay un canal donde la gente comparte ofertas que no salen en ningún otro sitio.",
-        "avatar": "NU",
-        "timestamp": "hace 3 semanas",
-        "channel": "empleo"
+        "quote": "Hay un canal donde la gente comparte ofertas que no salen en ningún otro sitio."
       }
     ]
   },
   "Closing": {
     "headline": "Tu próxima oportunidad puede empezar aquí.",
-    "description": "Únete a TechToJob, conoce a la comunidad y empieza a construir tu camino en tech."
+    "description": "Únete a TechToJob, conoce a la comunidad y empieza a construir tu camino en tech.",
+    "ctaCaption": "Gratis, sin spam, sal cuando quieras."
   },
   "Footer": {
-    "tagline": "La comunidad donde desarrolladores y empresas se conocen antes de que exista una vacante.",
+    "tagline": "La comunidad donde el talento tech construye, comparte y no pasa desapercibido.",
     "columns": {
       "talent": {
         "title": "Talento",

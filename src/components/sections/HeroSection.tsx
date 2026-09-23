@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { SectionContainer } from "@/components/ui/SectionContainer";
-import { HeroStage, type ShowcaseItem } from "@/components/sections/HeroStage";
+import { HeroStage } from "@/components/sections/HeroStage";
 import { HeroChatFragments, type Fragment } from "@/components/sections/HeroChatFragments";
 import { SOCIAL_LINKS } from "@/lib/constants";
 
@@ -20,19 +20,12 @@ function HeroBackground({ chatFragments }: { chatFragments: Fragment[] }) {
 }
 
 export async function HeroSection() {
-  const [t, tNews, tCommunity, tShowcase, tFragments] = await Promise.all([
+  const [t, tCommunity, tShowcase, tFragments] = await Promise.all([
     getTranslations("Hero"),
-    getTranslations("News"),
     getTranslations("CommunityCta"),
     getTranslations("HeroShowcase"),
     getTranslations("HeroFragments"),
   ]);
-  const rawItems = tNews.raw("items") as unknown[];
-  const showcaseItems = rawItems.filter(
-    (item): item is ShowcaseItem =>
-      typeof item === "object" && item !== null && "title" in item && "category" in item,
-  );
-  const showcaseStats = tShowcase.raw("stats") as string[];
   const chatFragments = tFragments.raw("fragments") as Fragment[];
 
   return (
@@ -45,8 +38,7 @@ export async function HeroSection() {
       <HeroStage
         headline={t("headline")}
         subheadline={t("subheadline")}
-        showcaseItems={showcaseItems}
-        showcaseStats={showcaseStats}
+        badge={tShowcase("badge")}
         community={{
           ctaLabel: tCommunity("ctaLabel"),
           ctaHoverLabel: tCommunity("ctaHoverLabel"),

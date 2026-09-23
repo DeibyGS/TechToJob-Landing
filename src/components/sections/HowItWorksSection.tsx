@@ -9,9 +9,17 @@ import { SOCIAL_LINKS } from "@/lib/constants";
 // Mirrors HowItWorksStage's STEP_ICONS mapping for the mobile sequential list.
 const STEP_ICONS = [UserPlus, Code2, Briefcase];
 
+// Where each step's CTA actually goes. Step 1 is the real join action
+// (Discord); steps 2-3 point at the matching in-page section rather than
+// Discord too, since this is a single static page (see AGENTS.md) — these
+// are exactly the hrefs to promote to real routes or channel-specific
+// Discord invites if the site ever grows past a single landing page.
+const STEP_HREFS = [SOCIAL_LINKS.discord, "#tournaments", "#companies"];
+
 export async function HowItWorksSection() {
   const t = await getTranslations("HowItWorks");
-  const steps = t.raw("steps") as { title: string; description: string; cta: string }[];
+  const rawSteps = t.raw("steps") as { title: string; description: string; cta: string }[];
+  const steps = rawSteps.map((step, index) => ({ ...step, href: STEP_HREFS[index] }));
 
   return (
     <SectionContainer
@@ -61,7 +69,7 @@ export async function HowItWorksSection() {
       </div>
 
       <div className="mt-12">
-        <HowItWorksStage headline={t("headline")} steps={steps} ctaHref={SOCIAL_LINKS.discord} />
+        <HowItWorksStage headline={t("headline")} steps={steps} />
       </div>
     </SectionContainer>
   );
