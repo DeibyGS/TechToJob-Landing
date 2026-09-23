@@ -8,19 +8,20 @@
     "ctaHoverLabel": "Connect with the community"
   },
   "HeroShowcase": {
-    "stats": ["1 active tournament", "Open community", "100% free"]
+    "badge": "Open community"
   },
   "Nav": {
     "links": {
       "howItWorks": "How it works",
+      "talent": "Talent",
+      "companies": "Companies",
       "tournaments": "Tournaments",
       "community": "Community",
-      "companies": "Companies",
       "testimonials": "Testimonials"
     }
   },
   "Hero": {
-    "headline": "Stop sending resumes into the void.",
+    "headline": "Be known before the job even opens.",
     "subheadline": "TechToJob is the developer and company community where you're known for what you do, not just what's on your CV."
   },
   "HeroFragments": {
@@ -42,7 +43,7 @@
     "steps": [
       {
         "title": "Join",
-        "description": "Join the community, complete your profile and meet people from across the tech industry.",
+        "description": "Join the Discord, introduce yourself, and meet other tech professionals. No endless forms.",
         "cta": "Join the community"
       },
       {
@@ -52,7 +53,7 @@
       },
       {
         "title": "Find opportunities",
-        "description": "Connect with companies, discover job opportunities and open new doors for your career.",
+        "description": "Connect with companies in the community and open new doors for your career.",
         "cta": "Discover opportunities"
       }
     ]
@@ -63,7 +64,8 @@
     "bullets": [
       "Build real projects for your portfolio",
       "Take part in tournaments and skill-based challenges",
-      "Connect directly with companies and other tech professionals"
+      "Connect directly with companies and other tech professionals",
+      "No automated filters screening out your profile before a person reads it, and no cost"
     ],
     "exampleCard": {
       "stackLabel": "Stack",
@@ -93,7 +95,7 @@
   },
   "Tournaments": {
     "headline": "Compete. Build. Stand out.",
-    "description": "Real-world challenges to prove your skills, learn from others and turn your work into meaningful experience.",
+    "description": "Real-world challenges to prove your skills, learn from others and turn your work into meaningful experience. This very site came out of a tournament like this: what you win actually gets used.",
     "steps": [
       {
         "title": "Challenge",
@@ -113,8 +115,8 @@
     ]
   },
   "Networking": {
-    "headline": "Meet the people building the future of tech",
-    "description": "Ask questions, find collaborators, learn from experienced professionals and discover new opportunities.",
+    "headline": "This is where you hear it first",
+    "description": "Ask questions, learn from experienced professionals, and hear about good opportunities before they're a public listing.",
     "channels": [
       "#tournaments",
       "#community",
@@ -128,14 +130,24 @@
     "channelDescriptions": [
       "Results, discussions and feedback from every tournament",
       "Chats, projects and things people are building",
-      "Job leads someone shares because they know who's hiring",
+      "Roles shared by people already inside the company that's hiring",
       "UI, UX, brand and everything the user sees on screen",
       "Repos, contributions and open source projects",
       "Models, agents, tools and what's trending in AI",
       "Infra, CI/CD, cloud and everything that powers apps",
       "Connect with people in the industry and expand your network"
     ],
-    "activityStrip": "Active channels · Open threads · People responding"
+    "growthCaptions": [
+      "Show what you build and get remembered for it.",
+      "Share what you're working on and meet people headed the same way.",
+      "Hear about openings from people already inside, before anyone else.",
+      "Sharpen your eye with feedback from other product people.",
+      "Contribute to real projects and add it to your portfolio.",
+      "Share what you're testing and learn faster from others.",
+      "Get infra questions solved by people who've been there.",
+      "Grow your network with people who can open doors for you."
+    ],
+    "activityStrip": "Right now on Discord"
   },
   "News": {
     "headline": "What's happening at TechToJob",
@@ -234,7 +246,7 @@
     "description": "Join TechToJob, meet the community and start building your path in tech."
   },
   "Footer": {
-    "tagline": "The community where developers and companies meet before a job opening exists.",
+    "tagline": "The community where tech talent builds, shares, and doesn't go unnoticed.",
     "columns": {
       "talent": {
         "title": "Talent",

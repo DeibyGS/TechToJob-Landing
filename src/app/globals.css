@@ -123,26 +123,6 @@ section[id] {
 /* Hero showcase card idle drift (sections/HeroStage.tsx) — very subtle,
    continuous life between GSAP crossfades so the card doesn't read as a
    frozen frame while it waits for the next auto-advance. */
-@keyframes hero-showcase-drift {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-.hero-showcase-float {
-  animation: hero-showcase-drift 6s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-showcase-float {
-    animation: none;
-  }
-}
-
 /* Hero grain texture — very subtle SVG noise overlay for depth. Applied via
    the `.hero-grain` class on the HeroStage container. Uses a data-URI SVG
    with feTurbulence for lightweight procedural noise (~0.3KB). */
@@ -199,37 +179,6 @@ section[id] {
     gap: 0.75rem;
   }
 }
-
-/* ── Logo color-cycle keyframes ─────────────────────────────────────── */
-/* 3 PNG variants crossfade: negativo → positivo → degradado            */
-/* Total 6s, runs once. Each variant 2s with ~0.3s crossfade            */
-
-@keyframes logo-cycle-0 {
-  0% { opacity: 1; }
-  33.3% { opacity: 1; }
-  38.3% { opacity: 0; }
-  100% { opacity: 0; }
-}
-
-@keyframes logo-cycle-1 {
-  0% { opacity: 0; }
-  33.3% { opacity: 0; }
-  38.3% { opacity: 1; }
-  66.7% { opacity: 1; }
-  71.7% { opacity: 0; }
-  100% { opacity: 0; }
-}
-
-@keyframes logo-cycle-2 {
-  0% { opacity: 0; }
-  66.7% { opacity: 0; }
-  71.7% { opacity: 1; }
-  100% { opacity: 1; }
-}
-
-.logo-cycle-0 { animation: logo-cycle-0 6s ease-in-out 1 forwards; }
-.logo-cycle-1 { animation: logo-cycle-1 6s ease-in-out 1 forwards; }
-.logo-cycle-2 { animation: logo-cycle-2 6s ease-in-out 1 forwards; }
 
 /* Hero chat fragment drift — 3 variants with different durations/directions
    for organic, non-synchronized floating. Each fragment gets one via the

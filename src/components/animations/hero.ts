@@ -24,7 +24,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
     const showcaseCards = container.querySelectorAll("[data-hero-showcase-card]");
     const showcaseWrap = container.querySelector("[data-mockup-wrap]");
     const communityBar = container.querySelector("[data-hero-community]");
-    const scrollIndicator = container.querySelector("[data-hero-scroll-indicator]");
     const chatFragments = container.querySelectorAll("[data-hero-chat-fragment]");
 
     // --- Entrance: staged reveal with dramatic rhythm ---
@@ -102,16 +101,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
       );
     }
 
-    // Scroll indicator — fade in after everything else
-    if (scrollIndicator) {
-      entrance.fromTo(
-        scrollIndicator,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.6, ease: EASE.entranceSoft },
-        1.5,
-      );
-    }
-
     // --- Desktop/tablet scroll + cursor behaviors ---
     const mm = gsap.matchMedia();
 
@@ -139,16 +128,6 @@ export function initHeroAnimation(container: HTMLElement): () => void {
       }
       if (textEls.length) {
         exitTl.fromTo(textEls, { opacity: 1 }, { opacity: 0, ease: EASE.scrub, duration: 15 }, 0);
-      }
-
-      // Fade scroll indicator on exit
-      if (scrollIndicator) {
-        exitTl.fromTo(
-          scrollIndicator,
-          { opacity: 1 },
-          { opacity: 0, ease: EASE.scrub, duration: 5 },
-          0,
-        );
       }
 
       // Chat fragments — fade out with the headline

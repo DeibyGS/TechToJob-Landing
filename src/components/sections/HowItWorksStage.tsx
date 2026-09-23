@@ -5,12 +5,11 @@ import { initHowItWorksScroll } from "@/components/animations/howItWorks";
 import { useGsapScope } from "@/components/animations/utils";
 import { Button } from "@/components/ui/Button";
 
-type Step = { title: string; description: string; cta: string };
+type Step = { title: string; description: string; cta: string; href: string };
 
 type HowItWorksStageProps = {
   headline: string;
   steps: Step[];
-  ctaHref: string;
 };
 
 // Index-mapped to `steps` (Join / Show what you can do / Find opportunities),
@@ -30,7 +29,7 @@ const STEP_ICONS = [UserPlus, Code2, Briefcase];
  * throughout (confirmed by real usage: barely visible at step 1, fully
  * gone by step 2).
  */
-export function HowItWorksStage({ headline, steps, ctaHref }: HowItWorksStageProps) {
+export function HowItWorksStage({ headline, steps }: HowItWorksStageProps) {
   const containerRef = useGsapScope<HTMLDivElement>(initHowItWorksScroll);
 
   return (
@@ -83,6 +82,9 @@ export function HowItWorksStage({ headline, steps, ctaHref }: HowItWorksStagePro
           <div className="relative min-h-[340px]">
             {steps.map((step, index) => {
               const Icon = STEP_ICONS[index];
+              // Only the Discord step is an external link — the others are
+              // in-page anchors, so they shouldn't open a new tab.
+              const isExternal = step.href.startsWith("http");
               return (
                 <div key={step.title} data-howitworks-step className="flex flex-col gap-3">
                   <span className="text-sm font-semibold text-brand-dark/40">
@@ -110,9 +112,8 @@ export function HowItWorksStage({ headline, steps, ctaHref }: HowItWorksStagePro
                     <Button
                       icon={<Icon />}
                       label={step.cta}
-                      href={ctaHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href={step.href}
+                      {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     />
                   </div>
                 </div>

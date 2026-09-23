@@ -4,9 +4,19 @@ import { BulletList } from "@/components/ui/BulletList";
 import { CompanyCard } from "@/components/ui/CompanyCard";
 import { Reveal } from "@/components/ui/Reveal";
 
+type ExampleCard = {
+  stackLabel: string;
+  stackValue: string;
+  levelLabel: string;
+  levelValue: string;
+  engagementLabel: string;
+  engagementValue: string;
+};
+
 export async function CompanySection() {
   const t = await getTranslations("Company");
   const bullets = t.raw("bullets") as string[];
+  const exampleCard = t.raw("exampleCard") as ExampleCard;
 
   return (
     <SectionContainer
@@ -40,7 +50,7 @@ export async function CompanySection() {
 
         {/* Card visual — derecha */}
         <Reveal delay={0.2}>
-          <CompanyCard />
+          <CompanyCard {...exampleCard} />
         </Reveal>
       </div>
     </SectionContainer>
