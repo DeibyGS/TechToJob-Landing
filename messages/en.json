@@ -18,7 +18,10 @@
       "tournaments": "Tournaments",
       "community": "Community",
       "testimonials": "Testimonials"
-    }
+    },
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "menuLabel": "Mobile navigation"
   },
   "Hero": {
     "headline": "Be known before the job even opens.",

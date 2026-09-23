@@ -4,9 +4,10 @@ import { NavLinks } from "@/components/layout/NavLinks";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { HeaderReveal } from "@/components/layout/HeaderReveal";
+import { SOCIAL_LINKS } from "@/lib/constants";
 
 export async function Header({ locale }: { locale: string }) {
-  const tNav = await getTranslations("Nav");
+  const [tNav, tCommunity] = await Promise.all([getTranslations("Nav"), getTranslations("CommunityCta")]);
 
   // Order mirrors the actual section order in page.tsx — the active-link
   // highlight tracks scroll position, so a nav order that matches the page
@@ -17,7 +18,6 @@ export async function Header({ locale }: { locale: string }) {
     { id: "companies", label: tNav("links.companies") },
     { id: "tournaments", label: tNav("links.tournaments") },
     { id: "networking", label: tNav("links.community") },
-    { id: "testimonials", label: tNav("links.testimonials") },
   ];
 
   return (
@@ -38,7 +38,12 @@ export async function Header({ locale }: { locale: string }) {
           <LanguageSwitcher currentLocale={locale} />
         </div>
         {/* Mobile: hamburger menu (contains nav + language switcher) */}
-        <MobileMenu links={links} currentLocale={locale} />
+        <MobileMenu
+          links={links}
+          currentLocale={locale}
+          labels={{ open: tNav("menuOpen"), close: tNav("menuClose"), menu: tNav("menuLabel") }}
+          cta={{ label: tCommunity("ctaLabel"), href: SOCIAL_LINKS.discord }}
+        />
       </header>
     </HeaderReveal>
   );

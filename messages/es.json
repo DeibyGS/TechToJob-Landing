@@ -18,7 +18,10 @@
       "tournaments": "Torneos",
       "community": "Comunidad",
       "testimonials": "Testimonios"
-    }
+    },
+    "menuOpen": "Abrir menú",
+    "menuClose": "Cerrar menú",
+    "menuLabel": "Navegación móvil"
   },
   "Hero": {
     "headline": "Que te conozcan antes de que exista la vacante.",

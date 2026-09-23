@@ -8,6 +8,30 @@ import { Button } from "@/components/ui/Button";
 
 type NavLink = { id: string; label: string };
 
+// Fires `callback` once the page has stopped scrolling for SCROLL_IDLE_MS,
+// with a hard cap in case the scroll never starts (target already in place).
+const SCROLL_IDLE_MS = 150;
+const SCROLL_SETTLE_MAX_MS = 1500;
+
+function onScrollSettled(callback: () => void) {
+  let idleId = window.setTimeout(finish, SCROLL_IDLE_MS);
+  const maxId = window.setTimeout(finish, SCROLL_SETTLE_MAX_MS);
+
+  function onScroll() {
+    clearTimeout(idleId);
+    idleId = window.setTimeout(finish, SCROLL_IDLE_MS);
+  }
+
+  function finish() {
+    clearTimeout(idleId);
+    clearTimeout(maxId);
+    window.removeEventListener("scroll", onScroll);
+    callback();
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
+
 type NavLinksProps = {
   links: NavLink[];
   /** Vertical layout for mobile menu, horizontal for desktop nav. */
@@ -115,8 +139,21 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
         },
       });
     } else {
-      target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-      resumeObserver();
+      // Native path (mobile, where Lenis is skipped — see smoothScroll.ts —
+      // or reduced motion). Wait one frame so the mobile menu's close has
+      // committed and its body scroll lock is released before scrolling —
+      // toggling `overflow` mid smooth-scroll makes mobile browsers stop a
+      // few px short. Landing is detected by scroll-idle (no `scrollend`
+      // dependency, unsupported on older Safari), then a final instant
+      // scrollIntoView absorbs any drift (e.g. images loading mid-scroll)
+      // before the observer resumes and the header border flashes.
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+        onScrollSettled(() => {
+          target.scrollIntoView({ behavior: "auto" });
+          resumeObserver();
+        });
+      });
     }
   };
 
