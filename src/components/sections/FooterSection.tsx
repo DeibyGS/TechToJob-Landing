@@ -146,8 +146,11 @@ function FooterColumn({
       <ul className="mt-4 flex flex-col gap-3">
         {links.map((label, index) => (
           <li key={label}>
+            {/* hrefs[index] pairs positionally with links[index] — falls back
+                to "#" so a locale/copy edit that drops a translated link
+                never renders an <a> with an undefined href. */}
             <a
-              href={hrefs[index]}
+              href={hrefs[index] ?? "#"}
               className="relative text-sm text-brand-white/70 transition-colors duration-200 hover:text-brand-teal hover:drop-shadow-[0_0_6px_rgba(132,192,191,0.5)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-teal after:transition-all after:duration-300 hover:after:w-full"
             >
               {label}

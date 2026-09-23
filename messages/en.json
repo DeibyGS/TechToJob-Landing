@@ -152,6 +152,7 @@
   },
   "News": {
     "headline": "What's happening at TechToJob",
+    "readMoreLabel": "Read more",
     "items": [
       {
         "title": "New web development tournament",
@@ -219,7 +220,8 @@
   },
   "Closing": {
     "headline": "Your next opportunity could start here.",
-    "description": "Join TechToJob, meet the community and start building your path in tech."
+    "description": "Join TechToJob, meet the community and start building your path in tech.",
+    "ctaCaption": "Free, no spam, leave whenever you want."
   },
   "Footer": {
     "tagline": "The community where tech talent builds, shares, and doesn't go unnoticed.",
