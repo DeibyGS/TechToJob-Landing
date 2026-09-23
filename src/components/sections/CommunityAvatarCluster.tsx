@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { Trophy, Users, Briefcase, GitBranch, Hash, type LucideIcon } from "lucide-react";
 import { TESTIMONIAL_PHOTO_BY_NAME } from "@/components/sections/TestimonialsSection";
 
@@ -11,9 +12,19 @@ type ChannelData = {
 
 // Same 5 channels the old bento leaned on, same icons as the header's
 // ChannelMarquee so a channel's icon stays consistent everywhere it appears.
-const CHIP_CHANNELS: { index: number; Icon: LucideIcon; top: number; left: number; mobileVisible: boolean }[] = [
+// `mobileAnchorRight`: on the narrow mobile container a chip starting at a
+// high `left` % overflows the right edge and gets clipped by overflow-hidden,
+// so below lg it's anchored to the right edge instead (grows leftward).
+const CHIP_CHANNELS: {
+  index: number;
+  Icon: LucideIcon;
+  top: number;
+  left: number;
+  mobileVisible: boolean;
+  mobileAnchorRight?: boolean;
+}[] = [
   { index: 0, Icon: Trophy, top: 6, left: 4, mobileVisible: true }, // torneos
-  { index: 2, Icon: Briefcase, top: 1, left: 74, mobileVisible: true }, // oportunidades
+  { index: 2, Icon: Briefcase, top: 1, left: 74, mobileVisible: true, mobileAnchorRight: true }, // oportunidades
   { index: 1, Icon: Users, top: 70, left: 72, mobileVisible: false }, // comunidad
   { index: 4, Icon: GitBranch, top: 92, left: 28, mobileVisible: false }, // open-source
   { index: 7, Icon: Hash, top: 38, left: 2, mobileVisible: true }, // networking
@@ -32,7 +43,6 @@ type AvatarSpec = {
   mobileSize: string;
   desktopSize: string;
   anchor?: boolean;
-  hiddenOnMobile?: boolean;
 };
 
 // Coordinates are center-points (top/left %) checked pairwise against each
@@ -50,9 +60,9 @@ const AVATARS: AvatarSpec[] = [
   { name: "Sara Ops", top: 78, left: 55, mobileSize: "h-10 w-10", desktopSize: "lg:h-16 lg:w-16" },
   { name: "Elena", top: 10, left: 30, mobileSize: "h-8 w-8", desktopSize: "lg:h-12 lg:w-12" },
   { name: "Sofía", top: 15, left: 78, mobileSize: "h-8 w-8", desktopSize: "lg:h-14 lg:w-14" },
-  { name: "María", top: 48, left: 85, mobileSize: "", desktopSize: "lg:h-12 lg:w-12", hiddenOnMobile: true },
-  { name: "Dani Back", top: 85, left: 20, mobileSize: "", desktopSize: "lg:h-14 lg:w-14", hiddenOnMobile: true },
-  { name: "Nuria UX", top: 62, left: 8, mobileSize: "", desktopSize: "lg:h-12 lg:w-12", hiddenOnMobile: true },
+  { name: "María", top: 48, left: 85, mobileSize: "h-8 w-8", desktopSize: "lg:h-12 lg:w-12" },
+  { name: "Dani Back", top: 85, left: 20, mobileSize: "h-8 w-8", desktopSize: "lg:h-14 lg:w-14" },
+  { name: "Nuria UX", top: 62, left: 8, mobileSize: "h-8 w-8", desktopSize: "lg:h-12 lg:w-12" },
 ];
 
 function slugify(name: string) {
@@ -89,11 +99,12 @@ export function CommunityAvatarCluster({ channels }: { channels: ChannelData[] }
 
   return (
     <div className="relative h-[260px] w-full overflow-hidden lg:h-full">
-      {/* Accessible equivalent of the decorative chips below — the real content */}
+      {/* Accessible equivalent of the decorative chips below — lists every
+          channel, not just the few that fit as visual chips */}
       <ul className="sr-only">
-        {CHIP_CHANNELS.map(({ index }) => (
-          <li key={channels[index].name}>
-            {channels[index].name}: {channels[index].caption}
+        {channels.map((channel) => (
+          <li key={channel.name}>
+            {channel.name}: {channel.caption}
           </li>
         ))}
       </ul>
@@ -105,11 +116,11 @@ export function CommunityAvatarCluster({ channels }: { channels: ChannelData[] }
 
         {/* Chips render first (behind, in DOM order) and sit at z-0 — pure
             background atmosphere, never allowed to cover a photo */}
-        {CHIP_CHANNELS.map(({ index, Icon, top, left, mobileVisible }) => (
+        {CHIP_CHANNELS.filter(({ index }) => channels[index]).map(({ index, Icon, top, left, mobileVisible, mobileAnchorRight }) => (
           <div
             key={channels[index].name}
-            className={`absolute z-0 max-w-[12rem] items-start gap-1.5 rounded-2xl border border-brand-dark/5 bg-white/70 px-3 py-2 text-[11px] font-medium leading-snug text-brand-dark/70 shadow-[0_2px_8px_rgba(47,52,54,0.06)] lg:text-xs ${mobileVisible ? "flex" : "hidden lg:flex"}`}
-            style={{ top: `${top}%`, left: `${left}%` }}
+            className={`absolute z-0 max-w-[12rem] items-start gap-1.5 rounded-2xl border border-brand-dark/5 bg-white/70 px-3 py-2 text-[11px] font-medium leading-snug text-brand-dark/70 shadow-[0_2px_8px_rgba(47,52,54,0.06)] lg:text-xs ${mobileVisible ? "flex" : "hidden lg:flex"} ${mobileAnchorRight ? "right-[3%] lg:right-auto lg:left-(--chip-left)" : "left-(--chip-left)"}`}
+            style={{ top: `${top}%`, "--chip-left": `${left}%` } as CSSProperties}
           >
             <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-teal/70" strokeWidth={2} aria-hidden="true" />
             {channels[index].caption}
@@ -119,7 +130,7 @@ export function CommunityAvatarCluster({ channels }: { channels: ChannelData[] }
         {avatars.map((avatar) => (
           <div
             key={avatar.name}
-            className={`absolute z-10 overflow-hidden rounded-full ${avatar.anchor ? "border-[3px]" : "border-2 grayscale"} border-brand-teal/50 shadow-[0_6px_16px_rgba(47,52,54,0.18)] ${avatar.hiddenOnMobile ? "hidden lg:block" : avatar.mobileSize} ${avatar.desktopSize}`}
+            className={`absolute z-10 overflow-hidden rounded-full ${avatar.anchor ? "border-[3px]" : "border-2 grayscale"} border-brand-teal/50 shadow-[0_6px_16px_rgba(47,52,54,0.18)] ${avatar.mobileSize} ${avatar.desktopSize}`}
             style={{ top: `${avatar.top}%`, left: `${avatar.left}%`, transform: "translate(-50%, -50%)" }}
           >
             <Image

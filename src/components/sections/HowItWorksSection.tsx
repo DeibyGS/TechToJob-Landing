@@ -3,6 +3,7 @@ import Image from "next/image";
 import { UserPlus, Code2, Briefcase } from "lucide-react";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { Reveal } from "@/components/ui/Reveal";
+import { Button } from "@/components/ui/Button";
 import { HowItWorksStage } from "@/components/sections/HowItWorksStage";
 import { SOCIAL_LINKS } from "@/lib/constants";
 
@@ -19,7 +20,7 @@ const STEP_HREFS = [SOCIAL_LINKS.discord, "#tournaments", "#companies"];
 export async function HowItWorksSection() {
   const t = await getTranslations("HowItWorks");
   const rawSteps = t.raw("steps") as { title: string; description: string; cta: string }[];
-  const steps = rawSteps.map((step, index) => ({ ...step, href: STEP_HREFS[index] }));
+  const steps = rawSteps.map((step, index) => ({ ...step, href: STEP_HREFS[index] ?? SOCIAL_LINKS.discord }));
 
   return (
     <SectionContainer
@@ -63,6 +64,16 @@ export async function HowItWorksSection() {
               </span>
               <h3 className="text-xl font-semibold">{step.title}</h3>
               <p className="text-brand-dark/70">{step.description}</p>
+              {/* Same CTA as the desktop HowItWorksStage, so mobile users get
+                  the per-step action too. Only the Discord step is external. */}
+              <div className="mt-1">
+                <Button
+                  icon={Icon ? <Icon /> : undefined}
+                  label={step.cta}
+                  href={step.href}
+                  {...(step.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                />
+              </div>
             </Reveal>
           );
         })}

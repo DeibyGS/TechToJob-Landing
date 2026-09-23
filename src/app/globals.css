@@ -15,15 +15,23 @@ body {
 
 /* The header (layout/HeaderReveal.tsx) is `fixed` once revealed past the
    Hero — anchor targets need room reserved so the fixed bar doesn't cover
-   their top edge on jump/scroll-to. 80px matches HEADER_HEIGHT_PX
-   (lib/constants.ts, the header's real md:h-20 height) — keep in sync if
-   that class changes. This is the ONLY place that clearance is applied:
+   their top edge on jump/scroll-to. The value tracks the header's own
+   responsive height: 64px below md (h-16), 80px from md up (md:h-20, which
+   is also HEADER_HEIGHT_PX in lib/constants.ts — only used by the lg-only
+   GSAP pin, so the JS constant stays desktop-only) — keep in sync if those
+   classes change. This is the ONLY place that clearance is applied:
    Lenis (NavLinks.tsx) reads scroll-margin-top natively when resolving an
    element scroll target, and the reduced-motion scrollIntoView() fallback
    respects it too — an extra JS `offset` on top of this would double-count
    the clearance and undershoot the target by the difference. */
 section[id] {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 64px;
+}
+
+@media (min-width: 48rem) {
+  section[id] {
+    scroll-margin-top: 80px;
+  }
 }
 
 /* One-shot flash on the header's teal bottom border, triggered from

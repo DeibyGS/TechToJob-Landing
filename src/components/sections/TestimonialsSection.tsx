@@ -30,7 +30,8 @@ export async function TestimonialsSection() {
   const copy = t.raw("items") as TestimonialCopy[];
   const items: Testimonial[] = copy.map((item) => ({
     ...item,
-    photo: TESTIMONIAL_PHOTO_BY_NAME[item.name] ?? "/images/testimonials/placeholder.jpg",
+    photo: TESTIMONIAL_PHOTO_BY_NAME[item.name] ??
+      `https://api.dicebear.com/10.x/avataaars/svg?seed=${encodeURIComponent(item.name)}`,
     // base.md requires the design to leave room for a profile link — "#" until
     // real LinkedIn URLs are collected, so the placeholder UI still shows it
     profileUrl: "#",

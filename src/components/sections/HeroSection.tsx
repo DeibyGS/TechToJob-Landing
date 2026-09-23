@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { HeroStage } from "@/components/sections/HeroStage";
@@ -9,11 +10,17 @@ function HeroBackground({ chatFragments }: { chatFragments: Fragment[] }) {
     <>
       <div className="hero-wash absolute" />
       <div className="hero-grain absolute inset-0" />
+      {/* Real <img> (not a CSS background-image) because this blurred mark is
+          the page's LCP element: an <img> in the HTML is found by the
+          browser's preload scanner, while a background url() is only fetched
+          after styles resolve. Eager + high fetch priority per the Next 16
+          image docs (`priority` is deprecated there). */}
       <div
         className="absolute top-1/2 left-1/2 h-[26rem] w-[613px] -translate-x-1/2 -translate-y-1/2 opacity-[0.18] blur-2xl md:h-[34rem]"
-        style={{ backgroundImage: "url(/logo/logo-negative.svg)", backgroundSize: "contain", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}
         aria-hidden="true"
-      />
+      >
+        <Image src="/logo/logo-negative.svg" alt="" fill loading="eager" fetchPriority="high" sizes="613px" className="object-contain" />
+      </div>
       <HeroChatFragments fragments={chatFragments} />
     </>
   );
