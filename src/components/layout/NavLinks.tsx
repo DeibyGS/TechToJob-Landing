@@ -10,10 +10,15 @@ type NavLink = { id: string; label: string };
 
 // Fires `callback` once the page has stopped scrolling for SCROLL_IDLE_MS,
 // with a hard cap in case the scroll never starts (target already in place).
+// `userInterrupted` is true if the visitor touched/wheeled mid-scroll — the
+// caller then must not snap them back to the link target. Returns a cancel
+// function so a newer click can drop a still-pending settle.
 const SCROLL_IDLE_MS = 150;
 const SCROLL_SETTLE_MAX_MS = 1500;
+const USER_SCROLL_EVENTS = ["touchstart", "wheel"] as const;
 
-function onScrollSettled(callback: () => void) {
+function onScrollSettled(callback: (userInterrupted: boolean) => void): () => void {
+  let userInterrupted = false;
   let idleId = window.setTimeout(finish, SCROLL_IDLE_MS);
   const maxId = window.setTimeout(finish, SCROLL_SETTLE_MAX_MS);
 
@@ -22,14 +27,25 @@ function onScrollSettled(callback: () => void) {
     idleId = window.setTimeout(finish, SCROLL_IDLE_MS);
   }
 
-  function finish() {
+  function onUserScroll() {
+    userInterrupted = true;
+  }
+
+  function cleanup() {
     clearTimeout(idleId);
     clearTimeout(maxId);
     window.removeEventListener("scroll", onScroll);
-    callback();
+    USER_SCROLL_EVENTS.forEach((type) => window.removeEventListener(type, onUserScroll));
+  }
+
+  function finish() {
+    cleanup();
+    callback(userInterrupted);
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });
+  USER_SCROLL_EVENTS.forEach((type) => window.addEventListener(type, onUserScroll, { passive: true }));
+  return cleanup;
 }
 
 type NavLinksProps = {
@@ -68,6 +84,8 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
   // whose leftover safety timeout / settle callback must not resume the
   // observer (or flash the header) mid-way through the second scroll.
   const navTokenRef = useRef(0);
+  // Pending native-path settle listener, cancelled when a newer click starts.
+  const cancelSettleRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const sections = links
@@ -115,6 +133,8 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
     suppressObserverRef.current = true;
     beginNavScroll();
     const token = ++navTokenRef.current;
+    cancelSettleRef.current?.();
+    cancelSettleRef.current = null;
     const resumeObserver = () => {
       if (token !== navTokenRef.current) return;
       suppressObserverRef.current = false;
@@ -153,10 +173,15 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
       // dependency, unsupported on older Safari), then a final instant
       // scrollIntoView absorbs any drift (e.g. images loading mid-scroll)
       // before the observer resumes and the header border flashes.
+      // A drift correction is skipped if a newer click took over (token) or
+      // the visitor started scrolling themselves (userInterrupted).
       requestAnimationFrame(() => {
+        if (token !== navTokenRef.current) return;
         target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-        onScrollSettled(() => {
-          target.scrollIntoView({ behavior: "auto" });
+        cancelSettleRef.current = onScrollSettled((userInterrupted) => {
+          if (token !== navTokenRef.current) return;
+          cancelSettleRef.current = null;
+          if (!userInterrupted) target.scrollIntoView({ behavior: "auto" });
           resumeObserver();
         });
       });
