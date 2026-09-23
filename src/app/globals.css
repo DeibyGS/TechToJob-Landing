@@ -15,9 +15,36 @@ body {
 
 /* The header (layout/HeaderReveal.tsx) is `fixed` once revealed past the
    Hero — anchor targets need room reserved so the fixed bar doesn't cover
-   their top edge on jump/scroll-to. */
+   their top edge on jump/scroll-to. 80px matches HEADER_HEIGHT_PX
+   (lib/constants.ts, the header's real md:h-20 height) — keep in sync if
+   that class changes. This is the ONLY place that clearance is applied:
+   Lenis (NavLinks.tsx) reads scroll-margin-top natively when resolving an
+   element scroll target, and the reduced-motion scrollIntoView() fallback
+   respects it too — an extra JS `offset` on top of this would double-count
+   the clearance and undershoot the target by the difference. */
 section[id] {
-  scroll-margin-top: 4rem;
+  scroll-margin-top: 80px;
+}
+
+/* One-shot flash on the header's teal bottom border, triggered from
+   HeaderReveal.tsx's flashHeaderBorder() when a nav-triggered scroll lands —
+   reads as the border briefly colliding with the section below. */
+@keyframes header-border-flash {
+  0% {
+    border-color: rgba(132, 192, 191, 0.25);
+    box-shadow: 0 1px 16px rgba(132, 192, 191, 0.35);
+  }
+  30% {
+    border-color: rgba(132, 192, 191, 1);
+    box-shadow: 0 4px 24px rgba(132, 192, 191, 0.8);
+  }
+  100% {
+    border-color: rgba(132, 192, 191, 0.25);
+    box-shadow: 0 1px 16px rgba(132, 192, 191, 0.35);
+  }
+}
+.header-border-flash {
+  animation: header-border-flash 550ms ease-out;
 }
 
 /* HowItWorks watermark — pure CSS, doesn't interfere with GSAP ScrollTrigger.

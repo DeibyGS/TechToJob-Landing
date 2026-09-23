@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { getLenis } from "@/components/animations/smoothScroll";
-import { beginNavScroll, commitNavScroll } from "@/components/layout/HeaderReveal";
-import { HEADER_SCROLL_OFFSET_PX } from "@/lib/constants";
+import { beginNavScroll, commitNavScroll, flashHeaderBorder } from "@/components/layout/HeaderReveal";
 import { Button } from "@/components/ui/Button";
 
 type NavLink = { id: string; label: string };
@@ -79,7 +78,7 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
     // observer to agree once scrolling settles — see suppressObserverRef.
     // Also mute the header's automatic show/hide for the same reason: a nav
     // click can legitimately scroll back up past the Hero/HowItWorks
-    // boundary (the -HEADER_SCROLL_OFFSET_PX clearance), which isn't the
+    // boundary (the header's scroll-margin-top clearance), which isn't the
     // user "going back to Hero" — see HeaderReveal.tsx's beginNavScroll.
     // The header itself is only force-shown once the scroll actually lands
     // (commitNavScroll, in resumeObserver below), not here — see that
@@ -90,6 +89,7 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
     const resumeObserver = () => {
       suppressObserverRef.current = false;
       commitNavScroll();
+      flashHeaderBorder();
     };
 
     // Close mobile menu if callback provided
@@ -97,16 +97,23 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
 
     const lenis = getLenis();
     if (lenis) {
-      // Header is `fixed` once revealed (see HeaderReveal.tsx) — offset the
-      // scroll target so its top edge isn't hidden underneath it.
-      lenis.scrollTo(target, {
-        offset: -HEADER_SCROLL_OFFSET_PX,
-        duration: reduceMotion ? 0 : undefined,
-        onComplete: resumeObserver,
-      });
       // Safety net in case onComplete never fires (e.g. the scroll gets
       // interrupted) — comfortably longer than Lenis's default duration.
-      window.setTimeout(resumeObserver, 1500);
+      // Cancelled by onComplete below so a normal landing only ever runs
+      // resumeObserver (and its flashHeaderBorder call) once, not twice.
+      const safetyTimeoutId = window.setTimeout(resumeObserver, 1500);
+
+      // No explicit offset here — Lenis reads the target's CSS
+      // scroll-margin-top natively (globals.css, `section[id]`) to keep the
+      // fixed header (HeaderReveal.tsx) from covering the target's top edge.
+      // Passing an offset on top of that would double-count the clearance.
+      lenis.scrollTo(target, {
+        duration: reduceMotion ? 0 : undefined,
+        onComplete: () => {
+          clearTimeout(safetyTimeoutId);
+          resumeObserver();
+        },
+      });
     } else {
       target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
       resumeObserver();

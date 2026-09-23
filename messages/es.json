@@ -137,17 +137,18 @@
       "Infra, CI/CD, cloud y todo lo que mueve las apps",
       "Conecta con gente del sector y amplía tu red"
     ],
-    "growthCaptions": [
-      "Demuestra lo que construyes y que te tengan en cuenta.",
-      "Comparte lo que haces y conoce gente que va en tu misma dirección.",
-      "Entérate de vacantes por gente que ya está dentro, antes que nadie.",
-      "Pule tu criterio con feedback de otros perfiles de producto.",
-      "Contribuye a proyectos reales y súmalo a tu portfolio.",
-      "Comparte lo que estás probando y aprende de otros más rápido.",
-      "Resuelve dudas de infraestructura con gente que ya pasó por lo mismo.",
-      "Amplía tu red con gente que puede abrirte puertas."
+    "chipQuotes": [
+      "Cada semana hay nuevos #torneos para compartir en comunidad.",
+      "En #comunidad siempre encuentro a alguien dispuesto a ayudar.",
+      "Me enteré de una vacante en #oportunidades antes de que fuera pública.",
+      "Compartí mi primer prototipo en #diseño y me dieron feedback real.",
+      "Contento de participar en mi primer proyecto de #open-source.",
+      "En #IA probamos herramientas nuevas antes de que se pongan de moda.",
+      "Resolví un problema de CI en minutos gracias a #devops.",
+      "Gracias al #networking he ampliado mi red de conocidos."
     ],
-    "activityStrip": "Ahora mismo en el Discord"
+    "activityStrip": "Ahora mismo en el Discord de TechToJob",
+    "chatPlaceholder": "Mensaje #general"
   },
   "News": {
     "headline": "Lo que está pasando en TechToJob",
@@ -182,10 +183,8 @@
     "configNotice": "Formulario no configurado todavía."
   },
   "Testimonials": {
-    "headline": "Conversaciones reales de la comunidad",
-    "description": "Así suena TechToJob cuando la gente se ayuda, comparte y construye junto.",
-    "channelLabel": "general",
-    "channelDescription": "Testimonios de la comunidad",
+    "headline": "Lo que dice la gente que ya está dentro",
+    "description": "Historias reales de quienes ya construyen, aprenden y encuentran oportunidades en TechToJob.",
     "prevLabel": "Testimonios anteriores",
     "nextLabel": "Siguientes testimonios",
     "slideLabel": "Testimonio {n}",
@@ -194,50 +193,27 @@
       {
         "name": "Alex Dev",
         "role": "Frontend Developer",
-        "quote": "Entré para preguntar una duda sobre React y acabé colaborando en un proyecto con gente del servidor.",
-        "avatar": "AD",
-        "timestamp": "hace 2 días",
-        "channel": "frontend"
+        "quote": "Entré para preguntar una duda sobre React y acabé colaborando en un proyecto con gente del servidor."
       },
       {
         "name": "Lucía Code",
         "role": "Full Stack Developer",
-        "quote": "Lo que más valoro es poder enseñar lo que voy construyendo. Aquí nadie te descarta por ser junior.",
-        "avatar": "LC",
-        "timestamp": "hace 3 días",
-        "channel": "proyectos"
-      },
-      {
-        "name": "Marcos Front",
-        "role": "UI Developer",
-        "quote": "En el canal de #frontend me resolvieron un problema en 10 minutos. En otros lados llevo días.",
-        "avatar": "MF",
-        "timestamp": "hace 5 días",
-        "channel": "frontend"
+        "quote": "Lo que más valoro es poder enseñar lo que voy construyendo. Aquí nadie te descarta por ser junior."
       },
       {
         "name": "Sara Ops",
         "role": "DevOps Engineer",
-        "quote": "Participé en un torneo sin esperar nada y acabé con un proyecto real para mi portfolio.",
-        "avatar": "SO",
-        "timestamp": "hace 1 semana",
-        "channel": "torneos"
+        "quote": "Participé en un torneo sin esperar nada y acabé con un proyecto real para mi portfolio."
       },
       {
         "name": "Dani Back",
         "role": "Backend Developer",
-        "quote": "Mejor que LinkedIn. Aquí conoces a la gente antes de que haya una oferta.",
-        "avatar": "DB",
-        "timestamp": "hace 2 semanas",
-        "channel": "networking"
+        "quote": "Mejor que LinkedIn. Aquí conoces a la gente antes de que haya una oferta."
       },
       {
         "name": "Nuria UX",
         "role": "Product Designer",
-        "quote": "Hay un canal donde la gente comparte ofertas que no salen en ningún otro sitio.",
-        "avatar": "NU",
-        "timestamp": "hace 3 semanas",
-        "channel": "empleo"
+        "quote": "Hay un canal donde la gente comparte ofertas que no salen en ningún otro sitio."
       }
     ]
   },

@@ -34,6 +34,28 @@ export function commitNavScroll() {
   triggerInstance?.enable();
 }
 
+// A subtle one-shot "impact" on the header's teal bottom border the moment a
+// nav-triggered scroll lands on its target section — reads as the border
+// briefly colliding with the section below. Toggled imperatively via the
+// same ref-holds-the-DOM-node pattern as the reveal/hide above (not React
+// state) so re-triggering it doesn't force a re-render of `children`.
+let headerEl: HTMLDivElement | null = null;
+let flashTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
+export function flashHeaderBorder() {
+  if (!headerEl || prefersReducedMotion()) return;
+  if (flashTimeoutId) clearTimeout(flashTimeoutId);
+  // Removing then re-adding on the next frame restarts the CSS animation
+  // even if a previous flash is still mid-fade (rapid nav clicks).
+  headerEl.classList.remove("header-border-flash");
+  void headerEl.offsetWidth; // force reflow so the removal registers
+  headerEl.classList.add("header-border-flash");
+  flashTimeoutId = setTimeout(() => {
+    headerEl?.classList.remove("header-border-flash");
+    flashTimeoutId = null;
+  }, 550);
+}
+
 // HeaderLogo's color-cycle animation is wasted if it runs on mount: the
 // header is translated off-screen for the entire Hero, so by the time it's
 // actually revealed the animation already finished. This lets HeaderLogo
@@ -60,6 +82,14 @@ export function onFirstReveal(listener: () => void) {
  */
 export function HeaderReveal({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    headerEl = ref.current;
+    return () => {
+      headerEl = null;
+      if (flashTimeoutId) clearTimeout(flashTimeoutId);
+    };
+  }, []);
 
   useEffect(() => {
     if (!ref.current || prefersReducedMotion()) return;

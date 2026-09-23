@@ -137,17 +137,18 @@
       "Infra, CI/CD, cloud and everything that powers apps",
       "Connect with people in the industry and expand your network"
     ],
-    "growthCaptions": [
-      "Show what you build and get remembered for it.",
-      "Share what you're working on and meet people headed the same way.",
-      "Hear about openings from people already inside, before anyone else.",
-      "Sharpen your eye with feedback from other product people.",
-      "Contribute to real projects and add it to your portfolio.",
-      "Share what you're testing and learn faster from others.",
-      "Get infra questions solved by people who've been there.",
-      "Grow your network with people who can open doors for you."
+    "chipQuotes": [
+      "There's a new challenge in #tournaments every week.",
+      "Someone in #community always helps you figure it out.",
+      "I heard about an opening in #opportunities before it went public.",
+      "Shared my first prototype in #design and got real feedback.",
+      "Happy to be part of my first #open-source project.",
+      "In #AI we try new tools before they're trending.",
+      "Fixed a CI issue in minutes thanks to #devops.",
+      "Thanks to #networking I've grown my circle of contacts."
     ],
-    "activityStrip": "Right now on Discord"
+    "activityStrip": "Right now on TechToJob's Discord",
+    "chatPlaceholder": "Message #general"
   },
   "News": {
     "headline": "What's happening at TechToJob",
@@ -182,10 +183,8 @@
     "configNotice": "Form not configured yet."
   },
   "Testimonials": {
-    "headline": "Real conversations from the community",
-    "description": "This is what TechToJob sounds like when people help, share and build together.",
-    "channelLabel": "general",
-    "channelDescription": "Community testimonials",
+    "headline": "What people already inside are saying",
+    "description": "Real stories from people already building, learning and landing opportunities through TechToJob.",
     "prevLabel": "Previous testimonials",
     "nextLabel": "Next testimonials",
     "slideLabel": "Testimonial {n}",
@@ -194,50 +193,27 @@
       {
         "name": "Alex Dev",
         "role": "Frontend Developer",
-        "quote": "I came to ask a React question and ended up collaborating on a project with people from the server.",
-        "avatar": "AD",
-        "timestamp": "2 days ago",
-        "channel": "frontend"
+        "quote": "I came to ask a React question and ended up collaborating on a project with people from the server."
       },
       {
         "name": "Lucía Code",
         "role": "Full Stack Developer",
-        "quote": "What I value most is being able to show what I'm building. Here nobody dismisses you for being junior.",
-        "avatar": "LC",
-        "timestamp": "3 days ago",
-        "channel": "projects"
-      },
-      {
-        "name": "Marcos Front",
-        "role": "UI Developer",
-        "quote": "In the #frontend channel someone solved my problem in 10 minutes. In other places I've been stuck for days.",
-        "avatar": "MF",
-        "timestamp": "5 days ago",
-        "channel": "frontend"
+        "quote": "What I value most is being able to show what I'm building. Here nobody dismisses you for being junior."
       },
       {
         "name": "Sara Ops",
         "role": "DevOps Engineer",
-        "quote": "I joined a tournament without expecting anything and ended up with a real project for my portfolio.",
-        "avatar": "SO",
-        "timestamp": "1 week ago",
-        "channel": "tournaments"
+        "quote": "I joined a tournament without expecting anything and ended up with a real project for my portfolio."
       },
       {
         "name": "Dani Back",
         "role": "Backend Developer",
-        "quote": "Better than LinkedIn. Here you meet people before there's a job opening.",
-        "avatar": "DB",
-        "timestamp": "2 weeks ago",
-        "channel": "networking"
+        "quote": "Better than LinkedIn. Here you meet people before there's a job opening."
       },
       {
         "name": "Nuria UX",
         "role": "Product Designer",
-        "quote": "There's a channel where people share job openings that don't appear anywhere else.",
-        "avatar": "NU",
-        "timestamp": "3 weeks ago",
-        "channel": "jobs"
+        "quote": "There's a channel where people share job openings that don't appear anywhere else."
       }
     ]
   },

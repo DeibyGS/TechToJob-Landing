@@ -24,16 +24,19 @@ export const HEADER_HEIGHT_PX = 80;
 // actually hidden underneath it anymore.
 export const PINNED_CONTENT_TOP_GAP_PX = 56;
 
-// NavLinks.tsx offsets its click-to-scroll target by this many px so the
-// fixed header (once revealed) doesn't cover it — literally the header's
-// height, not an independent guess.
-export const HEADER_SCROLL_OFFSET_PX = HEADER_HEIGHT_PX;
+// The click-to-scroll clearance NavLinks.tsx relies on so the fixed header
+// (once revealed) doesn't cover a section's top edge lives in globals.css's
+// `section[id] { scroll-margin-top: 80px }` — Lenis reads that natively when
+// resolving an element scroll target, so NavLinks.tsx passes no explicit JS
+// offset (doing both double-counts the clearance). Keep that CSS value in
+// sync with HEADER_HEIGHT_PX above if the header's height class ever changes.
 
 // HeaderReveal.tsx's show/hide ScrollTrigger buffer must stay meaningfully
-// LARGER than HEADER_SCROLL_OFFSET_PX — not just larger — or a nav-link
-// landing spot can end up back on the "hidden" side of the threshold and
-// the header hides itself right after being used to navigate. This used to
-// be an independent magic number (100) with only a 20px margin over the
-// offset, which wasn't enough slack for real-world scroll-settling
-// variance and reproduced exactly that bug.
+// LARGER than the header's scroll clearance (HEADER_HEIGHT_PX, effectively —
+// see globals.css above) — not just larger — or a nav-link landing spot can
+// end up back on the "hidden" side of the threshold and the header hides
+// itself right after being used to navigate. This used to be an independent
+// magic number (100) with only a 20px margin over the clearance, which
+// wasn't enough slack for real-world scroll-settling variance and
+// reproduced exactly that bug.
 export const HEADER_REVEAL_BUFFER_PX = 160;
