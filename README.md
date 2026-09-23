@@ -89,11 +89,12 @@ specs/                spec-driven development artifacts (kept public on purpose)
 - Touch targets ≥ 44×44 px, `prefers-reduced-motion` respected everywhere
 - Brand teal `#84c0bf` never used for small text on white (contrast rule)
 
-### Lighthouse (mobile)
+### Lighthouse
 
-| Performance | Accessibility | Best Practices | SEO |
-|---|---|---|---|
-| 97 | 100 | 100 | 100 |
+| Device | Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|---|
+| Mobile | 96 | 100 | 100 | 100 |
+| Desktop | 100 | 100 | 100 | 100 |
 
 Measured with [PageSpeed Insights](https://pagespeed.web.dev) on the
 deployed site (clean browser, no extensions).

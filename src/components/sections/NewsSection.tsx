@@ -73,7 +73,7 @@ function NewsCard({
           <p className="mt-3 text-brand-white/70">{item.summary}</p>
           <ReadMoreLink label={readMoreLabel} title={item.title} onDark />
         </div>
-        <span className="relative mt-6 flex shrink-0 items-center gap-1.5 text-sm text-brand-white/50 md:mt-0">
+        <span className="relative mt-6 flex shrink-0 items-center gap-1.5 text-sm text-brand-white/60 md:mt-0">
           <Calendar className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
           {item.date}
         </span>

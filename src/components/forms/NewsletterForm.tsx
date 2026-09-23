@@ -72,7 +72,7 @@ export function NewsletterForm({
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder={placeholder}
-        className="min-w-0 flex-1 rounded-lg border border-brand-white/20 bg-brand-dark px-4 py-3 text-brand-white placeholder:text-brand-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+        className="min-w-0 flex-1 rounded-lg border border-brand-white/20 bg-brand-dark px-4 py-3 text-brand-white placeholder:text-brand-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
       />
       {/* Same shared CTA as every other button on the landing (see
           specs/unify-button-component/) — teal fill, glow shadow,
