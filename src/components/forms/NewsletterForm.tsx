@@ -4,7 +4,7 @@
 // with a different ESP (Mailchimp/Brevo) later touches nothing else.
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle2, AlertCircle, Mail } from "lucide-react";
+import { ArrowRight, CheckCircle2, AlertCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID;
@@ -72,42 +72,37 @@ export function NewsletterForm({
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder={placeholder}
-        className="min-w-0 flex-1 rounded-lg border border-brand-white/20 bg-brand-dark px-4 py-3 text-brand-white placeholder:text-brand-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+        className="h-12 min-w-0 flex-1 rounded-lg border border-brand-white/20 bg-brand-dark px-4 py-3 text-brand-white placeholder:text-brand-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
       />
       {/* Same shared CTA as every other button on the landing (see
           specs/unify-button-component/) — teal fill, glow shadow,
-          arrow-on-hover growth. That growth is normally harmless (Hero/
-          Closing/HowItWorks have no flex sibling competing for space), but
-          here the button shares this row with the input's `flex-1` — the
-          button growing on hover would shrink the input instead of reading
-          as its own expansion. The invisible spacer reserves only the
-          button's RESTING (collapsed, no arrow) footprint in the layout —
-          that's the input's steady-state neighbor. The real button sits
-          `absolute` on top of it, anchored left: at rest it matches the
-          spacer exactly, and on hover it's free to grow rightward past the
-          spacer's edge — an absolutely positioned element's overflow
-          doesn't feed back into its parent's box size, so the input never
-          resizes, at rest or on hover. `!absolute` (not plain `absolute`)
-          is required here: Button's own base classes already include
-          `relative`, and Tailwind v4 emits `.absolute` before `.relative`
-          in the generated stylesheet — with equal specificity the
-          later-defined `.relative` wins the cascade, silently leaving the
-          button in normal flow and defeating this whole technique. The
-          `!` forces `position: absolute` regardless of that ordering. */}
+          arrow-on-hover growth. Here it shares a row with the input's
+          `flex-1`, so its footprint must never change on hover. The invisible
+          spacer reserves the button's EXPANDED footprint (label + trailing
+          arrow) at the input's exact height (`h-12` on both); the real
+          button fills it via `!absolute inset-0` with its content centered.
+          At rest the content sits centered with some slack, on hover it grows
+          into that slack — the button never overflows its reserved box into
+          the row gap. `!absolute` (not plain `absolute`) is required: Button's
+          base classes include `relative`, and Tailwind v4 emits `.absolute`
+          before `.relative`, so without `!` the later `.relative` wins. */}
       <div className="relative shrink-0">
         <span
           aria-hidden="true"
-          className="invisible inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase"
+          className="invisible inline-flex h-12 items-center gap-2 rounded-full px-5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase"
         >
           <Mail className="h-4 w-4" />
-          {submitLabel}
+          <span className="inline-flex items-center gap-1.5">
+            {submitLabel}
+            <ArrowRight className="h-3.5 w-3.5" />
+          </span>
         </span>
         <Button
           type="submit"
           label={submitLabel}
           icon={<Mail />}
           loading={status === "pending"}
-          className="!absolute inset-y-0 left-0"
+          className="!absolute inset-0 justify-center"
         />
       </div>
       {status === "error" && (
