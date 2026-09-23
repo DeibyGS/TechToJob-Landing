@@ -84,7 +84,7 @@ export function NetworkingPulse({
       <div className="flex items-center gap-2 border-b border-white/10 px-5 py-3 text-sm">
         <Hash className="h-4 w-4 shrink-0 text-white/40" strokeWidth={2.5} aria-hidden="true" />
         <span className="font-semibold text-white">{channelName}</span>
-        <span className="hidden truncate text-white/30 sm:inline">· {activityLabel}</span>
+        <span className="hidden truncate text-white/60 sm:inline">· {activityLabel}</span>
         {/* Generic "live" indicator — no invented member count, base.md bans made-up numbers */}
         <span className="ml-auto flex h-2 w-2 shrink-0 rounded-full bg-brand-teal" aria-hidden="true" />
       </div>

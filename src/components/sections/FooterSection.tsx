@@ -52,7 +52,7 @@ export async function FooterSection() {
                 className="object-contain"
               />
             </span>
-            <p className="mt-3 max-w-[200px] text-xs leading-relaxed text-brand-white/40">
+            <p className="mt-3 max-w-[200px] text-xs leading-relaxed text-brand-white/60">
               {t("tagline")}
             </p>
             <div className="mt-6 flex items-center gap-2">
@@ -105,7 +105,7 @@ export async function FooterSection() {
         <div className="mt-8 border-t border-brand-teal/30 pt-5">
           <div className="flex flex-col items-center gap-3 md:flex-row md:justify-between">
             {/* Privacy + Terms — left */}
-            <div className="flex items-center gap-4 text-sm text-brand-white/50">
+            <div className="flex items-center gap-4 text-sm text-brand-white/60">
               <a href="#privacy" className="relative transition-colors duration-200 hover:text-brand-teal hover:drop-shadow-[0_0_6px_rgba(132,192,191,0.5)] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-brand-teal after:transition-all after:duration-300 hover:after:w-full">
                 {t("privacy")}
               </a>
@@ -116,7 +116,7 @@ export async function FooterSection() {
             </div>
 
             {/* Copyright — center */}
-            <p className="text-sm text-brand-white/50">
+            <p className="text-sm text-brand-white/60">
               &copy; {year} TechToJob. {t("rights")}
             </p>
 
