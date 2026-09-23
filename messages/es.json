@@ -151,7 +151,8 @@
       "Gracias al #networking he ampliado mi red de conocidos."
     ],
     "activityStrip": "Ahora mismo en el Discord de TechToJob",
-    "chatPlaceholder": "Mensaje #general"
+    "chatPlaceholder": "Mensaje #general",
+    "pulseChannel": "general"
   },
   "News": {
     "headline": "Lo que está pasando en TechToJob",

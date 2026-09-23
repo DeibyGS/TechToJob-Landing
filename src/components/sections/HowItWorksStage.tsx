@@ -110,7 +110,7 @@ export function HowItWorksStage({ headline, steps }: HowItWorksStageProps) {
                       of the step's content for free. */}
                   <div className="mt-1">
                     <Button
-                      icon={<Icon />}
+                      icon={Icon ? <Icon /> : undefined}
                       label={step.cta}
                       href={step.href}
                       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}

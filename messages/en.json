@@ -151,7 +151,8 @@
       "Thanks to #networking I've grown my circle of contacts."
     ],
     "activityStrip": "Right now on TechToJob's Discord",
-    "chatPlaceholder": "Message #general"
+    "chatPlaceholder": "Message #general",
+    "pulseChannel": "general"
   },
   "News": {
     "headline": "What's happening at TechToJob",

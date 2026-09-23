@@ -99,11 +99,12 @@ export function CommunityAvatarCluster({ channels }: { channels: ChannelData[] }
 
   return (
     <div className="relative h-[260px] w-full overflow-hidden lg:h-full">
-      {/* Accessible equivalent of the decorative chips below — the real content */}
+      {/* Accessible equivalent of the decorative chips below — lists every
+          channel, not just the few that fit as visual chips */}
       <ul className="sr-only">
-        {CHIP_CHANNELS.map(({ index }) => (
-          <li key={channels[index].name}>
-            {channels[index].name}: {channels[index].caption}
+        {channels.map((channel) => (
+          <li key={channel.name}>
+            {channel.name}: {channel.caption}
           </li>
         ))}
       </ul>
@@ -115,7 +116,7 @@ export function CommunityAvatarCluster({ channels }: { channels: ChannelData[] }
 
         {/* Chips render first (behind, in DOM order) and sit at z-0 — pure
             background atmosphere, never allowed to cover a photo */}
-        {CHIP_CHANNELS.map(({ index, Icon, top, left, mobileVisible, mobileAnchorRight }) => (
+        {CHIP_CHANNELS.filter(({ index }) => channels[index]).map(({ index, Icon, top, left, mobileVisible, mobileAnchorRight }) => (
           <div
             key={channels[index].name}
             className={`absolute z-0 max-w-[12rem] items-start gap-1.5 rounded-2xl border border-brand-dark/5 bg-white/70 px-3 py-2 text-[11px] font-medium leading-snug text-brand-dark/70 shadow-[0_2px_8px_rgba(47,52,54,0.06)] lg:text-xs ${mobileVisible ? "flex" : "hidden lg:flex"} ${mobileAnchorRight ? "right-[3%] lg:right-auto lg:left-(--chip-left)" : "left-(--chip-left)"}`}

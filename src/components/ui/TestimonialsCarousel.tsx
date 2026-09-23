@@ -186,6 +186,7 @@ export function TestimonialsCarousel({
                     src={item.photo}
                     alt=""
                     fill
+                    unoptimized={item.photo.startsWith("http")}
                     sizes="(min-width: 768px) 33vw, 100vw"
                     className="object-cover"
                   />

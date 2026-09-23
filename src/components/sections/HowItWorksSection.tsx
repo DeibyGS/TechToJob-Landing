@@ -20,7 +20,7 @@ const STEP_HREFS = [SOCIAL_LINKS.discord, "#tournaments", "#companies"];
 export async function HowItWorksSection() {
   const t = await getTranslations("HowItWorks");
   const rawSteps = t.raw("steps") as { title: string; description: string; cta: string }[];
-  const steps = rawSteps.map((step, index) => ({ ...step, href: STEP_HREFS[index] }));
+  const steps = rawSteps.map((step, index) => ({ ...step, href: STEP_HREFS[index] ?? SOCIAL_LINKS.discord }));
 
   return (
     <SectionContainer

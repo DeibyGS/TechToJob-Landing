@@ -64,6 +64,10 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
   // briefly mark whatever's mid-scroll as active. This ref suppresses it
   // for the duration of a click-triggered scroll.
   const suppressObserverRef = useRef(false);
+  // Incremented per click: a rapid second click interrupts the first scroll,
+  // whose leftover safety timeout / settle callback must not resume the
+  // observer (or flash the header) mid-way through the second scroll.
+  const navTokenRef = useRef(0);
 
   useEffect(() => {
     const sections = links
@@ -110,7 +114,9 @@ export function NavLinks({ links, orientation = "horizontal", onLinkClick }: Nav
     setActiveId(id);
     suppressObserverRef.current = true;
     beginNavScroll();
+    const token = ++navTokenRef.current;
     const resumeObserver = () => {
+      if (token !== navTokenRef.current) return;
       suppressObserverRef.current = false;
       commitNavScroll();
       flashHeaderBorder();

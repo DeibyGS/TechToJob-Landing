@@ -80,6 +80,7 @@ export async function NetworkingSection() {
         <Reveal delay={0.22} className="h-full">
           <NetworkingPulse
             activityLabel={t("activityStrip")}
+            channelName={t("pulseChannel")}
             chatPlaceholder={t("chatPlaceholder")}
             pool={pulsePool}
           />
