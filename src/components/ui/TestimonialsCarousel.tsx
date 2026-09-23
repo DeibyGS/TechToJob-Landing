@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { useReducedMotion } from "motion/react";
 import { motion } from "motion/react";
-import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, Quote } from "lucide-react";
 
 type Testimonial = {
   name: string;
@@ -180,27 +180,28 @@ export function TestimonialsCarousel({
                 }}
                 className="flex h-full flex-col overflow-hidden rounded-xl border border-brand-white/5 bg-brand-white/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-teal/20 hover:shadow-[0_8px_24px_rgba(132,192,191,0.1)]"
               >
-                {/* Portrait + quote overlay */}
-                <div className="relative aspect-[6/7] w-full overflow-hidden bg-brand-white/5">
-                  <Image
-                    src={item.photo}
-                    alt=""
-                    fill
-                    unoptimized={item.photo.startsWith("http")}
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-                  <p className="absolute inset-x-0 bottom-0 p-4 text-sm leading-relaxed text-white">
-                    <span className="mr-0.5 text-lg font-bold text-brand-teal/70" aria-hidden="true">&ldquo;</span>
+                {/* Quote first — the testimonial is the content, the photo only
+                    attributes it (a large portrait out-weighed the quote). */}
+                <div className="flex flex-1 flex-col gap-4 p-6">
+                  <Quote className="h-7 w-7 shrink-0 text-brand-teal/70" aria-hidden="true" />
+                  <blockquote className="text-base leading-relaxed text-brand-white md:text-lg">
                     {item.quote}
-                    <span className="ml-0.5 text-lg font-bold text-brand-teal/70" aria-hidden="true">&rdquo;</span>
-                  </p>
+                  </blockquote>
                 </div>
 
                 {/* Name, role and profile link */}
-                <div className="flex items-center justify-between gap-2 p-4">
-                  <div className="min-w-0">
+                <div className="flex items-center justify-between gap-3 border-t border-brand-white/5 p-4">
+                  <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full bg-brand-white/5 ring-1 ring-brand-teal/30">
+                    <Image
+                      src={item.photo}
+                      alt=""
+                      fill
+                      unoptimized={item.photo.startsWith("http")}
+                      sizes="48px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
                     <p className="truncate font-semibold text-brand-white">{item.name}</p>
                     <p className="truncate text-xs text-brand-white/55">{item.role}</p>
                   </div>

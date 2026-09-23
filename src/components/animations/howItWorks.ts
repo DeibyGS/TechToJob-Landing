@@ -2,6 +2,11 @@ import gsap from "gsap";
 import { EASE, MEDIA_DESKTOP_UP, prefersReducedMotion, runInScope } from "./utils";
 import { HEADER_HEIGHT_PX, PINNED_CONTENT_TOP_GAP_PX } from "@/lib/constants";
 
+// Timeline units (1 unit = one step transition). Fade-out + gap + fade-in
+// must fit within 1 so consecutive transitions never overlap.
+const STEP_FADE_DURATION = 0.4;
+const STEP_FADE_GAP = 0.1;
+
 /**
  * Pins the HowItWorks visual anchor and crossfades through its step panels
  * in sync with scroll, at >=1024px only — registered via `gsap.matchMedia()`
@@ -63,21 +68,29 @@ export function initHowItWorksScroll(container: HTMLElement): () => void {
         if (index === 0) return;
         const at = index - 1;
 
-        timeline.to(steps[index - 1], { opacity: 0, y: -16, ease: EASE.crossfade }, at);
-        timeline.to(step, { opacity: 1, y: 0, ease: EASE.crossfade }, at);
-        // `.set()` is instantaneous — unlike the `.to()`s above, it doesn't
-        // interpolate. Placing it at the SAME position `at` as the opacity
-        // tween made pointerEvents flip the instant the timeline is created
-        // (progress 0, i.e. before any real scroll), while opacity was still
-        // fading and visually reads as fully opaque — so hovering step N's
-        // still-fully-visible button was actually hovering step N+1's
-        // already-interactive one underneath it (confirmed via devtools:
-        // inspecting "step 1"'s button highlighted step 2's `<a>`). ">"
-        // positions these right after the opacity tween above finishes, so
-        // interactivity only hands off once the outgoing step is actually
-        // invisible.
-        timeline.set(steps[index - 1], { pointerEvents: "none" }, ">");
-        timeline.set(step, { pointerEvents: "auto" }, ">");
+        // Sequential, not overlapping: the outgoing step fully fades out
+        // before the incoming one starts. Both are absolutely stacked at the
+        // same spot and `scrub` ties progress to scroll, so a simultaneous
+        // crossfade left two half-opaque texts overlapping whenever the user
+        // stopped scrolling mid-transition (reported in competition feedback).
+        const fadeOutEnd = at + STEP_FADE_DURATION;
+        const fadeInStart = fadeOutEnd + STEP_FADE_GAP;
+        timeline.to(
+          steps[index - 1],
+          { opacity: 0, y: -16, duration: STEP_FADE_DURATION, ease: EASE.crossfade },
+          at,
+        );
+        timeline.to(
+          step,
+          { opacity: 1, y: 0, duration: STEP_FADE_DURATION, ease: EASE.crossfade },
+          fadeInStart,
+        );
+        // `.set()` is instantaneous. Interactivity hands off only once the
+        // outgoing step is fully invisible — flipping it earlier let a
+        // still-visible button be shadowed by the next step's (invisible,
+        // already-interactive) one stacked underneath it.
+        timeline.set(steps[index - 1], { pointerEvents: "none" }, fadeOutEnd);
+        timeline.set(step, { pointerEvents: "auto" }, fadeInStart);
 
         if (anchor) {
           timeline.fromTo(
@@ -92,8 +105,10 @@ export function initHowItWorksScroll(container: HTMLElement): () => void {
           timeline.to(dots[index], { opacity: 1 }, at);
         }
         if (icons[index - 1] && icons[index]) {
-          timeline.to(icons[index - 1], { opacity: 0 }, at);
-          timeline.to(icons[index], { opacity: 1 }, at);
+          // Icons are stacked like the steps, so they follow the same
+          // sequential fade to stay in sync with the text.
+          timeline.to(icons[index - 1], { opacity: 0, duration: STEP_FADE_DURATION }, at);
+          timeline.to(icons[index], { opacity: 1, duration: STEP_FADE_DURATION }, fadeInStart);
         }
       });
     });
