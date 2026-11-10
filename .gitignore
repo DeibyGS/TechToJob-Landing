@@ -39,7 +39,7 @@ yarn-error.log*
 
 # Claude Code session-local docs (never committed)
 HANDOFF.md
-TRANSITION.md
+.claude/
 summary-*.md
 
 # typescript
